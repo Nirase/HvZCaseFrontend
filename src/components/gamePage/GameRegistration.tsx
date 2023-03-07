@@ -1,9 +1,14 @@
 import Button from "@mui/material/Button";
+import { Game } from "../../interfaces/game";
 
-const GameRegistration = () => {
+type Props = {
+  game: Game;
+};
+
+const GameRegistration = ({ game }: Props) => {
   return (
     <Button variant="contained" style={{ backgroundColor: "#360568" }}>
-      Enter the game
+      Enter {game.Name}
     </Button>
   );
 };

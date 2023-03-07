@@ -1,8 +1,14 @@
-const Info = (Game: any) => {
+import { Game } from "../../interfaces/game";
+
+type Props = {
+  game: Game;
+};
+
+const Info = ({ game }: Props) => {
   return (
     <>
-      <h1>{Game.Game.name}</h1>
-      <p>{Game.Game.description}</p>
+      <h1>{game.Name}</h1>
+      <p>{game.Description}</p>
       <h3>Rules</h3>
       <ul>
         <li>
