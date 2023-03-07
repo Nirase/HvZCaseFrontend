@@ -1,8 +1,10 @@
 import Container from "@mui/material/Container";
+import { useLoadScript } from "@react-google-maps/api";
 import BiteCode from "../components/gamePage/BiteCode";
 import BiteCodeEntry from "../components/gamePage/BiteCodeEntry";
 import GameRegistration from "../components/gamePage/GameRegistration";
 import Info from "../components/gamePage/Info";
+import Map from "../components/gamePage/Map";
 import SquadList from "../components/gamePage/SquadList";
 import { Game } from "../interfaces/game";
 
@@ -11,6 +13,11 @@ type Props = {
 };
 
 const GamePage = ({ game }: Props) => {
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: process.env.REACT_APP_MAP_API_KEY as string,
+    libraries: ["places"],
+  });
+
   return (
     <Container
       maxWidth="lg"
@@ -30,6 +37,7 @@ const GamePage = ({ game }: Props) => {
       <div>
         <SquadList />
       </div>
+      {!isLoaded ? <p>Loading map....</p> : <Map />}
     </Container>
   );
 };
