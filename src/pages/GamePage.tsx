@@ -1,5 +1,6 @@
 import Container from "@mui/material/Container";
 import { useLoadScript } from "@react-google-maps/api";
+import { useState } from "react";
 import BiteCode from "../components/gamePage/BiteCode";
 import BiteCodeEntry from "../components/gamePage/BiteCodeEntry";
 import GameRegistration from "../components/gamePage/GameRegistration";
@@ -11,11 +12,18 @@ import { Game } from "../interfaces/game";
 type Props = {
   game: Game;
 };
+const libraries: (
+  | "drawing"
+  | "geometry"
+  | "localContext"
+  | "places"
+  | "visualization"
+)[] = ["places"];
 
 const GamePage = ({ game }: Props) => {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_MAP_API_KEY as string,
-    libraries: ["places"],
+    libraries: libraries,
   });
 
   return (
