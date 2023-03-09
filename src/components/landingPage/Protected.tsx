@@ -15,7 +15,6 @@ const Protected = () => {
   return (
     <div>
       <h3>Protected</h3>
-      <button onClick={() => keycloak.logout()}>Logout</button>
       <button onClick={() => toAdmin()}>Admin</button>
       <button onClick={() => toProfile()}>Profile</button>
     </div>

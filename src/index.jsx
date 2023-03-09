@@ -25,8 +25,8 @@ initialize()
     // If No Keycloak Error occurred - Display the App
     root.render(
       <React.StrictMode>
-        <Header />
         <BrowserRouter>
+          <Header />
           <main className="container">
             <Routes>
               <Route path="/" element={<LandingPage />} />

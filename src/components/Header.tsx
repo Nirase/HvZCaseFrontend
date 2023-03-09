@@ -4,6 +4,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import keycloak from "../keycloak";
+import HeaderButtons from "./HeaderButtons";
 
 const Header = () => {
   return (
@@ -19,11 +20,7 @@ const Header = () => {
                 Login
               </Button>
             )}
-            {keycloak.authenticated && (
-              <Button color="inherit" onClick={() => keycloak.logout()}>
-                Logout
-              </Button>
-            )}
+            {keycloak.authenticated && <HeaderButtons />}
           </section>
         </Toolbar>
       </AppBar>
