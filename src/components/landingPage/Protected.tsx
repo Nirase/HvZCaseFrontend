@@ -1,4 +1,4 @@
-import keycloak from "../keycloak";
+import keycloak from "../../keycloak";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 

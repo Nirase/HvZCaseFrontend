@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import keycloak from "../keycloak";
 
 const Header = () => {
   return (
@@ -12,7 +13,18 @@ const Header = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Humans vs Zombies
           </Typography>
-          <Button color="inherit">Login</Button>
+          <section>
+            {!keycloak.authenticated && (
+              <Button color="inherit" onClick={() => keycloak.login()}>
+                Login
+              </Button>
+            )}
+            {keycloak.authenticated && (
+              <Button color="inherit" onClick={() => keycloak.logout()}>
+                Logout
+              </Button>
+            )}
+          </section>
         </Toolbar>
       </AppBar>
     </Box>
