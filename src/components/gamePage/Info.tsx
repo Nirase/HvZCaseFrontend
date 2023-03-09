@@ -7,8 +7,10 @@ type Props = {
 const Info = ({ game }: Props) => {
   return (
     <>
-      <h1>{game.Name}</h1>
-      <p>{game.Description}</p>
+      <h1>{game.name}</h1>
+      <p>{game.description}</p>
+      <p>Total players in game: {game.players.length}</p>
+      <p>Number of kills: {game.kills.length}</p>
       <h3>Rules</h3>
       <ul>
         <li>

@@ -13,10 +13,10 @@ const GameRegistration = ({ game }: Props) => {
     <Button
       variant="contained"
       style={{ backgroundColor: "#360568" }}
-      name={game.Name}
+      name={game.name}
       onClick={join}
     >
-      Enter {game.Name}
+      Enter {game.name}
     </Button>
   );
 };
