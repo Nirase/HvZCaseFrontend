@@ -1,13 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./index.css";
 import { initialize } from "./keycloak";
+import Loading from "./components/Loading";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import KeycloakRoute from "./routes/KeyCloakRoute";
+import { ROLES } from "./roles/roles";
 import AdminPage from "./pages/AdminPage";
 import LandingPage from "./pages/LandingPage";
-import { ROLES } from "./roles/roles";
-import KeycloakRoute from "./routes/KeyCloakRoute.jsx";
-import KeyCloakRoute from "./routes/KeyCloakRoute.jsx";
+import ProfilePage from "./pages/ProfilePage";
 
 // const root = ReactDOM.createRoot(
 //   document.getElementById("root") as HTMLElement
@@ -15,11 +16,7 @@ import KeyCloakRoute from "./routes/KeyCloakRoute.jsx";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
-root.render(
-  <React.StrictMode>
-    <LandingPage />
-  </React.StrictMode>
-);
+root.render(<Loading message="Connecting to Keycloak..." />);
 
 initialize()
   .then(() => {
@@ -27,17 +24,28 @@ initialize()
     root.render(
       <React.StrictMode>
         <BrowserRouter>
-          <Routes>
-            <Route path="" element={<LandingPage />} />
-            <Route
-              path="/profile"
-              element={
-                <KeycloakRoute role={ROLES.Admin}>
-                  <AdminPage />
-                </KeycloakRoute>
-              }
-            />
-          </Routes>
+          <main className="container">
+            <Routes>
+              <Route path="/" element={<LandingPage />} />
+              <Route
+                path="/admin"
+                element={
+                  <KeycloakRoute role={ROLES.Admin}>
+                    <AdminPage />
+                  </KeycloakRoute>
+                }
+              />
+              <Route
+                path="/profile"
+                element={
+                  <KeycloakRoute role={(ROLES.Admin, ROLES.User)}>
+                    <ProfilePage />
+                  </KeycloakRoute>
+                }
+              />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </main>
         </BrowserRouter>
       </React.StrictMode>
     );

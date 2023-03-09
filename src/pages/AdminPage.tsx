@@ -8,7 +8,7 @@ const AdminPage = () => {
   return (
     //isLogin ? <Protected /> : <Public />;
     <div>
-      <p>Admin Page</p>
+      <h4>Admin Page</h4>
       <button onClick={() => toHomePage()}>Home page</button>
     </div>
   );

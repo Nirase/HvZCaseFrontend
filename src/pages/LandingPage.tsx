@@ -2,16 +2,17 @@ import Protected from "../components/Protected";
 import Public from "../components/Public";
 import keycloak from "../keycloak";
 
-function Home() {
-  //const isLogin = useAuth();
+const Home = () => {
+  //implement this in navbar
 
   return (
-    //isLogin ? <Protected /> : <Public />;
     <div>
+      <h1>Landing Page</h1>
       <section className="actions">
         {!keycloak.authenticated && <Public />}
         {keycloak.authenticated && <Protected />}
       </section>
+
       {keycloak.token && (
         <div>
           <h4>Token</h4>
@@ -20,6 +21,6 @@ function Home() {
       )}
     </div>
   );
-}
+};
 
 export default Home;
