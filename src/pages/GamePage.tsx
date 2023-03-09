@@ -1,6 +1,5 @@
 import Container from "@mui/material/Container";
 import { useLoadScript } from "@react-google-maps/api";
-import { useState } from "react";
 import BiteCode from "../components/gamePage/BiteCode";
 import BiteCodeEntry from "../components/gamePage/BiteCodeEntry";
 import GameRegistration from "../components/gamePage/GameRegistration";
