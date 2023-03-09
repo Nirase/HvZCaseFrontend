@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { getListOfGames } from "../api/apiCalls";
 import GameCard from "../components/landingPage/GameCard";
-import Protected from "../components/landingPage/Protected";
-import Public from "../components/landingPage/Public";
 import { Game } from "../interfaces/game";
 import keycloak from "../keycloak";
 
@@ -20,11 +18,6 @@ const Home = () => {
   return (
     <>
       <h1>Landing Page</h1>
-      <section className="actions">
-        {!keycloak.authenticated && <Public />}
-        {keycloak.authenticated && <Protected />}
-      </section>
-      <p>123</p>
       {games.map((game: Game) => {
         return (
           <div key={game.id}>
