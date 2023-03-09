@@ -1,22 +1,32 @@
-import Button from "@mui/material/Button";
+import { CardActions, Button, Card, CardContent } from "@mui/material";
 
-const SquadListItem = (squad: any) => {
-  // make calls for each member and then check there value of is_alive
+import Typography from "@mui/material/Typography";
 
-  const members = squad.squad.members;
+type Props = {
+  squad: any;
+};
+
+const SquadListItem = ({ squad }: Props) => {
+  const members = squad.members;
   const dead = members.filter((member: any) => !member.is_alive);
 
-  
-
   return (
-    <div>
-      <p>{squad.squad.name}</p>
-      <p>Total number of members: {squad.squad.members.length}</p>
-      <p>Deceased members: {dead.length}</p>
-      <Button variant="outlined" color="secondary">
-        Join
-      </Button>
-    </div>
+    <Card>
+      <CardContent>
+        <Typography variant="h5" component="div">
+          {squad.name}
+        </Typography>
+        <Typography variant="body2">Members: {squad.members.length}</Typography>
+        <Typography sx={{ mb: 1.5 }} color="text.secondary">
+          Deceased members: {dead.length}
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <Button size="small" variant="outlined" color="secondary">
+          Join
+        </Button>
+      </CardActions>
+    </Card>
   );
 };
 export default SquadListItem;

@@ -1,14 +1,16 @@
 import Container from "@mui/material/Container";
 import { useLoadScript } from "@react-google-maps/api";
 import { useEffect, useState } from "react";
-import { getListOfGames, getOneGame } from "../api/apiCalls";
+import { getOneGameWithDetails } from "../api/apiCalls";
 import BiteCode from "../components/gamePage/BiteCode";
 import BiteCodeEntry from "../components/gamePage/BiteCodeEntry";
 import GameRegistration from "../components/gamePage/GameRegistration";
 import Info from "../components/gamePage/Info";
 import Map from "../components/gamePage/Map";
+import PlayerList from "../components/gamePage/PlayerList";
 import SquadList from "../components/gamePage/SquadList";
 import { Game } from "../interfaces/game";
+import "../styles/gamepage.css";
 
 const libraries: (
   | "drawing"
@@ -28,14 +30,13 @@ const GamePage = () => {
 
   useEffect(() => {
     const fetchOneGame = async () => {
-      const data = await getOneGame(1);
+      const data = await getOneGameWithDetails(1);
       setGame(data);
     };
 
     fetchOneGame();
   }, []);
 
-  console.log(game);
   if (game) {
     return (
       <Container
@@ -53,10 +54,11 @@ const GamePage = () => {
           <BiteCode />
           <BiteCodeEntry />
         </div>
-        <div>
-          <SquadList />
-        </div>
         {!isLoaded ? <p>Loading map....</p> : <Map />}
+        <div className="lists">
+          <SquadList />
+          <PlayerList players={game.players} />
+        </div>
       </Container>
     );
   } else {

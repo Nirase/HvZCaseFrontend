@@ -19,16 +19,16 @@ const SquadList = () => {
   ];
 
   return (
-    <>
-      <p>Squads active</p>
+    <div>
+      <h3>Squads active</h3>
       {squads.map((squad) => {
         return (
-          <div key={squad.name}>
+          <div key={squad.name} style={{ marginBottom: "10px" }}>
             <SquadListItem squad={squad} />
           </div>
         );
       })}
-    </>
+    </div>
   );
 };
 export default SquadList;
