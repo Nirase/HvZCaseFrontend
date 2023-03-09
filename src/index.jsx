@@ -9,6 +9,8 @@ import { ROLES } from "./roles/roles";
 import AdminPage from "./pages/AdminPage";
 import LandingPage from "./pages/LandingPage";
 import ProfilePage from "./pages/ProfilePage";
+import Header from "./components/Header";
+import GamePage from "./pages/GamePage";
 
 // const root = ReactDOM.createRoot(
 //   document.getElementById("root") as HTMLElement
@@ -23,6 +25,7 @@ initialize()
     // If No Keycloak Error occurred - Display the App
     root.render(
       <React.StrictMode>
+        <Header />
         <BrowserRouter>
           <main className="container">
             <Routes>
@@ -40,6 +43,14 @@ initialize()
                 element={
                   <KeycloakRoute role={(ROLES.Admin, ROLES.User)}>
                     <ProfilePage />
+                  </KeycloakRoute>
+                }
+              />
+              <Route
+                path="/game"
+                element={
+                  <KeycloakRoute role={ROLES.User}>
+                    <GamePage />
                   </KeycloakRoute>
                 }
               />
