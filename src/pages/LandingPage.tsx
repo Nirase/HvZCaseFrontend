@@ -27,12 +27,6 @@ const Home = () => {
           </div>
         );
       })}
-      {keycloak.token && (
-        <div>
-          <h4>Token</h4>
-          <pre>{keycloak.token}</pre>
-        </div>
-      )}
     </>
   );
 };
