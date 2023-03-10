@@ -3,11 +3,19 @@ import { useCallback, useMemo, useRef, useState } from "react";
 import "../../styles/map.css";
 import Places from "./Places";
 
+import {
+  faSkullCrossbones,
+  faPoo,
+  faBiohazard,
+  faUsersRays,
+  faSnowflake,
+} from "@fortawesome/free-solid-svg-icons";
+
 type LatLngLiteral = google.maps.LatLngLiteral;
 type MapOptions = google.maps.MapOptions;
 
 const Map = () => {
-  const [office, setOffice] = useState<LatLngLiteral>();
+  const [mapCenter, setMapCenter] = useState<LatLngLiteral>();
   const mapRef = useRef<GoogleMap>();
   const center = useMemo<LatLngLiteral>(
     () => ({ lat: 55.790473, lng: 13.122525 }),
@@ -23,17 +31,70 @@ const Map = () => {
     []
   );
 
-  const gravestone =
-    "M64,12a37.89,37.89,0,0,0-25.3,9.65L39,22l4,12L26,59.5V99h76V50A38,38,0,0,0,64,12ZM50,49H60V39h8V49H78v8H68V76H60V57H50Z";
+  const scull = {
+    path: faSkullCrossbones.icon[4] as string,
+    fillColor: "gray",
+    strokeWeight: 1,
+    fillOpacity: 1,
+    scale: 0.05,
+    anchor: new google.maps.Point(
+      faSkullCrossbones.icon[0] / 2, // width
+      faSkullCrossbones.icon[1] // height
+    ),
+    strokeColor: "#ffffff",
+  };
 
-  const missons =
-    "M22.507,37.18c-1.821,0-3.207,0.455-4.159,1.365c-0.953,0.91-1.431,2.255-1.431,4.031    c0,1.716,0.488,3.046,1.462,3.986c0.974,0.943,2.349,1.414,4.128,1.414c1.736,0,3.091-0.482,4.065-1.444    c0.974-0.964,1.46-2.282,1.46-3.956c0-1.733-0.482-3.067-1.443-4C25.624,37.646,24.264,37.18,22.507,37.18z";
+  const missons = {
+    path: faPoo.icon[4] as string,
+    fillColor: "#6e231e",
+    strokeWeight: 1,
+    fillOpacity: 1,
+    scale: 0.05,
+    anchor: new google.maps.Point(
+      faPoo.icon[0] / 2, // width
+      faPoo.icon[1] // height
+    ),
+    strokeColor: "#ffffff",
+  };
 
-  const humanMisson = "";
+  const humanMisson = {
+    path: faSnowflake.icon[4] as string,
+    fillColor: "#ffffff",
+    strokeWeight: 0.5,
+    fillOpacity: 1,
+    scale: 0.05,
+    anchor: new google.maps.Point(
+      faSnowflake.icon[0] / 2, // width
+      faSnowflake.icon[1] // height
+    ),
+    strokeColor: "black",
+  };
 
-  const zombieMisson = "";
+  const zombieMisson = {
+    path: faBiohazard.icon[4] as string,
+    fillColor: "#c91804",
+    strokeWeight: 0.5,
+    fillOpacity: 1,
+    scale: 0.05,
+    anchor: new google.maps.Point(
+      faBiohazard.icon[0] / 2, // width
+      faBiohazard.icon[1] // height
+    ),
+    strokeColor: "black",
+  };
 
-  const checkIn = "";
+  const checkIn = {
+    path: faUsersRays.icon[4] as string,
+    fillColor: "#ffffff",
+    strokeWeight: 0.5,
+    fillOpacity: 1,
+    scale: 0.05,
+    anchor: new google.maps.Point(
+      faUsersRays.icon[0] / 2, // width
+      faUsersRays.icon[1] // height
+    ),
+    strokeColor: "black",
+  };
 
   const onLoad = useCallback((map: any) => (mapRef.current = map), []);
 
@@ -42,8 +103,8 @@ const Map = () => {
       <div className="mapInfo">
         <h2>info</h2>
         <Places
-          setOffice={(position: LatLngLiteral) => {
-            setOffice(position);
+          setMapCenter={(position: LatLngLiteral) => {
+            setMapCenter(position);
             mapRef.current?.panTo(position);
           }}
         />
@@ -54,20 +115,23 @@ const Map = () => {
           mapContainerClassName="map-container"
           options={options}
           onLoad={onLoad}
+          id="map"
         >
-          {office && (
-            <Marker
-              position={office}
-              icon={{
-                path: gravestone,
-                fillColor: "grey",
-                fillOpacity: 0.9,
-                scale: 0.3,
-                strokeColor: "black",
-                strokeWeight: 2,
-              }}
-            />
-          )}
+          {mapCenter && <Marker position={mapCenter} icon={checkIn} />}
+          <Marker
+            position={{ lat: 55.795811, lng: 13.116458 }}
+            icon={humanMisson}
+          />
+          <Marker
+            position={{ lat: 55.79633, lng: 13.115525 }}
+            icon={zombieMisson}
+          />
+          <Marker position={{ lat: 55.7956, lng: 13.113658 }} icon={checkIn} />
+          <Marker
+            position={{ lat: 55.795763, lng: 13.115728 }}
+            icon={missons}
+          />
+          <Marker position={{ lat: 55.796101, lng: 13.115021 }} icon={scull} />
         </GoogleMap>
       </div>
     </div>
