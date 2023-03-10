@@ -10,6 +10,10 @@ const SquadListItem = ({ squad }: Props) => {
   const members = squad.members;
   const dead = members.filter((member: any) => !member.is_alive);
 
+  const handleJoin = () => {
+    console.log(squad.name);
+  };
+
   return (
     <Card>
       <CardContent>
@@ -22,7 +26,12 @@ const SquadListItem = ({ squad }: Props) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" variant="outlined" color="secondary">
+        <Button
+          size="small"
+          variant="outlined"
+          color="secondary"
+          onClick={handleJoin}
+        >
           Join
         </Button>
       </CardActions>

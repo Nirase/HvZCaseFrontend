@@ -1,5 +1,5 @@
-import { GoogleMap, Marker } from "@react-google-maps/api";
-import { useCallback, useMemo, useRef, useState } from "react";
+import { Circle, GoogleMap, Marker } from "@react-google-maps/api";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import "../../styles/map.css";
 import Places from "./Places";
 
@@ -15,22 +15,40 @@ type LatLngLiteral = google.maps.LatLngLiteral;
 type MapOptions = google.maps.MapOptions;
 
 const Map = () => {
-  const [mapCenter, setMapCenter] = useState<LatLngLiteral>();
+  let bounds: google.maps.LatLngBounds;
   const mapRef = useRef<GoogleMap>();
   const center = useMemo<LatLngLiteral>(
     () => ({ lat: 55.790473, lng: 13.122525 }),
     []
   );
+  const [mapCenter, setMapCenter] = useState<LatLngLiteral>(center);
+
+  //restriction
+  const cirkel = new google.maps.Circle({
+    center: mapCenter,
+    radius: 1000,
+  });
+  const newBounds = cirkel.getBounds();
+  bounds = newBounds as google.maps.LatLngBounds;
+  console.log("bounds", newBounds);
+
   const options = useMemo<MapOptions>(
     () => ({
       zoom: 15,
       mapId: "a20415a885e17d09",
       disableDefaultUI: true,
       clickableIcons: false,
+      restriction: {
+        latLngBounds: bounds,
+        strictBounds: false,
+      },
     }),
-    []
+    [bounds]
   );
 
+  const onLoad = useCallback((map: any) => (mapRef.current = map), []);
+
+  // markers
   const scull = {
     path: faSkullCrossbones.icon[4] as string,
     fillColor: "gray",
@@ -96,8 +114,6 @@ const Map = () => {
     strokeColor: "black",
   };
 
-  const onLoad = useCallback((map: any) => (mapRef.current = map), []);
-
   return (
     <div className="mapContainer">
       <div className="mapInfo">
@@ -117,7 +133,14 @@ const Map = () => {
           onLoad={onLoad}
           id="map"
         >
-          {mapCenter && <Marker position={mapCenter} icon={checkIn} />}
+          {mapCenter && (
+            <Circle
+              center={mapCenter}
+              radius={1000}
+              options={{ fillColor: "" }}
+            />
+          )}
+
           <Marker
             position={{ lat: 55.795811, lng: 13.116458 }}
             icon={humanMisson}
