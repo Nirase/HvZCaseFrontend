@@ -15,22 +15,13 @@ type LatLngLiteral = google.maps.LatLngLiteral;
 type MapOptions = google.maps.MapOptions;
 
 const Map = () => {
-  let bounds: google.maps.LatLngBounds;
+  const [mapCenter, setMapCenter] = useState<LatLngLiteral>();
+
   const mapRef = useRef<GoogleMap>();
   const center = useMemo<LatLngLiteral>(
     () => ({ lat: 55.790473, lng: 13.122525 }),
     []
   );
-  const [mapCenter, setMapCenter] = useState<LatLngLiteral>(center);
-
-  //restriction
-  const cirkel = new google.maps.Circle({
-    center: mapCenter,
-    radius: 1000,
-  });
-  const newBounds = cirkel.getBounds();
-  bounds = newBounds as google.maps.LatLngBounds;
-  console.log("bounds", newBounds);
 
   const options = useMemo<MapOptions>(
     () => ({
@@ -38,12 +29,8 @@ const Map = () => {
       mapId: "a20415a885e17d09",
       disableDefaultUI: true,
       clickableIcons: false,
-      restriction: {
-        latLngBounds: bounds,
-        strictBounds: false,
-      },
     }),
-    [bounds]
+    []
   );
 
   const onLoad = useCallback((map: any) => (mapRef.current = map), []);
@@ -114,6 +101,17 @@ const Map = () => {
     strokeColor: "black",
   };
 
+  const circleOptions = {
+    strokeOpacity: 0.5,
+    strokeWeight: 2,
+    clickable: false,
+    draggable: false,
+    editable: false,
+    visible: true,
+    strokeColor: "#8BC34A",
+    fillColor: "#8BC34A",
+  };
+
   return (
     <div className="mapContainer">
       <div className="mapInfo">
@@ -134,27 +132,35 @@ const Map = () => {
           id="map"
         >
           {mapCenter && (
-            <Circle
-              center={mapCenter}
-              radius={1000}
-              options={{ fillColor: "" }}
-            />
+            <>
+              <Circle
+                center={mapCenter}
+                radius={1000}
+                options={circleOptions}
+              />
+              <Marker
+                position={mapCenter}
+                icon={humanMisson}
+                title="misson for humnas"
+              />
+              <Marker
+                position={{ lat: 55.79633, lng: 13.115525 }}
+                icon={zombieMisson}
+              />
+              <Marker
+                position={{ lat: 55.7956, lng: 13.113658 }}
+                icon={checkIn}
+              />
+              <Marker
+                position={{ lat: 55.795763, lng: 13.115728 }}
+                icon={missons}
+              />
+              <Marker
+                position={{ lat: 55.796101, lng: 13.115021 }}
+                icon={scull}
+              />
+            </>
           )}
-
-          <Marker
-            position={{ lat: 55.795811, lng: 13.116458 }}
-            icon={humanMisson}
-          />
-          <Marker
-            position={{ lat: 55.79633, lng: 13.115525 }}
-            icon={zombieMisson}
-          />
-          <Marker position={{ lat: 55.7956, lng: 13.113658 }} icon={checkIn} />
-          <Marker
-            position={{ lat: 55.795763, lng: 13.115728 }}
-            icon={missons}
-          />
-          <Marker position={{ lat: 55.796101, lng: 13.115021 }} icon={scull} />
         </GoogleMap>
       </div>
     </div>
