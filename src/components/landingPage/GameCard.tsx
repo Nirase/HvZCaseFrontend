@@ -14,6 +14,7 @@ type Props = {
 };
 
 const GameCard = ({ game }: Props) => {
+  const gameId = game.id;
   const name = game.name;
   const description = game.description;
   const state = game.gameState;
@@ -23,7 +24,7 @@ const GameCard = ({ game }: Props) => {
 
   const navigate = useNavigate();
   const toGame = () => {
-    navigate("/game");
+    navigate("/game/" + gameId);
   };
 
   return (
