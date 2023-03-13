@@ -10,7 +10,17 @@ const Info = ({ game }: Props) => {
       <h1>{game.name}</h1>
       <p>{game.description}</p>
       <p>Total players in game: {game.players.length}</p>
-      <p>Number of kills: {game.kills.length}</p>
+      <p>Number of Zombies: {game.kills.length + 1}</p>
+      <p>
+        Start date for the game:
+        <span style={{ fontWeight: "bold" }}> {game.startDate}</span> | the end
+        date for the game:{" "}
+        <span style={{ fontWeight: "bold" }}> {game.endDate}</span>
+      </p>
+      <p>
+        GameStatus:
+        <span style={{ fontWeight: "bold" }}> {game.gameState}</span>
+      </p>
       <h3>Rules</h3>
       <ul>
         <li>
@@ -21,6 +31,17 @@ const Info = ({ game }: Props) => {
           using Nerf weapons and clean, rolled-up socks which may be thrown to
           <span style={{ fontWeight: "bold" }}> stun</span> an unsuspecting
           zombie.
+        </li>
+        <li>
+          When tagged, human players are required to provide a unique, secret
+          bite code to the zombie. The bite codes should be randomly generated
+          and appropriate for manual text entry
+        </li>
+        <li>
+          Zombies that collect the bite code of a human must log their kill in
+          the system to turn the human player into a zombie. Optionally the
+          killer may specify GPS coordinates and a text description of their
+          kill to create a gravestone marker on the map.
         </li>
       </ul>
     </>

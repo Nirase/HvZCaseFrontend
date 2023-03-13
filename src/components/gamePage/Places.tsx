@@ -7,10 +7,10 @@ import Autocomplete from "@mui/material/Autocomplete";
 import { useEffect } from "react";
 
 type Props = {
-  setOffice: (position: google.maps.LatLngLiteral) => void;
+  setMapCenter: (position: google.maps.LatLngLiteral) => void;
 };
 
-const Places = ({ setOffice }: Props) => {
+const Places = ({ setMapCenter }: Props) => {
   const {
     ready,
     value,
@@ -26,7 +26,7 @@ const Places = ({ setOffice }: Props) => {
     const result = await getGeocode({ address: val });
     const { lat, lng } = await getLatLng(result[0]);
 
-    setOffice({ lat, lng });
+    setMapCenter({ lat, lng });
   };
 
   useEffect(() => {
