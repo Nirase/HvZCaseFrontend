@@ -1,6 +1,7 @@
 import Container from "@mui/material/Container";
 import { useLoadScript } from "@react-google-maps/api";
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { getOneGameWithDetails } from "../api/apiCalls";
 import BiteCode from "../components/gamePage/BiteCode";
 import BiteCodeEntry from "../components/gamePage/BiteCodeEntry";
@@ -26,11 +27,23 @@ const GamePage = () => {
     libraries: libraries,
   });
 
+  const location = useLocation();
+  const [pathName, setPathName] = useState("");
+  useEffect(() => {
+    if (location) {
+      let tmp = location.pathname.slice(
+        location.pathname.lastIndexOf("/") + 1,
+        location.pathname.length
+      );
+      setPathName(tmp);
+    }
+  }, [location]);
+
   const [game, setGame] = useState<Game>();
 
   useEffect(() => {
     const fetchOneGame = async () => {
-      const data = await getOneGameWithDetails(1);
+      const data = await getOneGameWithDetails(parseInt(pathName));
       setGame(data);
     };
 
