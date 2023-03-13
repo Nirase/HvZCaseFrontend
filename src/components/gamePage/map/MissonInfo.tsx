@@ -38,19 +38,24 @@ const MissonInfo = ({ info, clearInfo }: Props) => {
             className="cross"
           />
         </div>
-
-        <h4>{info.name}</h4>
-        {showStartDate && (
-          <p>
-            Start Date:
-            <span style={{ fontWeight: "bold" }}> {info.startDate}</span>
-          </p>
-        )}
-        <p>
-          End Date:
-          <span style={{ fontWeight: "bold" }}> {info.endDate}</span>
-        </p>
-        <p>{info.description}</p>
+        <div className="infoBody">
+          <div className="infoBodyLeft">
+            <h4 style={{ marginBottom: 0 }}>{info.name}</h4>
+            {showStartDate && (
+              <p>
+                Start Date:
+                <span style={{ fontWeight: "bold" }}> {info.startDate}</span>
+              </p>
+            )}
+            <p>
+              End Date:
+              <span style={{ fontWeight: "bold" }}> {info.endDate}</span>
+            </p>
+          </div>
+          <div>
+            <p>{info.description}</p>
+          </div>
+        </div>
       </>
     );
   }

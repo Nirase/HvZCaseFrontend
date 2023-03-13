@@ -1,6 +1,7 @@
 .lists {
   display: flex;
   justify-content: space-around;
+  flex-wrap: wrap;
 }
 
 .infoContainer {
@@ -8,6 +9,7 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 10px;
+  flex-wrap: wrap;
 }
 
 .rules {

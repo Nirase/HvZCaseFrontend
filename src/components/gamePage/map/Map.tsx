@@ -58,22 +58,24 @@ const Map = ({ game }: Props) => {
 
   return (
     <div className="mapContainer">
-      <Paper className="mapInfo">
-        {missoinInfo === undefined && killInfo === undefined ? (
-          <h3>Map info</h3>
-        ) : (
-          ""
-        )}
+      <Paper className="mapInfoContainer">
+        <div className="mapInfo">
+          {missoinInfo === undefined && killInfo === undefined ? (
+            <h3>Map info</h3>
+          ) : (
+            ""
+          )}
 
-        <MissonInfo
-          info={missoinInfo}
-          clearInfo={(info: undefined) => setMissonInfo(info)}
-        />
-        <KillInfo
-          kill={killInfo}
-          players={game.players}
-          clearKillInfo={(info: undefined) => setKillInfo(info)}
-        />
+          <MissonInfo
+            info={missoinInfo}
+            clearInfo={(info: undefined) => setMissonInfo(info)}
+          />
+          <KillInfo
+            kill={killInfo}
+            players={game.players}
+            clearKillInfo={(info: undefined) => setKillInfo(info)}
+          />
+        </div>
       </Paper>
 
       <div className="map">
