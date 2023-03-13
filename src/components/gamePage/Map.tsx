@@ -10,13 +10,15 @@ import {
   faUsersRays,
   faSnowflake,
 } from "@fortawesome/free-solid-svg-icons";
+import MissionMarker from "./MissonMarker";
+import { Info, Mission } from "../../interfaces/marker";
 
 type LatLngLiteral = google.maps.LatLngLiteral;
 type MapOptions = google.maps.MapOptions;
 
 const Map = () => {
   const [mapCenter, setMapCenter] = useState<LatLngLiteral>();
-
+  const [missoinInfo, setMissonInfo] = useState<Info>();
   const mapRef = useRef<GoogleMap>();
   const center = useMemo<LatLngLiteral>(
     () => ({ lat: 55.790473, lng: 13.122525 }),
@@ -49,7 +51,7 @@ const Map = () => {
     strokeColor: "#ffffff",
   };
 
-  const missons = {
+  const missions = {
     path: faPoo.icon[4] as string,
     fillColor: "#6e231e",
     strokeWeight: 1,
@@ -62,7 +64,7 @@ const Map = () => {
     strokeColor: "#ffffff",
   };
 
-  const humanMisson = {
+  const humanMission = {
     path: faSnowflake.icon[4] as string,
     fillColor: "#ffffff",
     strokeWeight: 0.5,
@@ -75,7 +77,7 @@ const Map = () => {
     strokeColor: "black",
   };
 
-  const zombieMisson = {
+  const zombieMission = {
     path: faBiohazard.icon[4] as string,
     fillColor: "#c91804",
     strokeWeight: 0.5,
@@ -112,6 +114,40 @@ const Map = () => {
     fillColor: "#8BC34A",
   };
 
+  //mockdata
+  const mission = [
+    {
+      id: 3,
+      name: "hej",
+      description: "hejdå",
+      visibleToHumans: false,
+      visibleToZombies: true,
+      startDate: "2023-03-9",
+      endDate: "2023-03-11",
+      location: "nordanväg 48B, Kävlinge",
+    },
+    {
+      id: 4,
+      name: "hej",
+      description: "hejdå2",
+      visibleToHumans: true,
+      visibleToZombies: false,
+      startDate: "2023-03-9",
+      endDate: "2023-03-11",
+      location: "nordanväg 47B, Kävlinge",
+    },
+    {
+      id: 5,
+      name: "hej",
+      description: "hejdå3",
+      visibleToHumans: true,
+      visibleToZombies: true,
+      startDate: "2023-03-9",
+      endDate: "2023-03-11",
+      location: "nordanväg 48C, Kävlinge",
+    },
+  ];
+
   return (
     <div className="mapContainer">
       <div className="mapInfo">
@@ -122,6 +158,8 @@ const Map = () => {
             mapRef.current?.panTo(position);
           }}
         />
+        <h3>{missoinInfo?.name}</h3>
+        <p>{missoinInfo?.description}</p>
       </div>
       <div className="map">
         <GoogleMap
@@ -138,14 +176,24 @@ const Map = () => {
                 radius={1000}
                 options={circleOptions}
               />
+              {mission.map((marker) => {
+                return (
+                  <div key={marker.id}>
+                    <MissionMarker
+                      missionmarker={marker}
+                      info={(info: Info) => setMissonInfo(info)}
+                    />
+                  </div>
+                );
+              })}
               <Marker
                 position={mapCenter}
-                icon={humanMisson}
+                icon={humanMission}
                 title="misson for humnas"
               />
               <Marker
                 position={{ lat: 55.79633, lng: 13.115525 }}
-                icon={zombieMisson}
+                icon={zombieMission}
               />
               <Marker
                 position={{ lat: 55.7956, lng: 13.113658 }}
@@ -153,7 +201,7 @@ const Map = () => {
               />
               <Marker
                 position={{ lat: 55.795763, lng: 13.115728 }}
-                icon={missons}
+                icon={missions}
               />
               <Marker
                 position={{ lat: 55.796101, lng: 13.115021 }}
