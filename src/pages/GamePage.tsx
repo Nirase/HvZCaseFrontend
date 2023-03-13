@@ -1,7 +1,7 @@
 import Container from "@mui/material/Container";
 import { useLoadScript } from "@react-google-maps/api";
 import { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { getOneGameWithDetails } from "../api/apiCalls";
 import BiteCode from "../components/gamePage/BiteCode";
 import BiteCodeEntry from "../components/gamePage/BiteCodeEntry";
@@ -58,7 +58,7 @@ const GamePage = () => {
           <BiteCode />
           <BiteCodeEntry />
         </div>
-        {!isLoaded ? <p>Loading map....</p> : <Map />}
+        {!isLoaded ? <p>Loading map....</p> : <Map game={game} />}
         <div className="lists">
           <SquadList />
           <PlayerList players={game.players} />

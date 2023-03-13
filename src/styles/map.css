@@ -1,6 +1,6 @@
 .mapContainer {
   display: flex;
-  height: 30vh;
+  height: 50vh;
   margin-bottom: 30px;
   margin-top: 30px;
   padding-left: 30px;
@@ -10,13 +10,25 @@
 .mapInfo {
   width: 20%;
   padding: 1rem;
-  background: #db66d5;
-  color: #fff;
+}
+
+.css-1ps6pg7-MuiPaper-root {
+  background-color: #db66d5 !important;
+}
+
+.infoHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cross:hover {
+  cursor: pointer;
 }
 
 .map {
   width: 80%;
-  height: 30vh;
+  height: 50vh;
 }
 
 .map-container {

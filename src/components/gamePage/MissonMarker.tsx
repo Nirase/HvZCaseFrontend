@@ -14,10 +14,10 @@ type LatLngLiteral = google.maps.LatLngLiteral;
 
 type Props = {
   missionmarker: Mission;
-  info: (missonInfo: Info) => void;
+  setInfo: (missonInfo: Info) => void;
 };
 
-const MissionMarker = ({ missionmarker, info }: Props) => {
+const MissionMarker = ({ missionmarker, setInfo }: Props) => {
   // markers
   const scull = {
     path: faSkullCrossbones.icon[4] as string,
@@ -84,15 +84,24 @@ const MissionMarker = ({ missionmarker, info }: Props) => {
     strokeColor: "black",
   };
 
-  // funktions
-  const todaysDate = new Date().toLocaleString().split(",", 1);
+  // functionality
+  const todaysDateString = new Date().toLocaleString().split(",", 1)[0];
+  const todaysDate = new Date(todaysDateString);
+  const endDate = new Date(missionmarker.endDate);
 
-  const [icon, setIcon] = useState();
+  const [icon, setIcon] = useState<google.maps.Symbol>();
   const [position, setPosition] = useState<LatLngLiteral>();
   const description = missionmarker.description;
 
   const handelSelect = () => {
-    console.log("hej");
+    const info = {
+      startDate: missionmarker.startDate,
+      endDate: missionmarker.endDate,
+      description,
+      name: missionmarker.name,
+    };
+
+    setInfo(info);
   };
 
   useEffect(() => {
@@ -102,20 +111,23 @@ const MissionMarker = ({ missionmarker, info }: Props) => {
       setPosition({ lat, lng });
     };
     getPosition();
+    //set marker symbol
+    if (missionmarker.visibleToHumans && missionmarker.visibleToZombies) {
+      setIcon(missions);
+    } else if (missionmarker.visibleToHumans) {
+      setIcon(humanMission);
+    } else if (missionmarker.visibleToZombies) {
+      setIcon(zombieMission);
+    }
   }, []);
 
+  //if (todaysDate <= endDate) {
   if (position) {
-    return (
-      <Marker
-        position={position}
-        icon={icon}
-        title="misson for humnas"
-        onClick={handelSelect}
-      />
-    );
+    return <Marker position={position} icon={icon} onClick={handelSelect} />;
   } else {
     return null;
   }
+  // } else return null;
 };
 
 export default MissionMarker;
