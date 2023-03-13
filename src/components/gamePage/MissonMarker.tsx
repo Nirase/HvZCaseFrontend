@@ -17,73 +17,74 @@ type Props = {
   info: (missonInfo: Info) => void;
 };
 
-// markers
-const scull = {
-  path: faSkullCrossbones.icon[4] as string,
-  fillColor: "gray",
-  strokeWeight: 1,
-  fillOpacity: 1,
-  scale: 0.05,
-  anchor: new google.maps.Point(
-    faSkullCrossbones.icon[0] / 2, // width
-    faSkullCrossbones.icon[1] // height
-  ),
-  strokeColor: "#ffffff",
-};
-
-const missions = {
-  path: faPoo.icon[4] as string,
-  fillColor: "#6e231e",
-  strokeWeight: 1,
-  fillOpacity: 1,
-  scale: 0.05,
-  anchor: new google.maps.Point(
-    faPoo.icon[0] / 2, // width
-    faPoo.icon[1] // height
-  ),
-  strokeColor: "#ffffff",
-};
-
-const humanMission = {
-  path: faSnowflake.icon[4] as string,
-  fillColor: "#ffffff",
-  strokeWeight: 0.5,
-  fillOpacity: 1,
-  scale: 0.05,
-  anchor: new google.maps.Point(
-    faSnowflake.icon[0] / 2, // width
-    faSnowflake.icon[1] // height
-  ),
-  strokeColor: "black",
-};
-
-const zombieMission = {
-  path: faBiohazard.icon[4] as string,
-  fillColor: "#c91804",
-  strokeWeight: 0.5,
-  fillOpacity: 1,
-  scale: 0.05,
-  anchor: new google.maps.Point(
-    faBiohazard.icon[0] / 2, // width
-    faBiohazard.icon[1] // height
-  ),
-  strokeColor: "black",
-};
-
-const checkIn = {
-  path: faUsersRays.icon[4] as string,
-  fillColor: "#ffffff",
-  strokeWeight: 0.5,
-  fillOpacity: 1,
-  scale: 0.05,
-  anchor: new google.maps.Point(
-    faUsersRays.icon[0] / 2, // width
-    faUsersRays.icon[1] // height
-  ),
-  strokeColor: "black",
-};
-
 const MissionMarker = ({ missionmarker, info }: Props) => {
+  // markers
+  const scull = {
+    path: faSkullCrossbones.icon[4] as string,
+    fillColor: "gray",
+    strokeWeight: 1,
+    fillOpacity: 1,
+    scale: 0.05,
+    anchor: new google.maps.Point(
+      faSkullCrossbones.icon[0] / 2, // width
+      faSkullCrossbones.icon[1] // height
+    ),
+    strokeColor: "#ffffff",
+  };
+
+  const missions = {
+    path: faPoo.icon[4] as string,
+    fillColor: "#6e231e",
+    strokeWeight: 1,
+    fillOpacity: 1,
+    scale: 0.05,
+    anchor: new google.maps.Point(
+      faPoo.icon[0] / 2, // width
+      faPoo.icon[1] // height
+    ),
+    strokeColor: "#ffffff",
+  };
+
+  const humanMission = {
+    path: faSnowflake.icon[4] as string,
+    fillColor: "#ffffff",
+    strokeWeight: 0.5,
+    fillOpacity: 1,
+    scale: 0.05,
+    anchor: new google.maps.Point(
+      faSnowflake.icon[0] / 2, // width
+      faSnowflake.icon[1] // height
+    ),
+    strokeColor: "black",
+  };
+
+  const zombieMission = {
+    path: faBiohazard.icon[4] as string,
+    fillColor: "#c91804",
+    strokeWeight: 0.5,
+    fillOpacity: 1,
+    scale: 0.05,
+    anchor: new google.maps.Point(
+      faBiohazard.icon[0] / 2, // width
+      faBiohazard.icon[1] // height
+    ),
+    strokeColor: "black",
+  };
+
+  const checkIn = {
+    path: faUsersRays.icon[4] as string,
+    fillColor: "#ffffff",
+    strokeWeight: 0.5,
+    fillOpacity: 1,
+    scale: 0.05,
+    anchor: new google.maps.Point(
+      faUsersRays.icon[0] / 2, // width
+      faUsersRays.icon[1] // height
+    ),
+    strokeColor: "black",
+  };
+
+  // funktions
   const todaysDate = new Date().toLocaleString().split(",", 1);
 
   const [icon, setIcon] = useState();
