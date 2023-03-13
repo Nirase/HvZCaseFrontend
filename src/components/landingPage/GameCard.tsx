@@ -48,7 +48,7 @@ const GameCard = ({ game }: Props) => {
               color="text.primary"
             >
               {" "}
-              <b>Player: </b>
+              <b>Players: </b>
               {playerAmount}
             </Typography>
           </div>
