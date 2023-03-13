@@ -25,13 +25,13 @@ initialize()
     // If No Keycloak Error occurred - Display the App
     root.render(
       <React.StrictMode>
-        <Header />
         <BrowserRouter>
+          <Header />
           <main className="container">
             <Routes>
               <Route path="/" element={<LandingPage />} />
               <Route
-                path="/admin"
+                path="/admin/2"
                 element={
                   <KeycloakRoute role={ROLES.Admin}>
                     <AdminPage />
@@ -47,7 +47,7 @@ initialize()
                 }
               />
               <Route
-                path="/game"
+                path="/game/*"
                 element={
                   <KeycloakRoute role={ROLES.User}>
                     <GamePage />
