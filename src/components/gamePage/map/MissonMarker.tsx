@@ -8,7 +8,7 @@ import {
 import { Marker } from "@react-google-maps/api";
 import { useEffect, useState } from "react";
 import { getGeocode, getLatLng } from "use-places-autocomplete";
-import { Info, Mission } from "../../interfaces/marker";
+import { Info, Mission } from "../../../interfaces/marker";
 
 type LatLngLiteral = google.maps.LatLngLiteral;
 
@@ -127,7 +127,7 @@ const MissionMarker = ({ missionmarker, setInfo }: Props) => {
   } else {
     return null;
   }
-  // } else return null;
+  //} else return null;
 };
 
 export default MissionMarker;

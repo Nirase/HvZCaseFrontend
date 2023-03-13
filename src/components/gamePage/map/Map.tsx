@@ -1,19 +1,15 @@
-import { Circle, GoogleMap, Marker } from "@react-google-maps/api";
+import { Circle, GoogleMap } from "@react-google-maps/api";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import "../../styles/map.css";
+import "../../../styles/map.css";
 
-import {
-  faSkullCrossbones,
-  faPoo,
-  faBiohazard,
-  faUsersRays,
-  faSnowflake,
-} from "@fortawesome/free-solid-svg-icons";
 import MissionMarker from "./MissonMarker";
-import { Info, Mission } from "../../interfaces/marker";
-import { Game } from "../../interfaces/game";
+import { Info, Kill, Mission } from "../../../interfaces/marker";
+import { Game } from "../../../interfaces/game";
 import { getGeocode, getLatLng } from "use-places-autocomplete";
 import MissonInfo from "./MissonInfo";
+import KillMarker from "./KillMarker";
+import { Paper } from "@mui/material";
+import KillInfo from "./KillInfo";
 
 type LatLngLiteral = google.maps.LatLngLiteral;
 type MapOptions = google.maps.MapOptions;
@@ -25,6 +21,8 @@ type Props = {
 const Map = ({ game }: Props) => {
   const [mapCenter, setMapCenter] = useState<LatLngLiteral>();
   const [missoinInfo, setMissonInfo] = useState<Info>();
+  const [killInfo, setKillInfo] = useState<Kill>();
+
   const mapRef = useRef<GoogleMap>();
 
   const options = useMemo<MapOptions>(
@@ -60,10 +58,23 @@ const Map = ({ game }: Props) => {
 
   return (
     <div className="mapContainer">
-      <MissonInfo
-        info={missoinInfo}
-        clearInfo={(info: undefined) => setMissonInfo(info)}
-      />
+      <Paper className="mapInfo">
+        {missoinInfo === undefined && killInfo === undefined ? (
+          <h3>Map info</h3>
+        ) : (
+          ""
+        )}
+
+        <MissonInfo
+          info={missoinInfo}
+          clearInfo={(info: undefined) => setMissonInfo(info)}
+        />
+        <KillInfo
+          kill={killInfo}
+          players={game.players}
+          clearKillInfo={(info: undefined) => setKillInfo(info)}
+        />
+      </Paper>
 
       <div className="map">
         <GoogleMap
@@ -85,7 +96,23 @@ const Map = ({ game }: Props) => {
                   <div key={marker.id}>
                     <MissionMarker
                       missionmarker={marker}
-                      setInfo={(info: Info) => setMissonInfo(info)}
+                      setInfo={(info: Info) => {
+                        setMissonInfo(info);
+                        setKillInfo(undefined);
+                      }}
+                    />
+                  </div>
+                );
+              })}
+              {game.kills.map((kill: Kill) => {
+                return (
+                  <div key={kill.id}>
+                    <KillMarker
+                      kill={kill}
+                      setKillInfo={(info: Kill) => {
+                        setKillInfo(info);
+                        setMissonInfo(undefined);
+                      }}
                     />
                   </div>
                 );

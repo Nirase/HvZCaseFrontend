@@ -1,6 +1,5 @@
-import { Paper } from "@mui/material";
-import { Info } from "../../interfaces/marker";
-import "../../styles/map.css";
+import { Info } from "../../../interfaces/marker";
+import "../../../styles/map.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
@@ -27,15 +26,10 @@ const MissonInfo = ({ info, clearInfo }: Props) => {
   };
 
   if (info === undefined) {
-    return (
-      <Paper className="mapInfo">
-        <h3>Mission Info</h3>
-        <p>No mission chosen</p>
-      </Paper>
-    );
+    return null;
   } else {
     return (
-      <Paper className="mapInfo">
+      <>
         <div className="infoHeader">
           <h3>Mission Info</h3>
           <FontAwesomeIcon
@@ -57,7 +51,7 @@ const MissonInfo = ({ info, clearInfo }: Props) => {
           <span style={{ fontWeight: "bold" }}> {info.endDate}</span>
         </p>
         <p>{info.description}</p>
-      </Paper>
+      </>
     );
   }
 };

@@ -7,7 +7,7 @@ import BiteCode from "../components/gamePage/BiteCode";
 import BiteCodeEntry from "../components/gamePage/BiteCodeEntry";
 import GameRegistration from "../components/gamePage/GameRegistration";
 import Info from "../components/gamePage/Info";
-import Map from "../components/gamePage/Map";
+import Map from "../components/gamePage/map/Map";
 import PlayerList from "../components/gamePage/PlayerList";
 import SquadList from "../components/gamePage/SquadList";
 import { Game } from "../interfaces/game";
@@ -54,7 +54,7 @@ const GamePage = () => {
       >
         <Info game={game} />
         <GameRegistration game={game} />
-        <div>
+        <div className="biteCode">
           <BiteCode />
           <BiteCodeEntry />
         </div>

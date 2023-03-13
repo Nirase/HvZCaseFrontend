@@ -11,7 +11,6 @@ const Home = () => {
   useEffect(() => {
     const fetchGames = async () => {
       const data = await getListOfGames();
-      console.log(data);
       setGames(data);
     };
     fetchGames();

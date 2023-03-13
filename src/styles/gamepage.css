@@ -2,3 +2,20 @@
   display: flex;
   justify-content: space-around;
 }
+
+.infoContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.rules {
+  width: 60%;
+}
+
+.biteCode {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 20px;
+}
