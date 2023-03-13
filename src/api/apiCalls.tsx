@@ -1,7 +1,7 @@
 import { getApiData } from "./openApi";
 
 const getListOfGames = async () => {
-  const res = await getApiData("api/v1/game");
+  const res = await getApiData("game");
 
   if (!res) {
     return undefined;
@@ -11,7 +11,7 @@ const getListOfGames = async () => {
 };
 
 const getListOfGAmesWithDetails = async () => {
-  const res = await getApiData("api/v1/game/withdetails");
+  const res = await getApiData("game/withdetails");
 
   if (!res) {
     return undefined;
@@ -21,7 +21,7 @@ const getListOfGAmesWithDetails = async () => {
 };
 
 const getOneGame = async (id: number) => {
-  const res = await getApiData(`api/v1/game/${id}`);
+  const res = await getApiData(`game/${id}`);
 
   if (!res) {
     return undefined;
@@ -31,7 +31,7 @@ const getOneGame = async (id: number) => {
 };
 
 const getOneGameWithDetails = async (id: number) => {
-  const res = await getApiData(`api/v1/game/${id}/withdetails`);
+  const res = await getApiData(`game/${id}/withdetails`);
 
   if (!res) {
     return undefined;
