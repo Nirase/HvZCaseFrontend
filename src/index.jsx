@@ -31,7 +31,7 @@ initialize()
             <Routes>
               <Route path="/" element={<LandingPage />} />
               <Route
-                path="/admin/2"
+                path="/admin"
                 element={
                   <KeycloakRoute role={ROLES.Admin}>
                     <AdminPage />

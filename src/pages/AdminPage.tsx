@@ -1,24 +1,36 @@
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import Typography from "@mui/material/Typography";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { getListOfGames } from "../api/apiCalls";
+import AdminGameCard from "../components/adminPage/AdminGameCard";
+import { Game } from "../interfaces/game";
 
 const AdminPage = () => {
-  const location = useLocation();
-  const [pathName, setPathName] = useState("");
-
+  const [games, setGames] = useState([]);
+  //implement this in navbar
   useEffect(() => {
-    if (location) {
-      let tmp = location.pathname.slice(
-        location.pathname.lastIndexOf("/") + 1,
-        location.pathname.length
-      );
-      setPathName(tmp);
-    }
-  }, [location]);
+    const fetchGames = async () => {
+      const data = await getListOfGames();
+      setGames(data);
+    };
+    fetchGames();
+  }, []);
 
   return (
     //isLogin ? <Protected /> : <Public />;
     <div>
-      <h4>Admin Page {pathName}</h4>
+      <h4>Admin Page </h4>
+      {games.map((game: Game) => {
+        return (
+          <div key={game.id}>
+            <AdminGameCard game={game} />
+          </div>
+        );
+      })}
     </div>
   );
 };
