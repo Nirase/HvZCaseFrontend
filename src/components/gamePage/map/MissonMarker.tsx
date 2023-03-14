@@ -19,19 +19,6 @@ type Props = {
 
 const MissionMarker = ({ missionmarker, setInfo }: Props) => {
   // markers
-  const scull = {
-    path: faSkullCrossbones.icon[4] as string,
-    fillColor: "gray",
-    strokeWeight: 1,
-    fillOpacity: 1,
-    scale: 0.05,
-    anchor: new google.maps.Point(
-      faSkullCrossbones.icon[0] / 2, // width
-      faSkullCrossbones.icon[1] // height
-    ),
-    strokeColor: "#ffffff",
-  };
-
   const missions = {
     path: faPoo.icon[4] as string,
     fillColor: "#6e231e",

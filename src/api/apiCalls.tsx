@@ -1,4 +1,4 @@
-import { getApiData } from "./openApi";
+import { getApiData } from "./api";
 
 const getListOfGames = async () => {
   const res = await getApiData("game");
