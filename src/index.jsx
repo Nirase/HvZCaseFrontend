@@ -47,7 +47,7 @@ initialize()
                 }
               />
               <Route
-                path="/game/*"
+                path="/game/:gameId"
                 element={
                   <KeycloakRoute role={ROLES.User}>
                     <GamePage />

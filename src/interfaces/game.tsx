@@ -5,6 +5,9 @@ export interface Game {
   startDate: string;
   endDate: string;
   gameState?: "Registration" | "In progress" | "Completed";
+  location: string;
+  radius: number;
   players: [];
   kills: [];
+  missions: [];
 }

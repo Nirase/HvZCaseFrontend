@@ -11,3 +11,11 @@ export interface Mission extends Info {
   visibleToZombies: boolean;
   location: string;
 }
+
+export interface Kill {
+  id: number;
+  timeOfDeath: string;
+  victimId: number;
+  location: string;
+  description: string;
+}
