@@ -35,17 +35,12 @@ const AdminGCPlayer = (game: Props) => {
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newInput = event.target.value;
     setPlayerId(newInput);
-    console.log(playerID);
   };
 
   const fetchOnePlayerFromGame = async () => {
-    console.log("fp...");
     if (playerID != null) {
-      console.log("loading...");
-      console.log("pID:", playerID);
       const data = await getOnePlayerFromGame(+game.game.id, +playerID);
       setPlayer(data);
-      console.log(data + " p" + player);
     }
   };
 
