@@ -11,6 +11,7 @@ import { Game } from "../../interfaces/game";
 import PlayerListDetailed from "./PlayerListDetailed";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Player } from "../../interfaces/player";
+import PlayerListItemDetailed from "./PlayerListItemDetailed";
 
 type Props = {
   game: Game;
@@ -19,8 +20,7 @@ type Props = {
 const AdminGCPlayer = (game: Props) => {
   const [players, setPlayers] = useState([]);
   const [player, setPlayer] = useState<Player>();
-  const [playerID, setPlayerId] = useState<number>();
-  var newInput;
+  const [playerID, setPlayerId] = useState("");
   useEffect(() => {
     if (game) {
       const fetchPlayersFromGame = async () => {
@@ -32,18 +32,27 @@ const AdminGCPlayer = (game: Props) => {
     }
   }, []);
 
-  //NaN???
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    newInput = event.target.value;
+    const newInput = event.target.value;
+    setPlayerId(newInput);
+    console.log(playerID);
   };
 
   const fetchOnePlayerFromGame = async () => {
-    setPlayerId(parseInt(newInput.toString));
-    if (playerID) {
-      const data = await getOnePlayerFromGame(+game.game.id, playerID);
+    console.log("fp...");
+    if (playerID != null) {
+      console.log("loading...");
+      console.log("pID:", playerID);
+      const data = await getOnePlayerFromGame(+game.game.id, +playerID);
       setPlayer(data);
+      console.log(data + " p" + player);
     }
   };
+
+  let findPlayerCard;
+  if (player != null) {
+    findPlayerCard = <PlayerListItemDetailed player={player} />;
+  }
 
   if (players) {
     return (
@@ -67,7 +76,6 @@ const AdminGCPlayer = (game: Props) => {
             label="Id"
             onChange={handleInputChange}
             variant="standard"
-            value={playerID}
           />
           <br></br>
           <Button
@@ -77,6 +85,7 @@ const AdminGCPlayer = (game: Props) => {
           >
             Get player
           </Button>
+          <div>{findPlayerCard}</div>
         </div>
         <hr style={{ marginLeft: -20, marginRight: -20, marginTop: 20 }}></hr>
       </AccordionDetails>
