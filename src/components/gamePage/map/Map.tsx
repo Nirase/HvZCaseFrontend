@@ -17,7 +17,7 @@ type MapOptions = google.maps.MapOptions;
 
 type Props = {
   game: Game;
-  player: Player;
+  player: Player | undefined;
 };
 
 const Map = ({ game, player }: Props) => {
@@ -95,23 +95,24 @@ const Map = ({ game, player }: Props) => {
                 radius={game.radius}
                 options={circleOptions}
               />
-              {game.missions.map((marker: Mission) => {
-                return (
-                  <div key={marker.id}>
-                    <MissionMarker
-                      missionmarker={marker}
-                      setInfo={(info: Info) => {
-                        setMissonInfo(info);
-                        setKillInfo(undefined);
-                      }}
-                      isHuman={player.isHuman}
-                    />
-                  </div>
-                );
-              })}
+              {player &&
+                game.missions.map((marker: Mission) => {
+                  return (
+                    <div key={marker.id}>
+                      <MissionMarker
+                        missionmarker={marker}
+                        setInfo={(info: Info) => {
+                          setMissonInfo(info);
+                          setKillInfo(undefined);
+                        }}
+                        isHuman={player.isHuman}
+                      />
+                    </div>
+                  );
+                })}
               {game.kills.map((kill: Kill) => {
                 return (
-                  <div key={kill.id}>
+                  <div key={kill.victimId}>
                     <KillMarker
                       kill={kill}
                       setKillInfo={(info: Kill) => {
