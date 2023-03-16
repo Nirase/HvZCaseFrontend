@@ -1,5 +1,7 @@
 export interface User {
-  fist_name: string;
-  last_name: string;
-  Id: number;
+  id: number;
+  keycloakId: string;
+  firstName: string;
+  lastName: string;
+  players: [];
 }

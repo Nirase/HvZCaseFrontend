@@ -1,5 +1,4 @@
 import {
-  faSkullCrossbones,
   faPoo,
   faBiohazard,
   faUsersRays,
@@ -15,9 +14,10 @@ type LatLngLiteral = google.maps.LatLngLiteral;
 type Props = {
   missionmarker: Mission;
   setInfo: (missonInfo: Info) => void;
+  isHuman: boolean;
 };
 
-const MissionMarker = ({ missionmarker, setInfo }: Props) => {
+const MissionMarker = ({ missionmarker, setInfo, isHuman }: Props) => {
   // markers
   const missions = {
     path: faPoo.icon[4] as string,
@@ -76,7 +76,6 @@ const MissionMarker = ({ missionmarker, setInfo }: Props) => {
   const todaysDate = new Date(todaysDateString);
   const endDate = new Date(missionmarker.endDate);
 
-  const [icon, setIcon] = useState<google.maps.Symbol>();
   const [position, setPosition] = useState<LatLngLiteral>();
   const description = missionmarker.description;
 
@@ -98,21 +97,44 @@ const MissionMarker = ({ missionmarker, setInfo }: Props) => {
       setPosition({ lat, lng });
     };
     getPosition();
-    //set marker symbol
-    if (missionmarker.visibleToHumans && missionmarker.visibleToZombies) {
-      setIcon(missions);
-    } else if (missionmarker.visibleToHumans) {
-      setIcon(humanMission);
-    } else if (missionmarker.visibleToZombies) {
-      setIcon(zombieMission);
-    }
   }, []);
-
   //if (todaysDate <= endDate) {
-  if (position) {
-    return <Marker position={position} icon={icon} onClick={handelSelect} />;
+  if (isHuman && missionmarker.visibleToHumans) {
+    if (position) {
+      if (missionmarker.visibleToHumans && missionmarker.visibleToZombies) {
+        return (
+          <Marker position={position} icon={missions} onClick={handelSelect} />
+        );
+      } else if (missionmarker.visibleToHumans) {
+        return (
+          <Marker
+            position={position}
+            icon={humanMission}
+            onClick={handelSelect}
+          />
+        );
+      } else {
+        return null;
+      }
+    } else return null;
   } else {
-    return null;
+    if (position) {
+      if (missionmarker.visibleToHumans && missionmarker.visibleToZombies) {
+        return (
+          <Marker position={position} icon={missions} onClick={handelSelect} />
+        );
+      } else if (missionmarker.visibleToZombies) {
+        return (
+          <Marker
+            position={position}
+            icon={zombieMission}
+            onClick={handelSelect}
+          />
+        );
+      } else {
+        return null;
+      }
+    } else return null;
   }
   //} else return null;
 };

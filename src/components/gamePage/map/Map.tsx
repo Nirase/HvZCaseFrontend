@@ -10,15 +10,17 @@ import MissonInfo from "./MissonInfo";
 import KillMarker from "./KillMarker";
 import { Paper } from "@mui/material";
 import KillInfo from "./KillInfo";
+import { Player } from "../../../interfaces/player";
 
 type LatLngLiteral = google.maps.LatLngLiteral;
 type MapOptions = google.maps.MapOptions;
 
 type Props = {
   game: Game;
+  player: Player;
 };
 
-const Map = ({ game }: Props) => {
+const Map = ({ game, player }: Props) => {
   const [mapCenter, setMapCenter] = useState<LatLngLiteral>();
   const [missoinInfo, setMissonInfo] = useState<Info>();
   const [killInfo, setKillInfo] = useState<Kill>();
@@ -102,6 +104,7 @@ const Map = ({ game }: Props) => {
                         setMissonInfo(info);
                         setKillInfo(undefined);
                       }}
+                      isHuman={player.isHuman}
                     />
                   </div>
                 );
