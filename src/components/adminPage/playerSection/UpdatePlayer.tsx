@@ -8,20 +8,42 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import { Player } from "../../../interfaces/player";
+import { updatePlayerToGame } from "../../../api/apiCalls";
 
 type Props = {
+  gameid: number;
   player: Player;
 };
 
-const UpdatePlayer = (player: Props) => {
+const UpdatePlayer = ({ gameid, player }: Props) => {
   const [isHuman, setIsHuman] = useState("");
   const [isPatientZero, setIsPatientZero] = useState("");
 
   const handleChangeHuman = (event: SelectChangeEvent) => {
     setIsHuman(event.target.value as string);
+    if (event.target.value == "true") {
+      player.isHuman = true;
+      setIsPatientZero("false");
+      player.isPatientZero = false;
+    } else if (event.target.value == "false") {
+      player.isHuman = false;
+    }
   };
   const handleChangeIsPatient = (event: SelectChangeEvent) => {
     setIsPatientZero(event.target.value as string);
+    if (event.target.value == "true") {
+      setIsHuman("false");
+      player.isHuman = false;
+      player.isPatientZero = true;
+    } else if (event.target.value == "false") {
+      player.isPatientZero = false;
+    }
+  };
+
+  const updatePlayer = async () => {
+    if (player != null) {
+      await updatePlayerToGame(gameid, player);
+    }
   };
 
   return (
@@ -57,6 +79,7 @@ const UpdatePlayer = (player: Props) => {
       <Button
         variant="contained"
         style={{ marginTop: 10, backgroundColor: "#360568" }}
+        onClick={updatePlayer}
       >
         Update player
       </Button>

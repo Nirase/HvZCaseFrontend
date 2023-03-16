@@ -22,6 +22,7 @@ const AddPlayer = () => {
   const handleChangeIsPatient = (event: SelectChangeEvent) => {
     setIsPatientZero(event.target.value as string);
   };
+
   return (
     <Accordion>
       <AccordionSummary
@@ -35,13 +36,6 @@ const AddPlayer = () => {
         <TextField
           id="add-player-userid-input"
           label="User Id"
-          variant="standard"
-          style={{ marginLeft: "20px" }}
-        />
-        <TextField
-          id="add-player-gameid-input"
-          type={"number"}
-          label="Game Id"
           variant="standard"
           style={{ marginLeft: "20px" }}
         />

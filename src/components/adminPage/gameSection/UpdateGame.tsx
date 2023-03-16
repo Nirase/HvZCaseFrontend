@@ -9,7 +9,11 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 
-const UpdateGame = () => {
+type Props = {
+  id: number;
+};
+
+const UpdateGame = (id: Props) => {
   const [gameState, setGameState] = useState("");
 
   const handleChange = (event: SelectChangeEvent) => {

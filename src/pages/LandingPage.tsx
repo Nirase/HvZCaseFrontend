@@ -13,19 +13,22 @@ const Home = () => {
     };
     fetchGames();
   }, []);
-
-  return (
-    <>
-      <h1>Landing Page</h1>
-      {games.map((game: Game) => {
-        return (
-          <div key={game.id}>
-            <GameCard game={game} />
-          </div>
-        );
-      })}
-    </>
-  );
+  if (games) {
+    return (
+      <>
+        <h1 style={{ marginLeft: 20 }}>Landing Page</h1>
+        {games.map((game: Game) => {
+          return (
+            <div key={game.id}>
+              <GameCard game={game} />
+            </div>
+          );
+        })}
+      </>
+    );
+  } else {
+    <h3>Loading games...</h3>;
+  }
 };
 
 export default Home;

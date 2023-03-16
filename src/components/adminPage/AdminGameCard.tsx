@@ -27,7 +27,7 @@ const AdminGameCard = ({ game }: Props) => {
             {gameId} | {name}
           </h3>
         </AccordionSummary>
-        <AdminGCGame />
+        <AdminGCGame game={game} />
         <AdminGCPlayer game={game} />
         <AdminGCMission />
       </Accordion>

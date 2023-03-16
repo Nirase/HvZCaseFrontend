@@ -1,12 +1,28 @@
 import { Button } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
+import { deletePlayer } from "../../../api/apiCalls";
 
-const DeletePlayer = () => {
+type Props = {
+  gameId: number;
+  playerId: number;
+  deleteFunction: Function;
+};
+
+const DeletePlayer = ({ gameId, playerId, deleteFunction }: Props) => {
+  const deletePlayerFromGame = async () => {
+    console.log(gameId + " | " + playerId);
+    if (gameId != null && playerId != null) {
+      await deletePlayer(gameId, +playerId);
+      await deleteFunction();
+    }
+  };
+
   return (
     <div>
       <Button
         variant="contained"
         style={{ marginTop: 10, backgroundColor: "#360568" }}
+        onClick={deletePlayerFromGame}
       >
         Delete player
       </Button>

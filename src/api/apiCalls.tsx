@@ -1,4 +1,5 @@
-import { getApiData } from "./openApi";
+import { Player } from "../interfaces/player";
+import { deleteApiData, getApiData, putApiData } from "./api";
 
 const getListOfGames = async () => {
   const res = await getApiData("game");
@@ -59,6 +60,35 @@ const getOnePlayerFromGame = async (id: number, playerId: number) => {
   return await res;
 };
 
+const updatePlayerToGame = async (id: number, player: Player) => {
+  const res = await putApiData(`game/${id}/player/${player.id}`, player);
+
+  if (!res) {
+    return undefined;
+  }
+
+  return await res;
+};
+const deletePlayer = async (id: number, playerId: number) => {
+  const res = await deleteApiData(`game/${id}/player?playerId=${playerId}`);
+
+  if (!res) {
+    return undefined;
+  }
+
+  return await res;
+};
+
+const getUser = async (id: number) => {
+  const res = await getApiData(`user/${id}`);
+
+  if (!res) {
+    return undefined;
+  }
+
+  return await res;
+};
+
 export {
   getListOfGames,
   getListOfGAmesWithDetails,
@@ -66,4 +96,7 @@ export {
   getOneGameWithDetails,
   getPlayersFromGame,
   getOnePlayerFromGame,
+  updatePlayerToGame,
+  deletePlayer,
+  getUser,
 };

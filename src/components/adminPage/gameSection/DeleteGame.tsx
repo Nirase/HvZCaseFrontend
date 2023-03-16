@@ -1,18 +1,16 @@
 import { Button, TextField } from "@mui/material";
 import React from "react";
+import { NumberLiteralType } from "typescript";
 
-const DeleteGame = () => {
+type Props = {
+  id: number;
+};
+
+const DeleteGame = (id: Props) => {
   return (
     <div>
       <br></br>
       <b>Delete game</b>
-      <br></br>
-      <TextField
-        type={"number"}
-        id="delete-gameId-input"
-        label="Id"
-        variant="standard"
-      />
       <br></br>
       <Button
         id="delete-game-button"

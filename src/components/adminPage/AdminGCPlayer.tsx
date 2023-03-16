@@ -5,8 +5,12 @@ import {
   Button,
   TextField,
 } from "@mui/material";
-import React, { ChangeEvent, useEffect, useState } from "react";
-import { getOnePlayerFromGame, getPlayersFromGame } from "../../api/apiCalls";
+import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
+import {
+  getOnePlayerFromGame,
+  getPlayersFromGame,
+  getUser,
+} from "../../api/apiCalls";
 import { Game } from "../../interfaces/game";
 import PlayerListDetailed from "./PlayerListDetailed";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -15,13 +19,15 @@ import PlayerListItemDetailed from "./PlayerListItemDetailed";
 import UpdatePlayer from "./playerSection/UpdatePlayer";
 import AddPlayer from "./playerSection/AddPlayer";
 import DeletePlayer from "./playerSection/DeletePlayer";
+import { User } from "../../interfaces/user";
+import { isNull } from "util";
 
 type Props = {
   game: Game;
 };
 
 const AdminGCPlayer = (game: Props) => {
-  const [players, setPlayers] = useState([]);
+  const [players, setPlayers] = useState<Player[]>([]);
   const [player, setPlayer] = useState<Player>();
   const [playerID, setPlayerId] = useState("");
 
@@ -35,10 +41,18 @@ const AdminGCPlayer = (game: Props) => {
       fetchPlayersFromGame();
     }
   }, []);
-
+  //[players] for fetch list update
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newInput = event.target.value;
     setPlayerId(newInput);
+  };
+
+  //need to run twice for list removal - how to fix
+  const handleRemoveItem = () => {
+    setPlayers((current) =>
+      current.filter((player) => player.id !== +playerID)
+    );
+    setPlayer(undefined);
   };
 
   const fetchOnePlayerFromGame = async () => {
@@ -56,17 +70,22 @@ const AdminGCPlayer = (game: Props) => {
   }
   let deleteInput;
   if (player != null) {
-    deleteInput = <DeletePlayer />;
+    deleteInput = (
+      <DeletePlayer
+        gameId={game.game.id}
+        playerId={player.id}
+        deleteFunction={handleRemoveItem}
+      />
+    );
   } else {
     deleteInput = <p>Get a player to delete!</p>;
   }
   let updatePlayer;
   if (player != null) {
-    updatePlayer = <UpdatePlayer player={player} />;
+    updatePlayer = <UpdatePlayer gameid={game.game.id} player={player} />;
   } else {
     updatePlayer = <p>Get a player to update!</p>;
   }
-
   if (players) {
     return (
       <AccordionDetails>
