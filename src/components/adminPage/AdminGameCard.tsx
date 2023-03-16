@@ -5,6 +5,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Game } from "../../interfaces/game";
 import AdminGCGame from "./AdminGCGame";
 import AdminGCPlayer from "./AdminGCPlayer";
+import AdminGCMission from "./AdminGCMission";
 
 type Props = {
   game: Game;
@@ -28,6 +29,7 @@ const AdminGameCard = ({ game }: Props) => {
         </AccordionSummary>
         <AdminGCGame />
         <AdminGCPlayer game={game} />
+        <AdminGCMission />
       </Accordion>
     </div>
   );

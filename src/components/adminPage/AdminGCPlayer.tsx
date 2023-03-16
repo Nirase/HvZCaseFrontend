@@ -12,6 +12,9 @@ import PlayerListDetailed from "./PlayerListDetailed";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Player } from "../../interfaces/player";
 import PlayerListItemDetailed from "./PlayerListItemDetailed";
+import UpdatePlayer from "./playerSection/UpdatePlayer";
+import AddPlayer from "./playerSection/AddPlayer";
+import DeletePlayer from "./playerSection/DeletePlayer";
 
 type Props = {
   game: Game;
@@ -21,6 +24,7 @@ const AdminGCPlayer = (game: Props) => {
   const [players, setPlayers] = useState([]);
   const [player, setPlayer] = useState<Player>();
   const [playerID, setPlayerId] = useState("");
+
   useEffect(() => {
     if (game) {
       const fetchPlayersFromGame = async () => {
@@ -47,42 +51,76 @@ const AdminGCPlayer = (game: Props) => {
   let findPlayerCard;
   if (player != null) {
     findPlayerCard = <PlayerListItemDetailed player={player} />;
+  } else {
+    findPlayerCard = <p>Player not found</p>;
+  }
+  let deleteInput;
+  if (player != null) {
+    deleteInput = <DeletePlayer />;
+  } else {
+    deleteInput = <p>Get a player to delete!</p>;
+  }
+  let updatePlayer;
+  if (player != null) {
+    updatePlayer = <UpdatePlayer player={player} />;
+  } else {
+    updatePlayer = <p>Get a player to update!</p>;
   }
 
   if (players) {
     return (
       <AccordionDetails>
-        <h2>Player</h2>
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1a-content"
             id="panel1a-header"
           >
-            <h3>List of players</h3>
+            <h3>Player</h3>
           </AccordionSummary>
-          <PlayerListDetailed players={players} />
+          <AccordionDetails>
+            <Accordion>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+              >
+                <h4>List of players</h4>
+              </AccordionSummary>
+              <PlayerListDetailed players={players} />
+            </Accordion>
+            <AddPlayer />
+            <div style={{ marginTop: 10 }}>
+              <h4>Get Player</h4>
+              <TextField
+                type={"number"}
+                id="get-playerid-input"
+                label="Id"
+                onChange={handleInputChange}
+                variant="standard"
+              />
+              <br></br>
+              <Button
+                variant="contained"
+                style={{ marginTop: 10, backgroundColor: "#360568" }}
+                onClick={fetchOnePlayerFromGame}
+              >
+                Get player
+              </Button>
+              <div>{findPlayerCard}</div>
+            </div>
+            <div style={{ marginTop: 10 }}>
+              <h4>Update Player</h4>
+              <p>Id: {playerID}</p>
+              {updatePlayer}
+            </div>
+            <div style={{ marginTop: 10 }}>
+              <h4>Delete Player</h4>
+              <p>Id: {playerID}</p>
+              {deleteInput}
+            </div>
+          </AccordionDetails>
         </Accordion>
-        <div style={{ marginTop: 10 }}>
-          <h3>Get Player</h3>
-          <TextField
-            type={"number"}
-            id="playerIdInput"
-            label="Id"
-            onChange={handleInputChange}
-            variant="standard"
-          />
-          <br></br>
-          <Button
-            variant="contained"
-            style={{ marginTop: 10, backgroundColor: "#360568" }}
-            onClick={fetchOnePlayerFromGame}
-          >
-            Get player
-          </Button>
-          <div>{findPlayerCard}</div>
-        </div>
-        <hr style={{ marginLeft: -20, marginRight: -20, marginTop: 20 }}></hr>
       </AccordionDetails>
     );
   } else {

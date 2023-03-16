@@ -18,7 +18,7 @@ const AdminPage = () => {
       <h4>Admin Page </h4>
       {games.map((game: Game) => {
         return (
-          <div key={game.id}>
+          <div key={game.id} style={{ margin: 10 }}>
             <AdminGameCard game={game} />
           </div>
         );
