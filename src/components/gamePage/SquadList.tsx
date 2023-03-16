@@ -1,33 +1,36 @@
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { getSquads } from "../../api/apiCalls";
+import { Player } from "../../interfaces/player";
+import { Squad } from "../../interfaces/squad";
 import SquadListItem from "./SquadListItem";
 
-const SquadList = () => {
-  const squads = [
-    {
-      name: "sq1",
-      members: [
-        { name: "hej", is_alive: true },
-        { name: "do", is_alive: true },
-      ],
-    },
-    {
-      name: "sq2",
-      members: [
-        { name: "hej", is_alive: true },
-        { name: "do", is_alive: false },
-      ],
-    },
-  ];
+type Props = {
+  players: Array<Player>;
+};
+
+const SquadList = ({ players }: Props) => {
+  const { gameId }: any = useParams();
+  const [squads, setSquads] = useState<Array<Squad>>();
+  useEffect(() => {
+    const fetchSquads = async () => {
+      const data = await getSquads(+gameId);
+      setSquads(data);
+    };
+    fetchSquads();
+  }, []);
 
   return (
     <div>
       <h3>Squads active</h3>
-      {squads.map((squad) => {
-        return (
-          <div key={squad.name} style={{ marginBottom: "10px" }}>
-            <SquadListItem squad={squad} />
-          </div>
-        );
-      })}
+      {squads &&
+        squads.map((squad: Squad) => {
+          return (
+            <div key={squad.name} style={{ marginBottom: "10px" }}>
+              <SquadListItem squad={squad} players={players} />
+            </div>
+          );
+        })}
     </div>
   );
 };
