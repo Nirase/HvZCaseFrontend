@@ -1,8 +1,9 @@
 export interface Player {
   id: number;
-  UserId: number;
+  userId: number;
   firstName: string;
   lastName: string;
-  IsHuman: boolean;
-  BiteCode: string;
+  isHuman: boolean;
+  isPatientZero: boolean;
+  biteCode: string;
 }

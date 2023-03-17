@@ -1,26 +1,45 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { getListOfGames } from "../api/apiCalls";
+import AdminGameCard from "../components/adminPage/AdminGameCard";
+import CreateGame from "../components/adminPage/gameSection/CreateGame";
+import { Game } from "../interfaces/game";
 
 const AdminPage = () => {
-  const location = useLocation();
-  const [pathName, setPathName] = useState("");
-
+  const [games, setGames] = useState([]);
   useEffect(() => {
-    if (location) {
-      let tmp = location.pathname.slice(
-        location.pathname.lastIndexOf("/") + 1,
-        location.pathname.length
-      );
-      setPathName(tmp);
-    }
-  }, [location]);
-
-  return (
-    //isLogin ? <Protected /> : <Public />;
-    <div>
-      <h4>Admin Page {pathName}</h4>
-    </div>
-  );
+    const fetchGames = async () => {
+      const data = await getListOfGames();
+      setGames(data);
+    };
+    fetchGames();
+  }, []);
+  if (games) {
+    return (
+      <div>
+        <div style={{ marginLeft: 20 }}>
+          <h1>Admin Page </h1>
+          <CreateGame />
+        </div>
+        <div style={{ marginLeft: 10 }}>
+          {games.map((game: Game) => {
+            return (
+              <div key={game.id} style={{ margin: 10 }}>
+                <AdminGameCard game={game} />
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  } else {
+    return (
+      <div style={{ marginLeft: 20 }}>
+        <h1>Admin Page </h1>
+        <CreateGame />
+        <h3>Loading games...</h3>
+      </div>
+    );
+  }
 };
 
 export default AdminPage;

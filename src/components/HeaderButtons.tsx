@@ -10,7 +10,7 @@ const HeaderButtons = () => {
     navigate("/profile");
   };
   const toAdmin = () => {
-    navigate("/admin/2");
+    navigate("/admin");
   };
 
   return (

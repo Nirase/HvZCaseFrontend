@@ -19,3 +19,23 @@ export const apiFetch = async (endpoint: string, options: object) => {
 export const getApiData = async (endpoint: string) => {
   return apiFetch(endpoint, { method: "GET" });
 };
+
+export const postApiData = async (endpoint: string, data: any) => {
+  return apiFetch(endpoint, {
+    method: "POST",
+    body: data && JSON.stringify(data),
+  });
+};
+
+export const putApiData = async (endpoint: string, data: any) => {
+  return apiFetch(endpoint, {
+    method: "PUT",
+    body: data && JSON.stringify(data),
+  });
+};
+
+export const deleteApiData = async (endpoint: string) => {
+  return apiFetch(endpoint, {
+    method: "DELETE",
+  });
+};
