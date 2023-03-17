@@ -144,6 +144,17 @@ const addKill = async (gameId: number, body: any) => {
   return await res;
 };
 
+const addMessage = async(gameId: number, body: any) => {
+  const res = await postApiData(`api/v1/chat`, body);
+
+  if (!res) {
+    return undefined;
+  }
+
+  return await res;
+
+}
+
 export {
   getAnything,
   getListOfGames,
@@ -159,4 +170,5 @@ export {
   getUsers,
   getSquads,
   addKill,
+  addMessage,
 };
