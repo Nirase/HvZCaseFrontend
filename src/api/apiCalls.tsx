@@ -11,6 +11,7 @@ const getAnything = async (path: string) => {
   return await res;
 };
 
+// Game
 //open to all
 const getListOfGames = async () => {
   const res = await getApiData(`api/v1/game`);
@@ -52,8 +53,9 @@ const getOneGameWithDetails = async (id: number) => {
   return await res;
 };
 
+// player
 const getPlayersFromGame = async (id: number) => {
-  const res = await getApiData(`game/${id}/player`);
+  const res = await getApiData(`api/v1/game/${id}/player`);
 
   if (!res) {
     return undefined;
@@ -62,7 +64,7 @@ const getPlayersFromGame = async (id: number) => {
   return await res;
 };
 const getOnePlayerFromGame = async (id: number, playerId: number) => {
-  const res = await getApiData(`game/${id}/player/${playerId}`);
+  const res = await getApiData(`api/v1/game/${id}/player/${playerId}`);
 
   if (!res) {
     return undefined;
@@ -71,7 +73,7 @@ const getOnePlayerFromGame = async (id: number, playerId: number) => {
   return await res;
 };
 const addPlayerToGame = async (id: number, player: Player) => {
-  const res = await postApiData(`game/${id}/player`, player);
+  const res = await postApiData(`api/v1/game/${id}/player`, player);
   if (!res) {
     return undefined;
   }
@@ -79,7 +81,7 @@ const addPlayerToGame = async (id: number, player: Player) => {
   return await res;
 };
 const updatePlayerToGame = async (id: number, player: Player) => {
-  const res = await putApiData(`game/${id}/player/${player.id}`, player);
+  const res = await putApiData(`api/v1/game/${id}/player/${player.id}`, player);
 
   if (!res) {
     return undefined;
@@ -88,7 +90,9 @@ const updatePlayerToGame = async (id: number, player: Player) => {
   return await res;
 };
 const deletePlayer = async (id: number, playerId: number) => {
-  const res = await deleteApiData(`game/${id}/player?playerId=${playerId}`);
+  const res = await deleteApiData(
+    `api/v1/game/${id}/player?playerId=${playerId}`
+  );
 
   if (!res) {
     return undefined;
@@ -97,8 +101,9 @@ const deletePlayer = async (id: number, playerId: number) => {
   return await res;
 };
 
+//User
 const getUser = async (id: number) => {
-  const res = await getApiData(`user/${id}`);
+  const res = await getApiData(`api/v1/user/${id}`);
 
   if (!res) {
     return undefined;
@@ -117,6 +122,7 @@ const getUsers = async () => {
   return await res;
 };
 
+// Squad
 const getSquads = async (gameId: number) => {
   const res = await getApiData(`api/v1/game/${gameId}/squad`);
 
@@ -127,6 +133,7 @@ const getSquads = async (gameId: number) => {
   return await res;
 };
 
+// kill
 const addKill = async (gameId: number, body: any) => {
   const res = await postApiData(`api/v1/game/${gameId}/kill`, body);
 
