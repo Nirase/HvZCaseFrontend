@@ -1,14 +1,21 @@
 import TextField from "@mui/material/TextField";
+import { Player } from "../../interfaces/player";
 
-const BiteCode = () => {
+type Props = {
+  player: Player;
+};
+
+const BiteCode = ({ player }: Props) => {
   return (
-    <TextField
-      id="BiteCode"
-      variant="outlined"
-      disabled
-      defaultValue="23456614AD"
-      color="secondary"
-    />
+    <div>
+      <TextField
+        id="BiteCode"
+        variant="outlined"
+        disabled
+        defaultValue={player.biteCode}
+        color="secondary"
+      />
+    </div>
   );
 };
 export default BiteCode;

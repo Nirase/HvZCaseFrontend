@@ -1,8 +1,19 @@
 import { Player } from "../interfaces/player";
 import { deleteApiData, getApiData, postApiData, putApiData } from "./api";
 
+const getAnything = async (path: string) => {
+  const res = await getApiData(path);
+
+  if (!res) {
+    return undefined;
+  }
+
+  return await res;
+};
+
+//open to all
 const getListOfGames = async () => {
-  const res = await getApiData("game");
+  const res = await getApiData(`api/v1/game`);
 
   if (!res) {
     return undefined;
@@ -12,7 +23,7 @@ const getListOfGames = async () => {
 };
 
 const getListOfGAmesWithDetails = async () => {
-  const res = await getApiData("game/withdetails");
+  const res = await getApiData("api/v1/game/withdetails");
 
   if (!res) {
     return undefined;
@@ -22,7 +33,7 @@ const getListOfGAmesWithDetails = async () => {
 };
 
 const getOneGame = async (id: number) => {
-  const res = await getApiData(`game/${id}`);
+  const res = await getApiData(`api/v1/game/${id}`);
 
   if (!res) {
     return undefined;
@@ -32,7 +43,7 @@ const getOneGame = async (id: number) => {
 };
 
 const getOneGameWithDetails = async (id: number) => {
-  const res = await getApiData(`game/${id}/withdetails`);
+  const res = await getApiData(`api/v1/game/${id}/withdetails`);
 
   if (!res) {
     return undefined;
@@ -96,7 +107,38 @@ const getUser = async (id: number) => {
   return await res;
 };
 
+const getUsers = async () => {
+  const res = await getApiData(`api/v1/user`);
+
+  if (!res) {
+    return undefined;
+  }
+
+  return await res;
+};
+
+const getSquads = async (gameId: number) => {
+  const res = await getApiData(`api/v1/game/${gameId}/squad`);
+
+  if (!res) {
+    return undefined;
+  }
+
+  return await res;
+};
+
+const addKill = async (gameId: number, body: any) => {
+  const res = await postApiData(`api/v1/game/${gameId}/kill`, body);
+
+  if (!res) {
+    return undefined;
+  }
+
+  return await res;
+};
+
 export {
+  getAnything,
   getListOfGames,
   getListOfGAmesWithDetails,
   getOneGame,
@@ -107,4 +149,7 @@ export {
   updatePlayerToGame,
   deletePlayer,
   getUser,
+  getUsers,
+  getSquads,
+  addKill,
 };

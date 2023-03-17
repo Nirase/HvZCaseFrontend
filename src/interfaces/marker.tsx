@@ -13,9 +13,17 @@ export interface Mission extends Info {
 }
 
 export interface Kill {
-  id: number;
   timeOfDeath: string;
   victimId: number;
   location: string;
   description: string;
+}
+
+export interface CreateKill {
+  timeOfDeath: string;
+  biteCode: string;
+  killerId: number;
+  description: string;
+  location: string;
+  gameId: number;
 }

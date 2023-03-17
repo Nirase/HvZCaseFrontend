@@ -30,7 +30,6 @@ const KillMarker = ({ kill, setKillInfo }: Props) => {
 
   const handelSelect = () => {
     const killInfo = {
-      id: kill.id,
       timeOfDeath: kill.timeOfDeath,
       victimId: kill.victimId,
       location: kill.location,

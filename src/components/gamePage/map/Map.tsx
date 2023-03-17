@@ -10,15 +10,17 @@ import MissonInfo from "./MissonInfo";
 import KillMarker from "./KillMarker";
 import { Paper } from "@mui/material";
 import KillInfo from "./KillInfo";
+import { Player } from "../../../interfaces/player";
 
 type LatLngLiteral = google.maps.LatLngLiteral;
 type MapOptions = google.maps.MapOptions;
 
 type Props = {
   game: Game;
+  player: Player | undefined;
 };
 
-const Map = ({ game }: Props) => {
+const Map = ({ game, player }: Props) => {
   const [mapCenter, setMapCenter] = useState<LatLngLiteral>();
   const [missoinInfo, setMissonInfo] = useState<Info>();
   const [killInfo, setKillInfo] = useState<Kill>();
@@ -93,22 +95,24 @@ const Map = ({ game }: Props) => {
                 radius={game.radius}
                 options={circleOptions}
               />
-              {game.missions.map((marker: Mission) => {
-                return (
-                  <div key={marker.id}>
-                    <MissionMarker
-                      missionmarker={marker}
-                      setInfo={(info: Info) => {
-                        setMissonInfo(info);
-                        setKillInfo(undefined);
-                      }}
-                    />
-                  </div>
-                );
-              })}
+              {player &&
+                game.missions.map((marker: Mission) => {
+                  return (
+                    <div key={marker.id}>
+                      <MissionMarker
+                        missionmarker={marker}
+                        setInfo={(info: Info) => {
+                          setMissonInfo(info);
+                          setKillInfo(undefined);
+                        }}
+                        isHuman={player.isHuman}
+                      />
+                    </div>
+                  );
+                })}
               {game.kills.map((kill: Kill) => {
                 return (
-                  <div key={kill.id}>
+                  <div key={kill.victimId}>
                     <KillMarker
                       kill={kill}
                       setKillInfo={(info: Kill) => {
