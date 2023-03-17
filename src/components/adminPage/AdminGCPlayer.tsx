@@ -108,7 +108,7 @@ const AdminGCPlayer = (game: Props) => {
               </AccordionSummary>
               <PlayerListDetailed players={players} />
             </Accordion>
-            <AddPlayer />
+            <AddPlayer gameId={game.game.id} />
             <div style={{ marginTop: 10 }}>
               <h4>Get Player</h4>
               <TextField

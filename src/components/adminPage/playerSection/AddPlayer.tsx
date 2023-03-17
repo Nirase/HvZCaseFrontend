@@ -11,16 +11,44 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { Player } from "../../../interfaces/player";
+import { addPlayerToGame } from "../../../api/apiCalls";
 
-const AddPlayer = () => {
+type Props = {
+  gameId: number;
+};
+
+const AddPlayer = (gameId: Props) => {
   const [isHuman, setIsHuman] = useState("");
   const [isPatientZero, setIsPatientZero] = useState("");
-
+  const [biteCode, setBiteCode] = useState("");
+  const [userId, setUserId] = useState(0);
+  let player: Player;
   const handleChangeHuman = (event: SelectChangeEvent) => {
     setIsHuman(event.target.value as string);
+    if (event.target.value == "true") {
+      player.isHuman = true;
+      setIsPatientZero("false");
+      player.isPatientZero = false;
+    } else if (event.target.value == "false") {
+      player.isHuman = false;
+    }
   };
   const handleChangeIsPatient = (event: SelectChangeEvent) => {
     setIsPatientZero(event.target.value as string);
+    if (event.target.value == "true") {
+      setIsHuman("false");
+      player.isHuman = false;
+      player.isPatientZero = true;
+    } else if (event.target.value == "false") {
+      player.isPatientZero = false;
+    }
+  };
+
+  const addPlayer = async () => {
+    player.userId = userId;
+    player.biteCode = "random";
+    await addPlayerToGame(+gameId, player);
   };
 
   return (
@@ -38,6 +66,7 @@ const AddPlayer = () => {
           label="User Id"
           variant="standard"
           style={{ marginLeft: "20px" }}
+          onChange={(e) => setUserId(+e.target.value)}
         />
         <FormControl fullWidth style={{ marginTop: 20 }}>
           <InputLabel id="add-player-ishuman-input"> isHuman </InputLabel>
@@ -79,6 +108,7 @@ const AddPlayer = () => {
             marginBottom: 20,
             backgroundColor: "#360568",
           }}
+          onClick={addPlayer}
         >
           Add Player
         </Button>
