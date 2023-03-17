@@ -1,16 +1,13 @@
-import usePlacesAutocomplete, {
-  getGeocode,
-  getLatLng,
-} from "use-places-autocomplete";
+import usePlacesAutocomplete from "use-places-autocomplete";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { useEffect } from "react";
 
 type Props = {
-  setMapCenter: (position: google.maps.LatLngLiteral) => void;
+  setPosition: (position: string) => void;
 };
 
-const Places = ({ setMapCenter }: Props) => {
+const Places = ({ setPosition }: Props) => {
   const {
     ready,
     value,
@@ -19,14 +16,11 @@ const Places = ({ setMapCenter }: Props) => {
     clearSuggestions,
   } = usePlacesAutocomplete();
 
-  const handelSelect = async (val: string) => {
+  const handelSelect = (val: string) => {
     setValue(val, false);
     clearSuggestions();
 
-    const result = await getGeocode({ address: val });
-    const { lat, lng } = await getLatLng(result[0]);
-
-    setMapCenter({ lat, lng });
+    setPosition(value);
   };
 
   useEffect(() => {

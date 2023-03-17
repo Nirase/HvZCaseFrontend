@@ -10,6 +10,7 @@ import { Player } from "../../interfaces/player";
 import { useParams } from "react-router-dom";
 import { addKill } from "../../api/apiCalls";
 import ResponseSnackBar from "../ResponseSnackBar";
+import Places from "./Places";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -45,10 +46,10 @@ const BiteCodeEntry = ({ player }: Props) => {
 
   const handleKillClick = async () => {
     const time = new Date().toLocaleString();
-    const kill: any = {
+    const kill: CreateKill = {
       location,
       description,
-
+      timeOfDeath: time,
       biteCode,
       killerId: player.id,
       gameId: +gameId,
@@ -66,7 +67,7 @@ const BiteCodeEntry = ({ player }: Props) => {
         <TextField
           id="BiteCodeEntry"
           label="Enter Bite Code"
-          variant="filled"
+          variant="outlined"
           color="secondary"
           fullWidth
           value={biteCode}
@@ -93,15 +94,8 @@ const BiteCodeEntry = ({ player }: Props) => {
         <div>
           <Typography paragraph>Optional:</Typography>
 
-          <TextField
-            id="BiteLocation"
-            label="Enter Bite Location"
-            variant="filled"
-            color="secondary"
-            fullWidth
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-          />
+          <Places setPosition={(position: string) => setLocation(position)} />
+
           <Typography paragraph>
             Enter address for where the bite took place.
           </Typography>
@@ -109,7 +103,7 @@ const BiteCodeEntry = ({ player }: Props) => {
           <TextField
             id="BiteDescription"
             label="Enter short description of kill"
-            variant="filled"
+            variant="outlined"
             color="secondary"
             multiline
             maxRows={5}

@@ -2,7 +2,12 @@ import Container from "@mui/material/Container";
 import { useLoadScript } from "@react-google-maps/api";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getAnything, getOneGameWithDetails, getUsers } from "../api/apiCalls";
+import {
+  getAnything,
+  getOneGameWithDetails,
+  getSquads,
+  getUsers,
+} from "../api/apiCalls";
 import BiteCode from "../components/gamePage/BiteCode";
 import BiteCodeEntry from "../components/gamePage/BiteCodeEntry";
 import GameRegistration from "../components/gamePage/GameRegistration";
@@ -16,6 +21,8 @@ import keycloak from "../keycloak";
 import { ROLES } from "../roles/roles";
 import { User } from "../interfaces/user";
 import { Player } from "../interfaces/player";
+import SquadRegistration from "../components/gamePage/SquadRegistration";
+import { Squad } from "../interfaces/squad";
 
 const libraries: (
   | "drawing"
@@ -35,6 +42,8 @@ const GamePage = () => {
   const [game, setGame] = useState<Game>();
   const [playerString, setPlayerString] = useState<any>();
   const [player, setPlayer] = useState<Player>();
+  const [squads, setSquads] = useState<Array<Squad>>();
+
   const admin = keycloak.hasRealmRole(ROLES.Admin);
 
   useEffect(() => {
@@ -43,9 +52,7 @@ const GamePage = () => {
         const data = await getOneGameWithDetails(+gameId);
         setGame(data);
       };
-
       fetchOneGame();
-
       const fetchUser = async () => {
         const data = await getUsers();
         const theUser: User = data.find(
@@ -59,6 +66,12 @@ const GamePage = () => {
         setPlayerString(player);
       };
       fetchUser();
+
+      const fetchSquads = async () => {
+        const data = await getSquads(+gameId);
+        setSquads(data);
+      };
+      fetchSquads();
     }
   }, []);
 
@@ -106,10 +119,23 @@ const GamePage = () => {
         {!isLoaded ? (
           <p>Loading map....</p>
         ) : (
-          <Map game={game} player={player} />
+          <Map game={game} player={player} squads={squads} />
         )}
+
         <div className="lists">
-          <SquadList players={game.players} />
+          <div style={{ width: "30%" }}>
+            {squads && <SquadList players={game.players} squads={squads} />}
+            {player && (
+              <SquadRegistration
+                player={player}
+                squads={squads}
+                setSquad={(squad: Array<Squad>) => {
+                  setSquads(squad);
+                }}
+              />
+            )}
+          </div>
+
           <PlayerList players={game.players} />
         </div>
       </Container>
