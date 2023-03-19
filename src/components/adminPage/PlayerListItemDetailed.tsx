@@ -14,6 +14,7 @@ const PlayerListItemDetailed = ({ player }: Props) => {
   const isHuman = player.isHuman;
   const isPatientZero = player.isPatientZero;
   const biteCode = player.biteCode;
+  const squadId = player.squadId;
   //const playerFirstName = user.firstName;
   //const playerLastName = user.lastName;
 
@@ -43,6 +44,7 @@ const PlayerListItemDetailed = ({ player }: Props) => {
           isPatientZero: {isPatientZero + ""}
         </Typography>
         <Typography variant="body2">biteCode: {biteCode + ""}</Typography>
+        <Typography variant="body2">squadId: {squadId + ""}</Typography>
       </CardContent>
     </Card>
   );

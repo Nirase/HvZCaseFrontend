@@ -23,7 +23,10 @@ const AddPlayer = (gameId: Props) => {
   const [isPatientZero, setIsPatientZero] = useState("");
   const [biteCode, setBiteCode] = useState("");
   const [userId, setUserId] = useState(0);
+
+  //change this to useState?
   let player: Player;
+
   const handleChangeHuman = (event: SelectChangeEvent) => {
     setIsHuman(event.target.value as string);
     if (event.target.value == "true") {

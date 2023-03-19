@@ -18,7 +18,7 @@ const DeletePlayer = ({ gameId, playerId, deleteFunction }: Props) => {
   };
 
   return (
-    <div>
+    <>
       <Button
         variant="contained"
         style={{ marginTop: 10, backgroundColor: "#360568" }}
@@ -26,7 +26,7 @@ const DeletePlayer = ({ gameId, playerId, deleteFunction }: Props) => {
       >
         Delete player
       </Button>
-    </div>
+    </>
   );
 };
 
