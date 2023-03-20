@@ -1,4 +1,4 @@
-import { Player } from "../interfaces/player";
+import { addPlayer, Player } from "../interfaces/player";
 import { AddSquad } from "../interfaces/squad";
 import { deleteApiData, getApiData, postApiData, putApiData } from "./api";
 
@@ -13,7 +13,6 @@ const getAnything = async (path: string) => {
 };
 
 // Game
-//open to all
 const getListOfGames = async () => {
   const res = await getApiData(`api/v1/game`);
 
@@ -64,8 +63,8 @@ const getPlayersFromGame = async (id: number) => {
 
   return await res;
 };
-const getOnePlayerFromGame = async (id: number, playerId: number) => {
-  const res = await getApiData(`api/v1/game/${id}/player/${playerId}`);
+const getOnePlayerFromGame = async (gameId: number, playerId: number) => {
+  const res = await getApiData(`api/v1/game/${gameId}/player/${playerId}`);
 
   if (!res) {
     return undefined;
@@ -74,8 +73,8 @@ const getOnePlayerFromGame = async (id: number, playerId: number) => {
   return await res;
 };
 
-const addPlayerToGame = async (id: number, player: Player) => {
-  const res = await postApiData(`api/v1/game/${id}/player`, player);
+const addPlayerToGame = async (gameId: number, player: addPlayer) => {
+  const res = await postApiData(`api/v1/game/${gameId}/player`, player);
   if (!res) {
     return undefined;
   }

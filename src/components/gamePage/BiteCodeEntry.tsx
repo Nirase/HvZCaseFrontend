@@ -9,7 +9,6 @@ import { CreateKill } from "../../interfaces/marker";
 import { Player } from "../../interfaces/player";
 import { useParams } from "react-router-dom";
 import { addKill } from "../../api/apiCalls";
-import ResponseSnackBar from "../ResponseSnackBar";
 import Places from "./Places";
 
 interface ExpandMoreProps extends IconButtonProps {
@@ -29,16 +28,16 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 
 type Props = {
   player: Player;
+  setSnackbarRes: (res: any) => void;
+  setSnackbarFrom: (from: string) => void;
 };
 
-const BiteCodeEntry = ({ player }: Props) => {
+const BiteCodeEntry = ({ player, setSnackbarFrom, setSnackbarRes }: Props) => {
   const [expanded, setExpanded] = useState(false);
   const [biteCode, setBiteCode] = useState("");
   const [location, setLocation] = useState("");
   const [description, setDescription] = useState("");
   const { gameId }: any = useParams();
-  const [res, setRes] = useState<any>();
-  const [snackbar, setSnackbar] = useState(false);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -56,9 +55,8 @@ const BiteCodeEntry = ({ player }: Props) => {
     };
 
     const data = await addKill(+gameId, kill);
-    setRes(data);
-    setSnackbar(true);
-    console.log("kill", data);
+    setSnackbarRes(data);
+    setSnackbarFrom("Kill");
   };
 
   return (
@@ -114,7 +112,6 @@ const BiteCodeEntry = ({ player }: Props) => {
           <Typography paragraph>Rnter description of kill</Typography>
         </div>
       </Collapse>
-      <ResponseSnackBar open={snackbar} res={res} from={"killed"} />
     </div>
   );
 };

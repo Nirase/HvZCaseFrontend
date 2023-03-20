@@ -4,19 +4,24 @@ import { useParams } from "react-router";
 import { addSquad } from "../../api/apiCalls";
 import { Player } from "../../interfaces/player";
 import { AddSquad, Squad } from "../../interfaces/squad";
-import ResponseSnackBar from "../ResponseSnackBar";
 
 type Props = {
   player: Player;
   squads: Array<Squad> | undefined;
   setSquad: (squad: Array<Squad>) => void;
+  setSnackbarRes: (res: any) => void;
+  setSnackbarFrom: (from: string) => void;
 };
 
-const SquadRegistration = ({ player, squads, setSquad }: Props) => {
+const SquadRegistration = ({
+  player,
+  squads,
+  setSquad,
+  setSnackbarRes,
+  setSnackbarFrom,
+}: Props) => {
   const [name, setName] = useState("");
   const { gameId }: any = useParams();
-  const [open, setOpen] = useState(false);
-  const [res, setRes] = useState<any>();
   const id = player.id;
 
   const handleAdd = async () => {
@@ -35,6 +40,7 @@ const SquadRegistration = ({ player, squads, setSquad }: Props) => {
     };
 
     const data = await addSquad(+gameId, squad);
+
     console.log("added squad", data); // ska skica upp detta sen
     if (data) {
       if (squads) {
@@ -43,8 +49,8 @@ const SquadRegistration = ({ player, squads, setSquad }: Props) => {
       }
     }
 
-    setOpen(true);
-    setRes(data);
+    setSnackbarFrom("created a squad");
+    setSnackbarRes(data);
   };
 
   return (
@@ -78,8 +84,9 @@ const SquadRegistration = ({ player, squads, setSquad }: Props) => {
       >
         Create
       </Button>
-      <ResponseSnackBar open={open} res={res} from={"Created a squad"} />
     </div>
   );
 };
 export default SquadRegistration;
+
+// regex för squad name \A[a-zA-Z0-9_=@,.;\-]+\z

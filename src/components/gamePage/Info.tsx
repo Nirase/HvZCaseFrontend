@@ -46,8 +46,8 @@ const Info = ({ game }: Props) => {
           <li>
             Zombies that collect the bite code of a human must log their kill in
             the system to turn the human player into a zombie. Optionally the
-            killer may specify GPS coordinates and a text description of their
-            kill to create a gravestone marker on the map.
+            killer may specify location and a text description of their kill to
+            create a gravestone marker on the map.
           </li>
         </ul>
       </div>

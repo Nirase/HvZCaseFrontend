@@ -23,6 +23,7 @@ import { User } from "../interfaces/user";
 import { Player } from "../interfaces/player";
 import SquadRegistration from "../components/gamePage/SquadRegistration";
 import { Squad } from "../interfaces/squad";
+import ResponseSnackBar from "../components/ResponseSnackBar";
 
 const libraries: (
   | "drawing"
@@ -40,26 +41,34 @@ const GamePage = () => {
   const { gameId } = useParams();
 
   const [game, setGame] = useState<Game>();
+  const [allPlayers, setAllPlayers] = useState<Array<Player>>();
   const [playerString, setPlayerString] = useState<any>();
   const [player, setPlayer] = useState<Player>();
+  const [user, setUser] = useState<User>();
   const [squads, setSquads] = useState<Array<Squad>>();
+
+  const [snackbar, setSnackbar] = useState(false);
+  const [snackbarRes, setSnackbarRes] = useState<any>();
+  const [snackbarFrom, setSnackbarFrom] = useState<string>();
 
   const admin = keycloak.hasRealmRole(ROLES.Admin);
 
   useEffect(() => {
     if (gameId) {
       const fetchOneGame = async () => {
-        const data = await getOneGameWithDetails(+gameId);
-        setGame(data);
+        const theGame = await getOneGameWithDetails(+gameId);
+        setGame(theGame);
+        setAllPlayers(theGame.players);
       };
       fetchOneGame();
+
       const fetchUser = async () => {
         const data = await getUsers();
         const theUser: User = data.find(
           (user: User) =>
             user.firstName === keycloak.tokenParsed?.name.split(" ")[0] // change to sub value to check id insted
         );
-
+        setUser(theUser);
         const player = theUser.players.find(
           (player: string) => player.split("/")[3] === gameId
         );
@@ -86,7 +95,7 @@ const GamePage = () => {
     }
   }, [playerString]);
 
-  if (game) {
+  if (game && user) {
     return (
       <Container
         maxWidth="lg"
@@ -102,15 +111,37 @@ const GamePage = () => {
           <>
             {!player ? (
               <>
-                {game.gameState === "Registration" && (
-                  <GameRegistration game={game} />
-                )}
+                {/* {game.gameState === "Registration" && ( */}
+                <GameRegistration
+                  gameName={game.name}
+                  user={user}
+                  players={allPlayers}
+                  setPlayer={(newPlayer: Player) => setPlayer(newPlayer)}
+                  addToAllPlayers={(allPlayers: Player[]) =>
+                    setAllPlayers(allPlayers)
+                  }
+                  setSnackbarRes={(res: any) => {
+                    setSnackbarRes(res);
+                    setSnackbar(true);
+                  }}
+                  setSnackbarFrom={(from: string) => setSnackbarFrom(from)}
+                />
+                {/* )} */}
               </>
             ) : (
               <>
                 <div className="biteCode">
                   {player.isHuman && <BiteCode player={player} />}
-                  {!player.isHuman && <BiteCodeEntry player={player} />}
+                  {!player.isHuman && (
+                    <BiteCodeEntry
+                      player={player}
+                      setSnackbarRes={(res: any) => {
+                        setSnackbarRes(res);
+                        setSnackbar(true);
+                      }}
+                      setSnackbarFrom={(from: string) => setSnackbarFrom(from)}
+                    />
+                  )}
                 </div>
               </>
             )}
@@ -132,12 +163,22 @@ const GamePage = () => {
                 setSquad={(squad: Array<Squad>) => {
                   setSquads(squad);
                 }}
+                setSnackbarRes={(res: any) => {
+                  setSnackbarRes(res);
+                  setSnackbar(true);
+                }}
+                setSnackbarFrom={(from: string) => setSnackbarFrom(from)}
               />
             )}
           </div>
 
-          <PlayerList players={game.players} />
+          {allPlayers && <PlayerList players={allPlayers} />}
         </div>
+        <ResponseSnackBar
+          open={snackbar}
+          res={snackbarRes}
+          from={snackbarFrom}
+        />
       </Container>
     );
   } else {
