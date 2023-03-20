@@ -24,34 +24,39 @@ const AddPlayer = (gameId: Props) => {
   const [biteCode, setBiteCode] = useState("");
   const [userId, setUserId] = useState(0);
 
-  //change this to useState?
-  let player: Player;
+  const newPlayer: addPlayer = {
+    isHuman: true,
+    isPatientZero: false,
+    gameId: +gameId,
+    userId: userId,
+    biteCode,
+  };
 
   const handleChangeHuman = (event: SelectChangeEvent) => {
     setIsHuman(event.target.value as string);
     if (event.target.value == "true") {
-      player.isHuman = true;
+      newPlayer.isHuman = true;
       setIsPatientZero("false");
-      player.isPatientZero = false;
+      newPlayer.isPatientZero = false;
     } else if (event.target.value == "false") {
-      player.isHuman = false;
+      newPlayer.isHuman = false;
     }
   };
   const handleChangeIsPatient = (event: SelectChangeEvent) => {
     setIsPatientZero(event.target.value as string);
     if (event.target.value == "true") {
       setIsHuman("false");
-      player.isHuman = false;
-      player.isPatientZero = true;
+      newPlayer.isHuman = false;
+      newPlayer.isPatientZero = true;
     } else if (event.target.value == "false") {
-      player.isPatientZero = false;
+      newPlayer.isPatientZero = false;
     }
   };
 
   const addPlayer = async () => {
-    player.userId = userId;
-    player.biteCode = "random";
-    await addPlayerToGame(+gameId, player);
+    newPlayer.userId = userId;
+    newPlayer.biteCode = "random";
+    await addPlayerToGame(+gameId, newPlayer);
   };
 
   return (
