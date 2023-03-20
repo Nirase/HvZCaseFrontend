@@ -14,47 +14,68 @@ import { updatePlayerToGame } from "../../../api/apiCalls";
 type Props = {
   gameid: number;
   player: Player;
+  refreshPlayer: Function;
 };
 
-const UpdatePlayer = ({ gameid, player }: Props) => {
-  const [isHuman, setIsHuman] = useState("");
-  const [isPatientZero, setIsPatientZero] = useState("");
+const UpdatePlayer = ({ gameid, player, refreshPlayer }: Props) => {
+  const [isHumanStr, setIsHuman] = useState("");
+  const [isPatientZeroStr, setIsPatientZero] = useState("");
   const [squadId, setSquadId] = useState(0);
 
+  const updatedPlayer: Player = {
+    id: +player.id,
+    firstName: player.firstName,
+    lastName: player.lastName,
+    isHuman: player.isHuman,
+    isPatientZero: player.isPatientZero,
+    userId: player.userId,
+    biteCode: "random",
+    squadId: squadId,
+  };
+
+  console.log(player);
   const handleChangeHuman = (event: SelectChangeEvent) => {
     setIsHuman(event.target.value as string);
     if (event.target.value == "true") {
-      player.isHuman = true;
+      updatedPlayer.isHuman = true;
       setIsPatientZero("false");
-      player.isPatientZero = false;
+      updatedPlayer.isPatientZero = false;
     } else if (event.target.value == "false") {
-      player.isHuman = false;
+      updatedPlayer.isHuman = false;
     }
   };
   const handleChangeIsPatient = (event: SelectChangeEvent) => {
     setIsPatientZero(event.target.value as string);
     if (event.target.value == "true") {
       setIsHuman("false");
-      player.isHuman = false;
-      player.isPatientZero = true;
+      updatedPlayer.isHuman = false;
+      updatedPlayer.isPatientZero = true;
     } else if (event.target.value == "false") {
-      player.isPatientZero = false;
+      updatedPlayer.isPatientZero = false;
     }
   };
 
   const updatePlayer = async () => {
     if (player != null) {
-      if (squadId == 0) {
-        //what should i put her instead? if someone doesn't have a squad what do we do? leave squad function?
-        player.squadId = null;
-      } else {
-        player.squadId = squadId;
+      if (isHumanStr == "true") {
+        updatedPlayer.isHuman = true;
+      } else if (isHumanStr == "false") {
+        updatedPlayer.isHuman = false;
       }
-      console.log(player.squadId);
-      await updatePlayerToGame(gameid, player);
+      if (isPatientZeroStr == "true") {
+        updatedPlayer.isPatientZero = true;
+      } else if (isPatientZeroStr == "false") {
+        updatedPlayer.isPatientZero = false;
+      }
+      if (squadId == 0) {
+        updatedPlayer.squadId = null;
+      } else {
+        updatedPlayer.squadId = squadId;
+      }
+      await updatePlayerToGame(gameid, updatedPlayer);
+      refreshPlayer();
     }
   };
-
   return (
     <>
       <FormControl fullWidth style={{ marginTop: 20 }}>
@@ -62,7 +83,7 @@ const UpdatePlayer = ({ gameid, player }: Props) => {
         <Select
           labelId="update-player-ishuman-input"
           id="update-player-ishuman-select"
-          value={isHuman}
+          value={isHumanStr}
           label="isHuman"
           onChange={handleChangeHuman}
         >
@@ -77,7 +98,7 @@ const UpdatePlayer = ({ gameid, player }: Props) => {
         <Select
           labelId="update-ispatientzero-ishuman-input"
           id="update-ispatientzero-ishuman-select"
-          value={isPatientZero}
+          value={isPatientZeroStr}
           label="isPatientZero"
           onChange={handleChangeIsPatient}
         >

@@ -9,20 +9,21 @@ import {
   SelectChangeEvent,
   TextField,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { Player } from "../../../interfaces/player";
+import { addPlayer } from "../../../interfaces/player";
 import { addPlayerToGame } from "../../../api/apiCalls";
 
 type Props = {
   gameId: number;
 };
 
-const AddPlayer = (gameId: Props) => {
+const AddPlayer = ({ gameId }: Props) => {
   const [isHuman, setIsHuman] = useState("");
   const [isPatientZero, setIsPatientZero] = useState("");
   const [biteCode, setBiteCode] = useState("");
   const [userId, setUserId] = useState(0);
+  const gameID = gameId;
 
   const newPlayer: addPlayer = {
     isHuman: true,
@@ -55,8 +56,11 @@ const AddPlayer = (gameId: Props) => {
 
   const addPlayer = async () => {
     newPlayer.userId = userId;
+    newPlayer.gameId = +gameID;
     newPlayer.biteCode = "random";
-    await addPlayerToGame(+gameId, newPlayer);
+    console.log(newPlayer);
+    await addPlayerToGame(+gameID, newPlayer);
+    console.log(+gameID);
   };
 
   return (
@@ -116,7 +120,7 @@ const AddPlayer = (gameId: Props) => {
             marginBottom: 20,
             backgroundColor: "#360568",
           }}
-          // onClick={addPlayer}
+          onClick={addPlayer}
         >
           Add Player
         </Button>
