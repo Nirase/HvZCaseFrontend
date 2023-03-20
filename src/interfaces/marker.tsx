@@ -1,11 +1,11 @@
-export interface Info {
+export interface MissionInfo {
   startDate: string;
   endDate: string;
   description: string;
   name: string;
 }
 
-export interface Mission extends Info {
+export interface Mission extends MissionInfo {
   id: number;
   visibleToHumans: boolean;
   visibleToZombies: boolean;
@@ -26,4 +26,12 @@ export interface CreateKill {
   description: string;
   location: string;
   gameId: number;
+}
+
+export interface CheckIn {
+  id?: number;
+  squad: string;
+  location: string;
+  startDate: string;
+  endDate: string;
 }

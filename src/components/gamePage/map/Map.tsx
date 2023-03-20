@@ -3,7 +3,12 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import "../../../styles/map.css";
 
 import MissionMarker from "./MissonMarker";
-import { Info, Kill, Mission } from "../../../interfaces/marker";
+import {
+  MissionInfo,
+  Kill,
+  Mission,
+  CheckIn,
+} from "../../../interfaces/marker";
 import { Game } from "../../../interfaces/game";
 import { getGeocode, getLatLng } from "use-places-autocomplete";
 import MissonInfo from "./MissonInfo";
@@ -12,6 +17,9 @@ import { Paper } from "@mui/material";
 import KillInfo from "./KillInfo";
 import { Player } from "../../../interfaces/player";
 import { Squad } from "../../../interfaces/squad";
+import CheckInInfo from "./CheckInInfo";
+import { getAnything } from "../../../api/apiCalls";
+import CheckInMarker from "./CheckInMarker";
 
 type LatLngLiteral = google.maps.LatLngLiteral;
 type MapOptions = google.maps.MapOptions;
@@ -24,9 +32,10 @@ type Props = {
 
 const Map = ({ game, player, squads }: Props) => {
   const [mapCenter, setMapCenter] = useState<LatLngLiteral>();
-  const [missoinInfo, setMissonInfo] = useState<Info>();
+  const [missionInfo, setMissionInfo] = useState<MissionInfo>();
   const [killInfo, setKillInfo] = useState<Kill>();
-  const [checkInInfo, setCheckInInfo] = useState()
+  const [checkInInfo, setCheckInInfo] = useState<CheckIn>();
+  const [squadsCheckIn, setSquadsCheckIn] = useState<Array<CheckIn>>();
 
   const mapRef = useRef<GoogleMap>();
 
@@ -48,6 +57,20 @@ const Map = ({ game, player, squads }: Props) => {
       setMapCenter({ lat, lng });
     };
     getPosition();
+
+    if (squads) {
+      let fetchedSquads: any = [];
+      const playerSquad = squads.find((squad) => squad.id === player?.squadId);
+
+      const fetchCheckIn = async (path: string) => {
+        const res = await getAnything(path);
+        fetchedSquads.push(res);
+        setSquadsCheckIn(fetchedSquads);
+      };
+      playerSquad?.squadCheckIns.forEach((check: string) => {
+        fetchCheckIn(check);
+      });
+    }
   }, []);
 
   const circleOptions = {
@@ -65,20 +88,26 @@ const Map = ({ game, player, squads }: Props) => {
     <div className="mapContainer">
       <Paper className="mapInfoContainer">
         <div className="mapInfo">
-          {missoinInfo === undefined && killInfo === undefined ? (
+          {missionInfo === undefined &&
+          killInfo === undefined &&
+          checkInInfo === undefined ? (
             <h3>Map info</h3>
           ) : (
             ""
           )}
 
           <MissonInfo
-            info={missoinInfo}
-            clearInfo={(info: undefined) => setMissonInfo(info)}
+            info={missionInfo}
+            clearInfo={(info: undefined) => setMissionInfo(info)}
           />
           <KillInfo
             kill={killInfo}
             players={game.players}
             clearKillInfo={(info: undefined) => setKillInfo(info)}
+          />
+          <CheckInInfo
+            checkIn={checkInInfo}
+            clearCheckInInfo={(info: undefined) => setCheckInInfo(info)}
           />
         </div>
       </Paper>
@@ -104,9 +133,10 @@ const Map = ({ game, player, squads }: Props) => {
                     <div key={marker.id}>
                       <MissionMarker
                         missionmarker={marker}
-                        setInfo={(info: Info) => {
-                          setMissonInfo(info);
+                        setInfo={(info: MissionInfo) => {
+                          setMissionInfo(info);
                           setKillInfo(undefined);
+                          setCheckInInfo(undefined);
                         }}
                         isHuman={player.isHuman}
                       />
@@ -120,12 +150,28 @@ const Map = ({ game, player, squads }: Props) => {
                       kill={kill}
                       setKillInfo={(info: Kill) => {
                         setKillInfo(info);
-                        setMissonInfo(undefined);
+                        setMissionInfo(undefined);
+                        setCheckInInfo(undefined);
                       }}
                     />
                   </div>
                 );
               })}
+              {squadsCheckIn &&
+                squadsCheckIn.map((marker: CheckIn) => {
+                  return (
+                    <div key={marker.id}>
+                      <CheckInMarker
+                        checkIn={marker}
+                        setCheckInInfo={(info: CheckIn) => {
+                          setCheckInInfo(info);
+                          setMissionInfo(undefined);
+                          setKillInfo(undefined);
+                        }}
+                      />
+                    </div>
+                  );
+                })}
             </>
           )}
         </GoogleMap>

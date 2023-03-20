@@ -73,7 +73,7 @@ const BiteCodeEntry = ({ player, setSnackbarFrom, setSnackbarRes }: Props) => {
           error={biteCode === player.biteCode}
           helperText={
             biteCode === player.biteCode
-              ? "you can't input your own bite code"
+              ? "you can't input your old bite code"
               : ""
           }
         />
