@@ -6,6 +6,7 @@ export interface Player {
   isHuman: boolean;
   isPatientZero: boolean;
   biteCode: string;
+  squadId: number | null;
 }
 
 export interface addPlayer {
