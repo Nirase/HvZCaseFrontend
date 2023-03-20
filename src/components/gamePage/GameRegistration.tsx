@@ -46,7 +46,6 @@ const GameRegistration = ({
         addToAllPlayers(allPlayers);
       }
     }
-    console.log(addedPlayer);
   };
   return (
     <>

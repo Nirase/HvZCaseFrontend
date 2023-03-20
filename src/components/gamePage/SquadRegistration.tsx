@@ -1,5 +1,5 @@
 import { Button, TextField, Typography } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { addSquad } from "../../api/apiCalls";
 import { Player } from "../../interfaces/player";
@@ -23,6 +23,7 @@ const SquadRegistration = ({
   const [name, setName] = useState("");
   const { gameId }: any = useParams();
   const id = player.id;
+  const [checkName, setCheckName] = useState<boolean>();
 
   const handleAdd = async () => {
     const squad: AddSquad = {
@@ -53,6 +54,16 @@ const SquadRegistration = ({
     setSnackbarRes(data);
   };
 
+  useEffect(() => {
+    if (name) {
+      const regex = new RegExp("^[a-zA-Z0-9_=@,.;-]+$");
+      const check = regex.test(name);
+      setCheckName(check);
+    } else {
+      setCheckName(true);
+    }
+  }, [name]);
+
   return (
     <div
       style={{
@@ -75,12 +86,19 @@ const SquadRegistration = ({
         value={name}
         onChange={(e) => setName(e.target.value)}
         sx={{ mt: 2 }}
+        error={!checkName}
+        helperText={
+          !checkName
+            ? "You can have all letters and numbers but no spaces, the special characters you can use are  . , ; _ - @ =  "
+            : ""
+        }
       />
       <Button
         variant="contained"
         color="secondary"
         onClick={handleAdd}
         sx={{ mt: 2, mb: 2 }}
+        disabled={!checkName || !name}
       >
         Create
       </Button>

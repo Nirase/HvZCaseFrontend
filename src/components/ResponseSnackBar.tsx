@@ -20,15 +20,11 @@ const ResponseSnackBar = ({ open, res, from }: Props) => {
   const [version, setVersion] = useState<AlertColor>();
   const [message, setMessage] = useState<string>();
 
-  console.log({ "snack res": res, "snack Open": open, from: from });
-
   useEffect(() => {
     if (open) {
       setOpen(true);
-      console.log("Show", open);
     } else {
       setOpen(false);
-      console.log("hide", open);
     }
 
     if (res === undefined) {
@@ -40,7 +36,6 @@ const ResponseSnackBar = ({ open, res, from }: Props) => {
     } else if (!res.status) {
       setVersion("success");
       setMessage("You have successfully " + from);
-      console.log("res true", res);
     }
   }, [open, res]);
 

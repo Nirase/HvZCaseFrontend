@@ -70,6 +70,12 @@ const BiteCodeEntry = ({ player, setSnackbarFrom, setSnackbarRes }: Props) => {
           fullWidth
           value={biteCode}
           onChange={(e) => setBiteCode(e.target.value)}
+          error={biteCode === player.biteCode}
+          helperText={
+            biteCode === player.biteCode
+              ? "you can't input your own bite code"
+              : ""
+          }
         />
         <ExpandMore
           expand={expanded}
