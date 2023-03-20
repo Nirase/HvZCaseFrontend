@@ -19,14 +19,13 @@ import PlayerListItemDetailed from "./PlayerListItemDetailed";
 import UpdatePlayer from "./playerSection/UpdatePlayer";
 import AddPlayer from "./playerSection/AddPlayer";
 import DeletePlayer from "./playerSection/DeletePlayer";
-import { User } from "../../interfaces/user";
 import { isNull } from "util";
 
 type Props = {
   game: Game;
 };
 
-const AdminGCPlayer = (game: Props) => {
+const AdminGCPlayer = ({ game }: Props) => {
   const [players, setPlayers] = useState<Player[]>([]);
   const [player, setPlayer] = useState<Player>();
   const [playerID, setPlayerId] = useState("");
@@ -34,13 +33,14 @@ const AdminGCPlayer = (game: Props) => {
   useEffect(() => {
     if (game) {
       const fetchPlayersFromGame = async () => {
-        const data = await getPlayersFromGame(+game.game.id);
+        const data = await getPlayersFromGame(+game.id);
         setPlayers(data);
       };
 
       fetchPlayersFromGame();
     }
-  }, []);
+  }, [players]);
+
   //[players] for fetch list update
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newInput = event.target.value;
@@ -56,8 +56,9 @@ const AdminGCPlayer = (game: Props) => {
   };
 
   const fetchOnePlayerFromGame = async () => {
+    setPlayer(undefined);
     if (playerID != null) {
-      const data = await getOnePlayerFromGame(+game.game.id, +playerID);
+      const data = await getOnePlayerFromGame(+game.id, +playerID);
       setPlayer(data);
     }
   };
@@ -66,13 +67,14 @@ const AdminGCPlayer = (game: Props) => {
   if (player != null) {
     findPlayerCard = <PlayerListItemDetailed player={player} />;
   } else {
-    findPlayerCard = <p>Player not found</p>;
+    findPlayerCard = <p>player not found</p>;
   }
+
   let deleteInput;
   if (player != null) {
     deleteInput = (
       <DeletePlayer
-        gameId={game.game.id}
+        gameId={game.id}
         playerId={player.id}
         deleteFunction={handleRemoveItem}
       />
@@ -82,7 +84,13 @@ const AdminGCPlayer = (game: Props) => {
   }
   let updatePlayer;
   if (player != null) {
-    updatePlayer = <UpdatePlayer gameid={game.game.id} player={player} />;
+    updatePlayer = (
+      <UpdatePlayer
+        gameid={game.id}
+        player={player}
+        refreshPlayer={fetchOnePlayerFromGame}
+      />
+    );
   } else {
     updatePlayer = <p>Get a player to update!</p>;
   }
@@ -104,11 +112,11 @@ const AdminGCPlayer = (game: Props) => {
                 aria-controls="panel1a-content"
                 id="panel1a-header"
               >
-                <h4>List of players</h4>
+                <h4>List of players </h4>
               </AccordionSummary>
               <PlayerListDetailed players={players} />
             </Accordion>
-            <AddPlayer gameId={game.game.id} />
+            <AddPlayer gameId={game.id} />
             <div style={{ marginTop: 10 }}>
               <h4>Get Player</h4>
               <TextField
