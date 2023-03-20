@@ -6,13 +6,14 @@ import { Game } from "../../../interfaces/game";
 
 type Props = {
     game: Game;
+    options: any;
   };
   
 
-const MessageBox = ({ game }: Props) => 
+const MessageBox = ({ game, options }: Props) => 
 {
 
-    const [messages, setMessages] = useState([["",""]])
+    const [messages, setMessages] = useState([["", "",""]])
     const bottomRef = useRef<null | HTMLDivElement>(null); 
     
     useEffect(() => {
@@ -26,28 +27,36 @@ const MessageBox = ({ game }: Props) =>
 		const pusher = new Pusher("e346b81befca052d8721", {
 			cluster: 'eu'
 		})
-		const channel1 = pusher.subscribe('Global');
 
-		channel1.bind('MessageRecieved',function(data: any) {
-            setMessages(messages => [...messages, [data.sender, data.message]])
-		})
+        options.forEach(x => {
+            pusher.unsubscribe(x.name);
+        })
+
+        options.forEach(x => {
+            let channel = pusher.subscribe(x.name);
+            console.log(x.name);
+            channel.bind('MessageRecieved', function(data: any) {
+                setMessages(messages => [...messages, [data.channel, data.sender, data.message]])
+            })
+        })
+
 		
 		return (() => {
-			pusher.unsubscribe('Global')
+            options.forEach(x => {
+                pusher.unsubscribe(x.name);
+            })
 		})
-	}, []);
+	}, [options]);
     
 
     useEffect(() => {
         const fetchOldMessages = async () =>
         {
-            let result = await getAnything("api/v1/game/1/channel");
-            console.log(result);
-            result.forEach(async (value) => {
-                value.messages.forEach(async (msg) => {
-                    let message = await getAnything(msg);
-                    setMessages(messages => [...messages, [message.sender, msg.message]]);
-
+            let result = await getAnything("api/v1/game/1/channel/withdetails");
+            result.forEach(async (value: any) => {
+                console.log(value);
+                value.messages.forEach(async (msg: any) => {
+                    setMessages(messages => [...messages, [msg.channel ,msg.sender, msg.contents]]);
                 })
             })
         }
@@ -60,13 +69,12 @@ const MessageBox = ({ game }: Props) =>
       
 
     return (
-        <Container ref={bottomRef} sx={{border: 1, minHeight: "250px", maxHeight:"250px", maxWidth:"sm", overflow:'auto'}}>
-            {messages.slice(1).map((msg, index) => (
-                <p>{msg[0]}: {msg[1]}</p>
+        <Container ref={bottomRef} sx={{border: 1, minHeight: "250px", maxHeight:"250px", maxWidth:"sm", overflow:'auto', bgcolor:"#4C443C"}}>
+            {messages.slice(1).map((msg) => (
+                <p key={msg.id}>[{msg[0]}] {msg[1]}: {msg[2]}</p>
             ))}
         </Container>
     )
 }
-
 
 export default MessageBox;
