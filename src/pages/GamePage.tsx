@@ -2,7 +2,12 @@ import Container from "@mui/material/Container";
 import { useLoadScript } from "@react-google-maps/api";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getAnything, getOneGameWithDetails, getUsers } from "../api/apiCalls";
+import {
+  getAnything,
+  getOneGameWithDetails,
+  getSquads,
+  getUsers,
+} from "../api/apiCalls";
 import BiteCode from "../components/gamePage/BiteCode";
 import BiteCodeEntry from "../components/gamePage/BiteCodeEntry";
 import GameRegistration from "../components/gamePage/GameRegistration";
@@ -16,6 +21,9 @@ import keycloak from "../keycloak";
 import { ROLES } from "../roles/roles";
 import { User } from "../interfaces/user";
 import { Player } from "../interfaces/player";
+import SquadRegistration from "../components/gamePage/SquadRegistration";
+import { Squad } from "../interfaces/squad";
+import ResponseSnackBar from "../components/ResponseSnackBar";
 
 const libraries: (
   | "drawing"
@@ -33,17 +41,25 @@ const GamePage = () => {
   const { gameId } = useParams();
 
   const [game, setGame] = useState<Game>();
+  const [allPlayers, setAllPlayers] = useState<Array<Player>>();
   const [playerString, setPlayerString] = useState<any>();
   const [player, setPlayer] = useState<Player>();
+  const [user, setUser] = useState<User>();
+  const [squads, setSquads] = useState<Array<Squad>>();
+
+  const [snackbar, setSnackbar] = useState(false);
+  const [snackbarRes, setSnackbarRes] = useState<any>();
+  const [snackbarFrom, setSnackbarFrom] = useState<string>();
+
   const admin = keycloak.hasRealmRole(ROLES.Admin);
 
   useEffect(() => {
     if (gameId) {
       const fetchOneGame = async () => {
-        const data = await getOneGameWithDetails(+gameId);
-        setGame(data);
+        const theGame = await getOneGameWithDetails(+gameId);
+        setGame(theGame);
+        setAllPlayers(theGame.players);
       };
-
       fetchOneGame();
 
       const fetchUser = async () => {
@@ -52,13 +68,19 @@ const GamePage = () => {
           (user: User) =>
             user.firstName === keycloak.tokenParsed?.name.split(" ")[0] // change to sub value to check id insted
         );
-
+        setUser(theUser);
         const player = theUser.players.find(
           (player: string) => player.split("/")[3] === gameId
         );
         setPlayerString(player);
       };
       fetchUser();
+
+      const fetchSquads = async () => {
+        const data = await getSquads(+gameId);
+        setSquads(data);
+      };
+      fetchSquads();
     }
   }, []);
 
@@ -73,7 +95,7 @@ const GamePage = () => {
     }
   }, [playerString]);
 
-  if (game) {
+  if (game && user) {
     return (
       <Container
         maxWidth="lg"
@@ -89,15 +111,37 @@ const GamePage = () => {
           <>
             {!player ? (
               <>
-                {game.gameState === "Registration" && (
-                  <GameRegistration game={game} />
-                )}
+                {/* {game.gameState === "Registration" && ( */}
+                <GameRegistration
+                  gameName={game.name}
+                  user={user}
+                  players={allPlayers}
+                  setPlayer={(newPlayer: Player) => setPlayer(newPlayer)}
+                  addToAllPlayers={(allPlayers: Player[]) =>
+                    setAllPlayers(allPlayers)
+                  }
+                  setSnackbarRes={(res: any) => {
+                    setSnackbarRes(res);
+                    setSnackbar(true);
+                  }}
+                  setSnackbarFrom={(from: string) => setSnackbarFrom(from)}
+                />
+                {/* )} */}
               </>
             ) : (
               <>
                 <div className="biteCode">
                   {player.isHuman && <BiteCode player={player} />}
-                  {!player.isHuman && <BiteCodeEntry player={player} />}
+                  {!player.isHuman && (
+                    <BiteCodeEntry
+                      player={player}
+                      setSnackbarRes={(res: any) => {
+                        setSnackbarRes(res);
+                        setSnackbar(true);
+                      }}
+                      setSnackbarFrom={(from: string) => setSnackbarFrom(from)}
+                    />
+                  )}
                 </div>
               </>
             )}
@@ -106,12 +150,35 @@ const GamePage = () => {
         {!isLoaded ? (
           <p>Loading map....</p>
         ) : (
-          <Map game={game} player={player} />
+          <Map game={game} player={player} squads={squads} />
         )}
+
         <div className="lists">
-          <SquadList players={game.players} />
-          <PlayerList players={game.players} />
+          <div style={{ width: "30%" }}>
+            {squads && <SquadList players={game.players} squads={squads} />}
+            {player && (
+              <SquadRegistration
+                player={player}
+                squads={squads}
+                setSquad={(squad: Array<Squad>) => {
+                  setSquads(squad);
+                }}
+                setSnackbarRes={(res: any) => {
+                  setSnackbarRes(res);
+                  setSnackbar(true);
+                }}
+                setSnackbarFrom={(from: string) => setSnackbarFrom(from)}
+              />
+            )}
+          </div>
+
+          {allPlayers && <PlayerList players={allPlayers} />}
         </div>
+        <ResponseSnackBar
+          open={snackbar}
+          res={snackbarRes}
+          from={snackbarFrom}
+        />
       </Container>
     );
   } else {

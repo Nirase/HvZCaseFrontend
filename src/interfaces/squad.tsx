@@ -4,3 +4,9 @@ export interface Squad {
   players: [];
   squadCheckIns: [];
 }
+
+export interface AddSquad {
+  name: string;
+  gameId: number;
+  creatorId: number;
+}

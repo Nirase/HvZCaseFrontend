@@ -7,19 +7,10 @@ import SquadListItem from "./SquadListItem";
 
 type Props = {
   players: Array<Player>;
+  squads: Array<Squad>;
 };
 
-const SquadList = ({ players }: Props) => {
-  const { gameId }: any = useParams();
-  const [squads, setSquads] = useState<Array<Squad>>();
-  useEffect(() => {
-    const fetchSquads = async () => {
-      const data = await getSquads(+gameId);
-      setSquads(data);
-    };
-    fetchSquads();
-  }, []);
-
+const SquadList = ({ players, squads }: Props) => {
   return (
     <div>
       <h3>Squads active</h3>

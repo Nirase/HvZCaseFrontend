@@ -12,13 +12,13 @@ const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
 type Props = {
   open: boolean;
   res: any;
-  from: string;
+  from: string | undefined;
 };
 
 const ResponseSnackBar = ({ open, res, from }: Props) => {
   const [show, setOpen] = useState(false);
   const [version, setVersion] = useState<AlertColor>();
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState<string>();
 
   useEffect(() => {
     if (open) {

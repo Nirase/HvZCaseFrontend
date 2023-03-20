@@ -5,6 +5,7 @@ import {
   MenuItem,
   Select,
   SelectChangeEvent,
+  TextField,
 } from "@mui/material";
 import React, { useState } from "react";
 import { Player } from "../../../interfaces/player";
@@ -18,6 +19,7 @@ type Props = {
 const UpdatePlayer = ({ gameid, player }: Props) => {
   const [isHuman, setIsHuman] = useState("");
   const [isPatientZero, setIsPatientZero] = useState("");
+  const [squadId, setSquadId] = useState(0);
 
   const handleChangeHuman = (event: SelectChangeEvent) => {
     setIsHuman(event.target.value as string);
@@ -42,12 +44,19 @@ const UpdatePlayer = ({ gameid, player }: Props) => {
 
   const updatePlayer = async () => {
     if (player != null) {
+      if (squadId == 0) {
+        //what should i put her instead? if someone doesn't have a squad what do we do? leave squad function?
+        player.squadId = null;
+      } else {
+        player.squadId = squadId;
+      }
+      console.log(player.squadId);
       await updatePlayerToGame(gameid, player);
     }
   };
 
   return (
-    <div>
+    <>
       <FormControl fullWidth style={{ marginTop: 20 }}>
         <InputLabel id="update-player-ishuman-input"> isHuman </InputLabel>
         <Select
@@ -76,6 +85,14 @@ const UpdatePlayer = ({ gameid, player }: Props) => {
           <MenuItem value={"false"}> false</MenuItem>
         </Select>
       </FormControl>
+      <TextField
+        id="update-player-squadid-input"
+        label="Squad Id"
+        variant="standard"
+        type={"number"}
+        style={{ marginLeft: "20px" }}
+        onChange={(e) => setSquadId(+e.target.value)}
+      />
       <Button
         variant="contained"
         style={{ marginTop: 10, backgroundColor: "#360568" }}
@@ -83,7 +100,7 @@ const UpdatePlayer = ({ gameid, player }: Props) => {
       >
         Update player
       </Button>
-    </div>
+    </>
   );
 };
 
