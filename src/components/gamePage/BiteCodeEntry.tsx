@@ -9,7 +9,7 @@ import { CreateKill } from "../../interfaces/marker";
 import { Player } from "../../interfaces/player";
 import { useParams } from "react-router-dom";
 import { addKill } from "../../api/apiCalls";
-import ResponseSnackBar from "../ResponseSnackBar";
+import Places from "./Places";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -28,16 +28,16 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 
 type Props = {
   player: Player;
+  setSnackbarRes: (res: any) => void;
+  setSnackbarFrom: (from: string) => void;
 };
 
-const BiteCodeEntry = ({ player }: Props) => {
+const BiteCodeEntry = ({ player, setSnackbarFrom, setSnackbarRes }: Props) => {
   const [expanded, setExpanded] = useState(false);
   const [biteCode, setBiteCode] = useState("");
   const [location, setLocation] = useState("");
   const [description, setDescription] = useState("");
   const { gameId }: any = useParams();
-  const [res, setRes] = useState<any>();
-  const [snackbar, setSnackbar] = useState(false);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -45,19 +45,18 @@ const BiteCodeEntry = ({ player }: Props) => {
 
   const handleKillClick = async () => {
     const time = new Date().toLocaleString();
-    const kill: any = {
+    const kill: CreateKill = {
       location,
       description,
-
+      timeOfDeath: time,
       biteCode,
       killerId: player.id,
       gameId: +gameId,
     };
 
     const data = await addKill(+gameId, kill);
-    setRes(data);
-    setSnackbar(true);
-    console.log("kill", data);
+    setSnackbarRes(data);
+    setSnackbarFrom("Kill");
   };
 
   return (
@@ -66,11 +65,17 @@ const BiteCodeEntry = ({ player }: Props) => {
         <TextField
           id="BiteCodeEntry"
           label="Enter Bite Code"
-          variant="filled"
+          variant="outlined"
           color="secondary"
           fullWidth
           value={biteCode}
           onChange={(e) => setBiteCode(e.target.value)}
+          error={biteCode === player.biteCode}
+          helperText={
+            biteCode === player.biteCode
+              ? "you can't input your own bite code"
+              : ""
+          }
         />
         <ExpandMore
           expand={expanded}
@@ -93,15 +98,8 @@ const BiteCodeEntry = ({ player }: Props) => {
         <div>
           <Typography paragraph>Optional:</Typography>
 
-          <TextField
-            id="BiteLocation"
-            label="Enter Bite Location"
-            variant="filled"
-            color="secondary"
-            fullWidth
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-          />
+          <Places setPosition={(position: string) => setLocation(position)} />
+
           <Typography paragraph>
             Enter address for where the bite took place.
           </Typography>
@@ -109,7 +107,7 @@ const BiteCodeEntry = ({ player }: Props) => {
           <TextField
             id="BiteDescription"
             label="Enter short description of kill"
-            variant="filled"
+            variant="outlined"
             color="secondary"
             multiline
             maxRows={5}
@@ -120,7 +118,6 @@ const BiteCodeEntry = ({ player }: Props) => {
           <Typography paragraph>Rnter description of kill</Typography>
         </div>
       </Collapse>
-      <ResponseSnackBar open={snackbar} res={res} from={"killed"} />
     </div>
   );
 };

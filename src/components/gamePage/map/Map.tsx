@@ -11,6 +11,7 @@ import KillMarker from "./KillMarker";
 import { Paper } from "@mui/material";
 import KillInfo from "./KillInfo";
 import { Player } from "../../../interfaces/player";
+import { Squad } from "../../../interfaces/squad";
 
 type LatLngLiteral = google.maps.LatLngLiteral;
 type MapOptions = google.maps.MapOptions;
@@ -18,12 +19,14 @@ type MapOptions = google.maps.MapOptions;
 type Props = {
   game: Game;
   player: Player | undefined;
+  squads: Array<Squad> | undefined;
 };
 
-const Map = ({ game, player }: Props) => {
+const Map = ({ game, player, squads }: Props) => {
   const [mapCenter, setMapCenter] = useState<LatLngLiteral>();
   const [missoinInfo, setMissonInfo] = useState<Info>();
   const [killInfo, setKillInfo] = useState<Kill>();
+  const [checkInInfo, setCheckInInfo] = useState()
 
   const mapRef = useRef<GoogleMap>();
 

@@ -7,3 +7,11 @@ export interface Player {
   isPatientZero: boolean;
   biteCode: string;
 }
+
+export interface addPlayer {
+  userId: number;
+  isHuman: boolean;
+  isPatientZero: boolean;
+  biteCode: string;
+  gameId: number;
+}

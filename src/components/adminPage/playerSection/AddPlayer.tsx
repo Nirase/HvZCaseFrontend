@@ -45,11 +45,11 @@ const AddPlayer = (gameId: Props) => {
     }
   };
 
-  const addPlayer = async () => {
-    player.userId = userId;
-    player.biteCode = "random";
-    await addPlayerToGame(+gameId, player);
-  };
+  // const addPlayer = async () => {
+  //   player.userId = userId;
+  //   player.biteCode = "random";
+  //   await addPlayerToGame(+gameId, player);
+  // };
 
   return (
     <Accordion>
@@ -108,7 +108,7 @@ const AddPlayer = (gameId: Props) => {
             marginBottom: 20,
             backgroundColor: "#360568",
           }}
-          onClick={addPlayer}
+          // onClick={addPlayer}
         >
           Add Player
         </Button>
