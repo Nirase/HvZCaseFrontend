@@ -8,6 +8,7 @@ import {
   TextField,
 } from "@mui/material";
 import { maxWidth } from "@mui/system";
+import { useLoadScript } from "@react-google-maps/api";
 import React, { useState } from "react";
 import { updateGame } from "../../../api/apiCalls";
 import { Game } from "../../../interfaces/game";
@@ -17,6 +18,7 @@ type Props = {
   id: number;
   game: Game;
 };
+const libraries: ("places")[] = ["places"];
 
 const UpdateGame = ({ id, game }: Props) => {
   const [name, setName] = useState("");
@@ -40,6 +42,11 @@ const UpdateGame = ({ id, game }: Props) => {
     kills: game.kills,
     missions: game.missions,
   };
+
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: process.env.REACT_APP_MAP_API_KEY as string,
+    libraries: libraries,
+  });
 
   const handleChange = (event: SelectChangeEvent) => {
     setGameState(event.target.value as string);
@@ -96,7 +103,11 @@ const UpdateGame = ({ id, game }: Props) => {
       />
       <br></br>
       <div style={{ maxWidth: 600, marginTop: 20, marginBottom: 20 }}>
-        <Places setPosition={(position: string) => setAddress(position)} />
+        {!isLoaded ? (
+          <p></p>
+        ) : (
+          <Places setPosition={(position: string) => setAddress(position)} />
+        )}
       </div>
       <TextField
         type={"number"}

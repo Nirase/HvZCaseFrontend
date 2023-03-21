@@ -1,4 +1,5 @@
 import { Button, TextField } from "@mui/material";
+import { useLoadScript } from "@react-google-maps/api";
 import React, { useState } from "react";
 import { createAGame } from "../../../api/apiCalls";
 import { createGame } from "../../../interfaces/game";
@@ -7,6 +8,7 @@ import Places from "../../gamePage/Places";
 type Props = {
   refreshList: Function;
 };
+const libraries: ("places")[] = ["places"];
 
 const CreateGame = ({ refreshList }: Props) => {
   const [name, setName] = useState("");
@@ -24,6 +26,11 @@ const CreateGame = ({ refreshList }: Props) => {
     location: "",
     radius: 0,
   };
+
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: process.env.REACT_APP_MAP_API_KEY as string,
+    libraries: libraries,
+  });
   const [warningText, setWarningText] = useState("");
 
   const handleCreate = async () => {
@@ -62,7 +69,11 @@ const CreateGame = ({ refreshList }: Props) => {
       />
       <br></br>
       <div style={{ maxWidth: 400, marginTop: 20 }}>
-        <Places setPosition={(position: string) => setAddress(position)} />
+        {!isLoaded ? (
+          <p></p>
+        ) : (
+          <Places setPosition={(position: string) => setAddress(position)} />
+        )}
       </div>
       <TextField
         type={"number"}
