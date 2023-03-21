@@ -114,22 +114,22 @@ const GamePage = () => {
           <>
             {!player ? (
               <>
-                {/* {game.gameState === "Registration" && ( */}
-                <GameRegistration
-                  gameName={game.name}
-                  user={user}
-                  players={allPlayers}
-                  setPlayer={(newPlayer: Player) => setPlayer(newPlayer)}
-                  addToAllPlayers={(allPlayers: Player[]) =>
-                    setAllPlayers(allPlayers)
-                  }
-                  setSnackbarRes={(res: any) => {
-                    setSnackbarRes(res);
-                    setSnackbar(true);
-                  }}
-                  setSnackbarFrom={(from: string) => setSnackbarFrom(from)}
-                />
-                {/* )} */}
+                {game.gameState === "Registration" && (
+                  <GameRegistration
+                    gameName={game.name}
+                    user={user}
+                    players={allPlayers}
+                    setPlayer={(newPlayer: Player) => setPlayer(newPlayer)}
+                    addToAllPlayers={(allPlayers: Player[]) =>
+                      setAllPlayers(allPlayers)
+                    }
+                    setSnackbarRes={(res: any) => {
+                      setSnackbarRes(res);
+                      setSnackbar(true);
+                    }}
+                    setSnackbarFrom={(from: string) => setSnackbarFrom(from)}
+                  />
+                )}
               </>
             ) : (
               <>
@@ -158,8 +158,15 @@ const GamePage = () => {
         )}
         <div className="lists">
           <div style={{ width: "30%" }}>
-            {squads && <SquadList players={game.players} squads={squads} />}
-            {player && (
+            {squads && (
+              <SquadList
+                players={game.players}
+                squads={squads}
+                player={player}
+                updatePlayer={(player: Player) => setPlayer(player)}
+              />
+            )}
+            {player && !player.squadId ? (
               <SquadRegistration
                 player={player}
                 squads={squads}
@@ -172,6 +179,8 @@ const GamePage = () => {
                 }}
                 setSnackbarFrom={(from: string) => setSnackbarFrom(from)}
               />
+            ) : (
+              ""
             )}
           </div>
 

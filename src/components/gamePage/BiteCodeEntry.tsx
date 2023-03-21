@@ -57,6 +57,7 @@ const BiteCodeEntry = ({ player, setSnackbarFrom, setSnackbarRes }: Props) => {
     const data = await addKill(+gameId, kill);
     setSnackbarRes(data);
     setSnackbarFrom("Kill");
+    console.log(data);
   };
 
   return (
@@ -73,7 +74,7 @@ const BiteCodeEntry = ({ player, setSnackbarFrom, setSnackbarRes }: Props) => {
           error={biteCode === player.biteCode}
           helperText={
             biteCode === player.biteCode
-              ? "you can't input your own bite code"
+              ? "you can't input your old bite code"
               : ""
           }
         />
