@@ -33,7 +33,6 @@ const UpdatePlayer = ({ gameid, player, refreshPlayer }: Props) => {
     squadId: squadId,
   };
 
-  console.log(player);
   const handleChangeHuman = (event: SelectChangeEvent) => {
     setIsHuman(event.target.value as string);
     if (event.target.value == "true") {

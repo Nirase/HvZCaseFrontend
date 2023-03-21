@@ -1,3 +1,4 @@
+import { Game } from "../interfaces/game";
 import { addPlayer, Player } from "../interfaces/player";
 import { AddSquad } from "../interfaces/squad";
 import { deleteApiData, getApiData, postApiData, putApiData } from "./api";
@@ -45,6 +46,16 @@ const getOneGame = async (id: number) => {
 
 const getOneGameWithDetails = async (id: number) => {
   const res = await getApiData(`api/v1/game/${id}/withdetails`);
+
+  if (!res) {
+    return undefined;
+  }
+
+  return await res;
+};
+
+const updateGame = async (id: number, game: Game) => {
+  const res = await putApiData(`api/v1/game/${id}`, game);
 
   if (!res) {
     return undefined;
@@ -156,7 +167,7 @@ const addKill = async (gameId: number, body: any) => {
   return await res;
 };
 
-const addMessage = async(gameId: number, body: any) => {
+const addMessage = async (gameId: number, body: any) => {
   const res = await postApiData(`api/v1/chat`, body);
 
   if (!res) {
@@ -164,8 +175,7 @@ const addMessage = async(gameId: number, body: any) => {
   }
 
   return await res;
-
-}
+};
 
 export {
   getAnything,
@@ -173,6 +183,7 @@ export {
   getListOfGAmesWithDetails,
   getOneGame,
   getOneGameWithDetails,
+  updateGame,
   getPlayersFromGame,
   getOnePlayerFromGame,
   addPlayerToGame,

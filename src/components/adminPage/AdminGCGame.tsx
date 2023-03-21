@@ -22,7 +22,7 @@ const AdminGCGame = ({ game }: Props) => {
             <h3>Game</h3>
           </AccordionSummary>
           <AccordionDetails>
-            <UpdateGame id={game.id} />
+            <UpdateGame id={game.id} game={game} />
             <DeleteGame id={game.id} />
           </AccordionDetails>
         </Accordion>
