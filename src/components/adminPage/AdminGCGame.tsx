@@ -7,9 +7,10 @@ import { Game } from "../../interfaces/game";
 
 type Props = {
   game: Game;
+  refreshList: Function;
 };
 
-const AdminGCGame = ({ game }: Props) => {
+const AdminGCGame = ({ game, refreshList }: Props) => {
   if (game) {
     return (
       <AccordionDetails>
@@ -23,7 +24,7 @@ const AdminGCGame = ({ game }: Props) => {
           </AccordionSummary>
           <AccordionDetails>
             <UpdateGame id={game.id} game={game} />
-            <DeleteGame id={game.id} />
+            <DeleteGame id={game.id} refreshList={refreshList} />
           </AccordionDetails>
         </Accordion>
       </AccordionDetails>

@@ -9,9 +9,10 @@ import AdminGCMission from "./AdminGCMission";
 
 type Props = {
   game: Game;
+  refreshList: Function;
 };
 
-const AdminGameCard = ({ game }: Props) => {
+const AdminGameCard = ({ game, refreshList }: Props) => {
   const gameId = game.id;
   const name = game.name;
 
@@ -27,9 +28,9 @@ const AdminGameCard = ({ game }: Props) => {
             {gameId} | {name}
           </h3>
         </AccordionSummary>
-        <AdminGCGame game={game} />
+        <AdminGCGame game={game} refreshList={refreshList} />
         <AdminGCPlayer game={game} />
-        <AdminGCMission />
+        <AdminGCMission game={game} />
       </Accordion>
     </div>
   );

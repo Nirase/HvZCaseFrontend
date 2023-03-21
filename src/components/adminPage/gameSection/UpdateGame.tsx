@@ -7,9 +7,11 @@ import {
   SelectChangeEvent,
   TextField,
 } from "@mui/material";
+import { maxWidth } from "@mui/system";
 import React, { useState } from "react";
 import { updateGame } from "../../../api/apiCalls";
 import { Game } from "../../../interfaces/game";
+import Places from "../../gamePage/Places";
 
 type Props = {
   id: number;
@@ -39,16 +41,23 @@ const UpdateGame = ({ id, game }: Props) => {
     missions: game.missions,
   };
 
-  console.log(game);
   const handleChange = (event: SelectChangeEvent) => {
     setGameState(event.target.value as string);
   };
 
   const handleUpdate = async () => {
-    updatedGame.name = name;
-    updatedGame.description = desc;
-    updatedGame.startDate = startDate;
-    updatedGame.endDate = endDate;
+    if (name) {
+      updatedGame.name = name;
+    }
+    if (desc) {
+      updatedGame.description = desc;
+    }
+    if (startDate) {
+      updatedGame.startDate = startDate;
+    }
+    if (endDate) {
+      updatedGame.endDate = endDate;
+    }
     if (
       gameState == "Registration" ||
       gameState == "In progress" ||
@@ -56,8 +65,12 @@ const UpdateGame = ({ id, game }: Props) => {
     ) {
       updatedGame.gameState = gameState;
     }
-    updatedGame.location = address;
-    updatedGame.radius = mapRadius;
+    if (address) {
+      updatedGame.location = address;
+    }
+    if (mapRadius) {
+      updatedGame.radius = mapRadius;
+    }
     console.log(updatedGame);
     await updateGame(id, updatedGame);
   };
@@ -66,28 +79,33 @@ const UpdateGame = ({ id, game }: Props) => {
       <br></br>
       <b>Update game</b>
       <br></br>
-      <TextField id="nameInput" label="Name" variant="standard" />
+      <TextField
+        id="nameInput"
+        label="Name"
+        variant="standard"
+        defaultValue={game.name}
+        onChange={(e) => setName(e.target.value as string)}
+      />
       <TextField
         id="update-game-desc-input"
         label="Description"
         variant="standard"
-        style={{ marginLeft: "20px" }}
-        onChange={(e) => setName(e.target.value as string)}
-      />
-      <br></br>
-      <TextField
-        id="addressInput"
-        label="Address"
-        variant="standard"
+        style={{ marginLeft: 20 }}
+        defaultValue={game.description}
         onChange={(e) => setDesc(e.target.value as string)}
       />
+      <br></br>
+      <div style={{ maxWidth: 600, marginTop: 20, marginBottom: 20 }}>
+        <Places setPosition={(position: string) => setAddress(position)} />
+      </div>
       <TextField
         type={"number"}
         id="update-game-radius-input"
         label="Map radius (m)"
         variant="standard"
-        style={{ marginLeft: "20px" }}
-        onChange={(e) => setAddress(e.target.value)}
+        style={{ marginBottom: 20 }}
+        defaultValue={game.radius}
+        onChange={(e) => setRadius(+e.target.value)}
       />
       <br></br>
       <label>Start Date</label>
@@ -96,20 +114,22 @@ const UpdateGame = ({ id, game }: Props) => {
         id="update-start-date-input"
         label=" "
         variant="standard"
-        style={{ marginLeft: "-70px" }}
+        style={{ marginLeft: -70 }}
+        defaultValue={game.startDate}
         onChange={(e) => setStartDate(e.target.value)}
       />
-      <label style={{ marginLeft: "20px" }}>End Date</label>
+      <label style={{ marginLeft: 20 }}>End Date</label>
       <TextField
         type="date"
         id="update-end-date-input"
         label=" "
         variant="standard"
-        style={{ marginLeft: "-65px" }}
+        style={{ marginLeft: -65 }}
+        defaultValue={game.endDate}
         onChange={(e) => setEndDate(e.target.value)}
       />
       <br></br>
-      <FormControl fullWidth style={{ marginTop: 20 }}>
+      <FormControl fullWidth style={{ marginTop: 20, maxWidth: 600 }}>
         <InputLabel id="update-game-state-input"> Game State </InputLabel>
         <Select
           labelId="update-game-state-input"
@@ -117,7 +137,7 @@ const UpdateGame = ({ id, game }: Props) => {
           value={gameState}
           label="Game State"
           onChange={handleChange}
-          defaultValue={""}
+          defaultValue={game.gameState}
         >
           <MenuItem value={"Registration"}>Registration</MenuItem>
           <MenuItem value={"In progress"}>In Progress</MenuItem>
