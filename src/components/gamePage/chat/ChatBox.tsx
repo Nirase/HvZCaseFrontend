@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { Player } from "../../../interfaces/player";
 import { Game } from "../../../interfaces/game";
 import ChatForm from "./ChatForm";
+import { Channel } from "../../../interfaces/channel";
 
 type Props = {
   game: Game;
@@ -14,14 +15,15 @@ type Props = {
 const ChatBox = ({ game, player }: Props) => 
 {
     let gameId = game.id;
-    const [options, setOptions] = useState<any>([]);
+    const [options, setOptions] = useState<Channel[]>([]);
 
     
     useEffect(() => {
         if (gameId) {
           const fetchOptions = async () => {
             const data = await getAnything(`api/v1/game/${gameId}/channel`);
-            setOptions(data);
+            const channels: Channel[] = Object.values(data);
+            setOptions(channels);
           };
 
           fetchOptions();
@@ -33,8 +35,8 @@ const ChatBox = ({ game, player }: Props) =>
     // On form submit -> Make api call to post a new message using the gameId, channelId, playerId and contents.
     return (
         <Container maxWidth="sm" >
-          {options ?  <MessageBox game={game} options={options}></MessageBox> : <></>}
-          {options ? <ChatForm player={player} options={options} game={game}></ChatForm> : <></>}
+          {options.length > 0 ?  <MessageBox game={game} options={options}></MessageBox> : <></>}
+          {options.length > 0 ?  <ChatForm player={player} options={options} game={game}></ChatForm> : <></>}
         </Container>
     );
 

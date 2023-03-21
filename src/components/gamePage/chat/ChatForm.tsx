@@ -1,13 +1,14 @@
 import { Button, Grid, MenuItem, Paper, Select, TextField } from "@mui/material";
 import { Container } from "@mui/system";
 import { addMessage } from "../../../api/apiCalls";
+import { Channel } from "../../../interfaces/channel";
 import { Game } from "../../../interfaces/game";
 import { Player } from "../../../interfaces/player";
 
 type Props = {
     player: Player | undefined;
     game: Game;
-    options: any;
+    options: Channel[];
 }
 
 const ChatForm = ({ player, game, options } : Props) => {
@@ -15,7 +16,6 @@ const ChatForm = ({ player, game, options } : Props) => {
         if (!player)
             return;
         event.preventDefault();
-        console.log(event.target.channelId.value);
         await addMessage(game.id, {
             gameId: game.id,
             channelId: event.target.channelId.value,
@@ -31,7 +31,7 @@ const ChatForm = ({ player, game, options } : Props) => {
             <Grid container alignItems="center">
                 <Grid item xs={false} sm={2}>
                     <Select name="channelId" fullWidth defaultValue={1}>
-                        {options?.map(({x} : any) => (
+                        {options?.map((x : Channel) => (
                             <MenuItem key={x.id} value={x.id}>
                                 {x.name}
                             </MenuItem>

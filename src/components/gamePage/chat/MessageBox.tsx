@@ -3,10 +3,11 @@ import Pusher from "pusher-js";
 import { useEffect, useRef, useState } from "react"
 import { getAnything } from "../../../api/apiCalls";
 import { Game } from "../../../interfaces/game";
+import { Channel } from "../../../interfaces/channel";
 
 type Props = {
     game: Game;
-    options: any;
+    options: Channel[];
   };
   
 
@@ -18,7 +19,6 @@ const MessageBox = ({ game, options }: Props) =>
     
     useEffect(() => {
       // 👇️ scroll to bottom every time messages change
-      console.log(bottomRef.current);
       bottomRef.current?.scrollTo({top: bottomRef.current.scrollHeight, behavior: 'smooth'})
     }, [messages]);
 
@@ -28,13 +28,12 @@ const MessageBox = ({ game, options }: Props) =>
 			cluster: 'eu'
 		})
 
-        options.forEach(({x} : any) => {
+        options.forEach((x : Channel) => {
             pusher.unsubscribe(x.name);
         })
 
-        options.forEach(({x} : any) => {
+        options.forEach((x : Channel) => {
             let channel = pusher.subscribe(x.name);
-            console.log(x.name);
             channel.bind('MessageRecieved', function(data: any) {
                 setMessages(messages => [...messages, [data.channel, data.sender, data.message]])
             })
@@ -42,7 +41,7 @@ const MessageBox = ({ game, options }: Props) =>
 
 		
 		return (() => {
-            options.forEach(({x} : any) => {
+            options.forEach((x : Channel) => {
                 pusher.unsubscribe(x.name);
             })
 		})
@@ -54,7 +53,6 @@ const MessageBox = ({ game, options }: Props) =>
         {
             let result = await getAnything("api/v1/game/1/channel/withdetails");
             result.forEach(async (value: any) => {
-                console.log(value);
                 value.messages.forEach(async (msg: any) => {
                     setMessages(messages => [...messages, [msg.channel ,msg.sender, msg.contents]]);
                 })
