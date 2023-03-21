@@ -28,11 +28,11 @@ const MessageBox = ({ game, options }: Props) =>
 			cluster: 'eu'
 		})
 
-        options.forEach(x => {
+        options.forEach(({x} : any) => {
             pusher.unsubscribe(x.name);
         })
 
-        options.forEach(x => {
+        options.forEach(({x} : any) => {
             let channel = pusher.subscribe(x.name);
             console.log(x.name);
             channel.bind('MessageRecieved', function(data: any) {
@@ -42,7 +42,7 @@ const MessageBox = ({ game, options }: Props) =>
 
 		
 		return (() => {
-            options.forEach(x => {
+            options.forEach(({x} : any) => {
                 pusher.unsubscribe(x.name);
             })
 		})
@@ -70,8 +70,8 @@ const MessageBox = ({ game, options }: Props) =>
 
     return (
         <Container ref={bottomRef} sx={{border: 1, minHeight: "250px", maxHeight:"250px", maxWidth:"sm", overflow:'auto', bgcolor:"#4C443C"}}>
-            {messages.slice(1).map((msg) => (
-                <p key={msg.id}>[{msg[0]}] {msg[1]}: {msg[2]}</p>
+            {messages.slice(1).map((msg, index) => (
+                <p key={index}>[{msg[0]}] {msg[1]}: {msg[2]}</p>
             ))}
         </Container>
     )
