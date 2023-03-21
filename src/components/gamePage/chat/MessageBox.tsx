@@ -18,7 +18,6 @@ const MessageBox = ({ game, options }: Props) =>
     const bottomRef = useRef<null | HTMLDivElement>(null); 
     
     useEffect(() => {
-      // 👇️ scroll to bottom every time messages change
       bottomRef.current?.scrollTo({top: bottomRef.current.scrollHeight, behavior: 'smooth'})
     }, [messages]);
 
@@ -52,19 +51,18 @@ const MessageBox = ({ game, options }: Props) =>
         const fetchOldMessages = async () =>
         {
             let result = await getAnything("api/v1/game/1/channel/withdetails");
+            let allMessages: any = []
             result.forEach(async (value: any) => {
                 value.messages.forEach(async (msg: any) => {
-                    setMessages(messages => [...messages, [msg.channel ,msg.sender, msg.contents]]);
+                    allMessages.push([msg.channel ,msg.sender, msg.contents]);
                 })
             })
+            setMessages(allMessages);
         }
 
         fetchOldMessages();
     }, []);
 
-
-
-      
 
     return (
         <Container ref={bottomRef} sx={{border: 1, minHeight: "250px", maxHeight:"250px", maxWidth:"sm", overflow:'auto', bgcolor:"#4C443C"}}>

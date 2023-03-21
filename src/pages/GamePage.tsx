@@ -108,6 +108,8 @@ const GamePage = () => {
         }}
       >
         <Info game={game} />
+        <ChatBox game={game} player={player}></ChatBox>
+
         {!admin && (
           <>
             {!player ? (
@@ -132,7 +134,6 @@ const GamePage = () => {
             ) : (
               <>
               
-                <ChatBox game={game} player={player}></ChatBox>
                 <div className="biteCode">
                   {player.isHuman && <BiteCode player={player} />}
                   {!player.isHuman && (
