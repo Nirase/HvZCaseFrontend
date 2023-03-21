@@ -26,13 +26,7 @@ import { Squad } from "../interfaces/squad";
 import ResponseSnackBar from "../components/ResponseSnackBar";
 import ChatBox from "../components/gamePage/chat/ChatBox";
 
-const libraries: (
-  | "drawing"
-  | "geometry"
-  | "localContext"
-  | "places"
-  | "visualization"
-)[] = ["places"];
+const libraries: "places"[] = ["places"];
 
 const GamePage = () => {
   const { isLoaded } = useLoadScript({
@@ -108,7 +102,7 @@ const GamePage = () => {
         }}
       >
         <Info game={game} />
-        <ChatBox game={game} player={player}></ChatBox>
+        {/* <ChatBox game={game} player={player}></ChatBox> */}
 
         {!admin && (
           <>
@@ -133,10 +127,9 @@ const GamePage = () => {
               </>
             ) : (
               <>
-              
                 <div className="biteCode">
                   {player.isHuman && <BiteCode player={player} />}
-                  {!player.isHuman && (
+                  {!player.isHuman && isLoaded ? (
                     <BiteCodeEntry
                       player={player}
                       setSnackbarRes={(res: any) => {
@@ -145,6 +138,8 @@ const GamePage = () => {
                       }}
                       setSnackbarFrom={(from: string) => setSnackbarFrom(from)}
                     />
+                  ) : (
+                    ""
                   )}
                 </div>
               </>

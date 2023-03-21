@@ -11,10 +11,7 @@ import LandingPage from "./pages/LandingPage";
 import ProfilePage from "./pages/ProfilePage";
 import Header from "./components/Header";
 import GamePage from "./pages/GamePage";
-
-// const root = ReactDOM.createRoot(
-//   document.getElementById("root") as HTMLElement
-// );
+import SquadPage from "./pages/SquadPage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -51,6 +48,14 @@ initialize()
                 element={
                   <KeycloakRoute role={ROLES.User}>
                     <GamePage />
+                  </KeycloakRoute>
+                }
+              />
+              <Route
+                path="/game/:gameId/squad/:squadId"
+                element={
+                  <KeycloakRoute role={ROLES.User}>
+                    <SquadPage />
                   </KeycloakRoute>
                 }
               />

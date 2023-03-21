@@ -3,6 +3,7 @@ import { CardActions, Button, Card, CardContent } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import { useNavigate } from "react-router-dom";
 import {
   addPlayerToSquad,
   removePlayerFromSquad,
@@ -22,6 +23,8 @@ const SquadListItem = ({ squad, players, player, updatePlayer }: Props) => {
   const [amountOfMembers, setAmountOfMembers] = useState<number>(0);
   const [dead, setDead] = useState<number>(0);
   const { gameId }: any = useParams();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     let nrMembers = 0;
@@ -64,7 +67,7 @@ const SquadListItem = ({ squad, players, player, updatePlayer }: Props) => {
   };
 
   const handleInfo = () => {
-    console.log(squad.name);
+    navigate("/game/" + gameId + "/squad/" + squad.id);
   };
 
   return (

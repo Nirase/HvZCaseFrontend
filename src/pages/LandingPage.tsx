@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
 import { getListOfGames } from "../api/apiCalls";
 import GameCard from "../components/landingPage/GameCard";
 import { Game } from "../interfaces/game";
