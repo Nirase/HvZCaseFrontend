@@ -24,6 +24,7 @@ import { Player } from "../interfaces/player";
 import SquadRegistration from "../components/gamePage/SquadRegistration";
 import { Squad } from "../interfaces/squad";
 import ResponseSnackBar from "../components/ResponseSnackBar";
+import ChatBox from "../components/gamePage/chat/ChatBox";
 
 const libraries: (
   | "drawing"
@@ -130,6 +131,8 @@ const GamePage = () => {
               </>
             ) : (
               <>
+              
+                <ChatBox game={game} player={player}></ChatBox>
                 <div className="biteCode">
                   {player.isHuman && <BiteCode player={player} />}
                   {!player.isHuman && (
@@ -152,7 +155,6 @@ const GamePage = () => {
         ) : (
           <Map game={game} player={player} squads={squads} />
         )}
-
         <div className="lists">
           <div style={{ width: "30%" }}>
             {squads && <SquadList players={game.players} squads={squads} />}
