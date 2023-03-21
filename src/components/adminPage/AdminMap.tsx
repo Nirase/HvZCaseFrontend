@@ -3,7 +3,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import "../../styles/map.css";
 
 import MissionMarker from "../gamePage/map/MissonMarker";
-import { Info, Kill, Mission } from "../../interfaces/marker";
+import { MissionInfo } from "../../interfaces/marker";
 import { Game } from "../../interfaces/game";
 import { getGeocode, getLatLng } from "use-places-autocomplete";
 import MissonInfo from "../gamePage/map/MissonInfo";
@@ -18,7 +18,7 @@ type Props = {
 
 const AdminMap = ({ game }: Props) => {
   const [mapCenter, setMapCenter] = useState<LatLngLiteral>();
-  const [missoinInfo, setMissonInfo] = useState<Info>();
+  const [missoinInfo, setMissonInfo] = useState<MissionInfo>();
 
   const mapRef = useRef<GoogleMap>();
 
