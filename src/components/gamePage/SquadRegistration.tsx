@@ -32,26 +32,17 @@ const SquadRegistration = ({
       creatorId: id,
     };
 
-    const squadFront: Squad = {
-      // placeholder i will put the data that get sent back here later
-      id: 999,
-      name,
-      players: [],
-      squadCheckIns: [],
-    };
+    const addedSquad = await addSquad(+gameId, squad);
 
-    const data = await addSquad(+gameId, squad);
-
-    console.log("added squad", data); // ska skica upp detta sen
-    if (data) {
+    if (addedSquad) {
       if (squads) {
-        const allSquads = [...squads, squadFront];
+        const allSquads = [...squads, addedSquad];
         setSquad(allSquads);
       }
     }
 
     setSnackbarFrom("created a squad");
-    setSnackbarRes(data);
+    setSnackbarRes(addedSquad);
   };
 
   useEffect(() => {

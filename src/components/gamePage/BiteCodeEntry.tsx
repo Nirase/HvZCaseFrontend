@@ -57,6 +57,7 @@ const BiteCodeEntry = ({ player, setSnackbarFrom, setSnackbarRes }: Props) => {
     const data = await addKill(+gameId, kill);
     setSnackbarRes(data);
     setSnackbarFrom("Kill");
+    console.log(data);
   };
 
   return (

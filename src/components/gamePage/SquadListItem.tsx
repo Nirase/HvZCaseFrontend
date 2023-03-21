@@ -2,17 +2,26 @@ import { CardActions, Button, Card, CardContent } from "@mui/material";
 
 import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router";
+import {
+  addPlayerToSquad,
+  removePlayerFromSquad,
+  updatePlayerToGame,
+} from "../../api/apiCalls";
 import { Player } from "../../interfaces/player";
 import { Squad } from "../../interfaces/squad";
 
 type Props = {
   squad: Squad;
   players: Array<Player>;
+  player: Player | undefined;
+  updatePlayer: (player: Player) => void;
 };
 
-const SquadListItem = ({ squad, players }: Props) => {
+const SquadListItem = ({ squad, players, player, updatePlayer }: Props) => {
   const [amountOfMembers, setAmountOfMembers] = useState<number>(0);
   const [dead, setDead] = useState<number>(0);
+  const { gameId }: any = useParams();
 
   useEffect(() => {
     let nrMembers = 0;
@@ -32,7 +41,29 @@ const SquadListItem = ({ squad, players }: Props) => {
     setDead(nrDead);
   }, []);
 
-  const handleJoin = () => {
+  const handleJoin = async () => {
+    if (player) {
+      const playerCopy: Player = { ...player };
+      playerCopy.squadId = squad.id;
+
+      await addPlayerToSquad(+gameId, squad.id, player.id);
+      updatePlayer(playerCopy);
+      setAmountOfMembers(amountOfMembers + 1);
+    }
+  };
+
+  const handleLeave = async () => {
+    if (player) {
+      const playerCopy: Player = { ...player };
+      playerCopy.squadId = null;
+
+      await removePlayerFromSquad(+gameId, squad.id, player.id);
+      updatePlayer(playerCopy);
+      setAmountOfMembers(amountOfMembers - 1);
+    }
+  };
+
+  const handleInfo = () => {
     console.log(squad.name);
   };
 
@@ -48,14 +79,39 @@ const SquadListItem = ({ squad, players }: Props) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button
-          size="small"
-          variant="outlined"
-          color="secondary"
-          onClick={handleJoin}
-        >
-          Join
-        </Button>
+        {player && (
+          <>
+            {player.squadId === squad.id ? (
+              <>
+                <Button
+                  size="small"
+                  variant="outlined"
+                  color="secondary"
+                  onClick={handleInfo}
+                >
+                  Info
+                </Button>
+                <Button
+                  size="small"
+                  variant="outlined"
+                  color="error"
+                  onClick={handleLeave}
+                >
+                  Leave
+                </Button>
+              </>
+            ) : (
+              <Button
+                size="small"
+                variant="outlined"
+                color="secondary"
+                onClick={handleJoin}
+              >
+                Join
+              </Button>
+            )}
+          </>
+        )}
       </CardActions>
     </Card>
   );

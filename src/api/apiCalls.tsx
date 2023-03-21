@@ -1,6 +1,12 @@
 import { addPlayer, Player } from "../interfaces/player";
 import { AddSquad } from "../interfaces/squad";
-import { deleteApiData, getApiData, postApiData, putApiData } from "./api";
+import {
+  deleteApiData,
+  getApiData,
+  patchApiData,
+  postApiData,
+  putApiData,
+} from "./api";
 
 const getAnything = async (path: string) => {
   const res = await getApiData(path);
@@ -82,8 +88,11 @@ const addPlayerToGame = async (gameId: number, player: addPlayer) => {
   return await res;
 };
 
-const updatePlayerToGame = async (id: number, player: Player) => {
-  const res = await putApiData(`api/v1/game/${id}/player/${player.id}`, player);
+const updatePlayerToGame = async (gameId: number, player: Player) => {
+  const res = await putApiData(
+    `api/v1/game/${gameId}/player/${player.id}`,
+    player
+  );
 
   if (!res) {
     return undefined;
@@ -145,6 +154,40 @@ const addSquad = async (gameId: number, squad: AddSquad) => {
   return await res;
 };
 
+const addPlayerToSquad = async (
+  gameId: number,
+  squadId: number,
+  playerId: number
+) => {
+  const res = await patchApiData(
+    `api/v1/game/${gameId}/squad/${squadId}/join`,
+    playerId
+  );
+
+  if (!res) {
+    return undefined;
+  }
+
+  return await res;
+};
+
+const removePlayerFromSquad = async (
+  gameId: number,
+  squadId: number,
+  playerId: number
+) => {
+  const res = await patchApiData(
+    `api/v1/game/${gameId}/squad/${squadId}/leave`,
+    playerId
+  );
+
+  if (!res) {
+    return undefined;
+  }
+
+  return await res;
+};
+
 // kill
 const addKill = async (gameId: number, body: any) => {
   const res = await postApiData(`api/v1/game/${gameId}/kill`, body);
@@ -171,5 +214,7 @@ export {
   getUsers,
   getSquads,
   addSquad,
+  addPlayerToSquad,
+  removePlayerFromSquad,
   addKill,
 };

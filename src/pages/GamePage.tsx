@@ -83,7 +83,6 @@ const GamePage = () => {
       fetchSquads();
     }
   }, []);
-  console.log(squads);
 
   useEffect(() => {
     if (playerString) {
@@ -156,7 +155,14 @@ const GamePage = () => {
 
         <div className="lists">
           <div style={{ width: "30%" }}>
-            {squads && <SquadList players={game.players} squads={squads} />}
+            {squads && (
+              <SquadList
+                players={game.players}
+                squads={squads}
+                player={player}
+                updatePlayer={(player: Player) => setPlayer(player)}
+              />
+            )}
             {player && !player.squadId ? (
               <SquadRegistration
                 player={player}
