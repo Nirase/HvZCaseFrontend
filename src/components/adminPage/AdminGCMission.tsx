@@ -40,4 +40,5 @@ const AdminGCMission = ({ game }: Props) => {
   );
 };
 //<AdminMap game={game} />;
+//{!isLoaded ? <p>Loading map....</p> : <AdminMap game={game} />}
 export default AdminGCMission;
