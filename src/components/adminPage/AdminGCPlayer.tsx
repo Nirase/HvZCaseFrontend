@@ -39,7 +39,7 @@ const AdminGCPlayer = ({ game }: Props) => {
 
       fetchPlayersFromGame();
     }
-  }, [players]);
+  }, [player]);
 
   //[players] for fetch list update
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {

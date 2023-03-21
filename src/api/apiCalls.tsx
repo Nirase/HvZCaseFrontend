@@ -1,3 +1,4 @@
+import { createGame, Game } from "../interfaces/game";
 import { addPlayer, Player } from "../interfaces/player";
 import { AddSquad } from "../interfaces/squad";
 import {
@@ -59,6 +60,35 @@ const getOneGameWithDetails = async (id: number) => {
   return await res;
 };
 
+const updateGame = async (id: number, game: Game) => {
+  const res = await patchApiData(`api/v1/game/${id}`, game);
+
+  if (!res) {
+    return undefined;
+  }
+
+  return await res;
+};
+
+const createAGame = async (game: createGame) => {
+  const res = await postApiData(`api/v1/game`, game);
+
+  if (!res) {
+    return undefined;
+  }
+
+  return await res;
+};
+
+const deleteGame = async (id: number) => {
+  const res = await deleteApiData(`api/v1/game?id=${id}`);
+
+  if (!res) {
+    return undefined;
+  }
+
+  return await res;
+};
 // player
 const getPlayersFromGame = async (id: number) => {
   const res = await getApiData(`api/v1/game/${id}/player`);
@@ -88,9 +118,9 @@ const addPlayerToGame = async (gameId: number, player: addPlayer) => {
   return await res;
 };
 
-const updatePlayerToGame = async (gameId: number, player: Player) => {
-  const res = await putApiData(
-    `api/v1/game/${gameId}/player/${player.id}`,
+const updatePlayerToGame = async (id: number, player: Player) => {
+  const res = await patchApiData(
+    `api/v1/game/${id}/player/${player.id}`,
     player
   );
 
@@ -199,7 +229,7 @@ const addKill = async (gameId: number, body: any) => {
   return await res;
 };
 
-const addMessage = async(gameId: number, body: any) => {
+const addMessage = async (gameId: number, body: any) => {
   const res = await postApiData(`api/v1/chat`, body);
 
   if (!res) {
@@ -207,8 +237,7 @@ const addMessage = async(gameId: number, body: any) => {
   }
 
   return await res;
-
-}
+};
 
 export {
   getAnything,
@@ -216,6 +245,9 @@ export {
   getListOfGAmesWithDetails,
   getOneGame,
   getOneGameWithDetails,
+  updateGame,
+  createAGame,
+  deleteGame,
   getPlayersFromGame,
   getOnePlayerFromGame,
   addPlayerToGame,

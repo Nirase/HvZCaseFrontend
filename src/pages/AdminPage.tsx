@@ -13,18 +13,26 @@ const AdminPage = () => {
     };
     fetchGames();
   }, []);
+
+  const refreshGameList = async () => {
+    const fetchGames = async () => {
+      const data = await getListOfGames();
+      setGames(data);
+    };
+    fetchGames();
+  };
   if (games) {
     return (
       <div>
         <div style={{ marginLeft: 20 }}>
           <h1>Admin Page </h1>
-          <CreateGame />
+          <CreateGame refreshList={refreshGameList} />
         </div>
         <div style={{ marginLeft: 10 }}>
           {games.map((game: Game) => {
             return (
               <div key={game.id} style={{ margin: 10 }}>
-                <AdminGameCard game={game} />
+                <AdminGameCard game={game} refreshList={refreshGameList} />
               </div>
             );
           })}
@@ -35,7 +43,7 @@ const AdminPage = () => {
     return (
       <div style={{ marginLeft: 20 }}>
         <h1>Admin Page </h1>
-        <CreateGame />
+        <CreateGame refreshList={refreshGameList} />
         <h3>Loading games...</h3>
       </div>
     );

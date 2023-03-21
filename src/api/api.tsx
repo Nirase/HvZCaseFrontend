@@ -33,6 +33,12 @@ export const putApiData = async (endpoint: string, data: any) => {
     body: data && JSON.stringify(data),
   });
 };
+export const patchApiData = async (endpoint: string, data: any) => {
+  return apiFetch(endpoint, {
+    method: "PATCH",
+    body: data && JSON.stringify(data),
+  });
+};
 
 export const patchApiData = async (endpoint: string, data: any) => {
   return apiFetch(endpoint, {

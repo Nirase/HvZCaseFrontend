@@ -58,9 +58,7 @@ const AddPlayer = ({ gameId }: Props) => {
     newPlayer.userId = userId;
     newPlayer.gameId = +gameID;
     newPlayer.biteCode = "random";
-    console.log(newPlayer);
     await addPlayerToGame(+gameID, newPlayer);
-    console.log(+gameID);
   };
 
   return (

@@ -1,8 +1,27 @@
 import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 import React from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { Game } from "../../interfaces/game";
+import AdminMap from "./AdminMap";
+import { useLoadScript } from "@react-google-maps/api";
 
-const AdminGCMission = () => {
+type Props = {
+  game: Game;
+};
+const libraries: (
+  | "drawing"
+  | "geometry"
+  | "localContext"
+  | "places"
+  | "visualization"
+)[] = ["places"];
+
+const AdminGCMission = ({ game }: Props) => {
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: process.env.REACT_APP_MAP_API_KEY as string,
+    libraries: libraries,
+  });
+
   return (
     <AccordionDetails>
       <Accordion>
@@ -14,11 +33,11 @@ const AdminGCMission = () => {
           <h3>Mission</h3>
         </AccordionSummary>
         <AccordionDetails>
-          <p>Mission thingies</p>
+          {!isLoaded ? <p>Loading map....</p> : <AdminMap game={game} />}
         </AccordionDetails>
       </Accordion>
     </AccordionDetails>
   );
 };
-
+//<AdminMap game={game} />;
 export default AdminGCMission;

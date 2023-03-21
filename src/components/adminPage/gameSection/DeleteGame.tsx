@@ -1,12 +1,19 @@
 import { Button, TextField } from "@mui/material";
 import React from "react";
 import { NumberLiteralType } from "typescript";
+import { deleteGame } from "../../../api/apiCalls";
 
 type Props = {
   id: number;
+  refreshList: Function;
 };
 
-const DeleteGame = (id: Props) => {
+const DeleteGame = ({ id, refreshList }: Props) => {
+  const handleDelete = async () => {
+    await deleteGame(+id);
+    await refreshList();
+  };
+
   return (
     <div>
       <br></br>
@@ -16,6 +23,7 @@ const DeleteGame = (id: Props) => {
         id="delete-game-button"
         variant="contained"
         style={{ marginTop: 10, backgroundColor: "#360568" }}
+        onClick={handleDelete}
       >
         Delete Game
       </Button>
