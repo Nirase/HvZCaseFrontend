@@ -29,6 +29,7 @@ const AdminPage = () => {
           <CreateGame refreshList={refreshGameList} />
         </div>
         <div style={{ marginLeft: 10 }}>
+          <h2 style={{ marginLeft: 10 }}>Games</h2>
           {games.map((game: Game) => {
             return (
               <div key={game.id} style={{ margin: 10 }}>

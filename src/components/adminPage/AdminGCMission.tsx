@@ -4,6 +4,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Game } from "../../interfaces/game";
 import AdminMap from "./AdminMap";
 import { useLoadScript } from "@react-google-maps/api";
+import { margin } from "@mui/system";
 
 type Props = {
   game: Game;
@@ -32,9 +33,9 @@ const AdminGCMission = ({ game }: Props) => {
         >
           <h3>Mission</h3>
         </AccordionSummary>
-        <AccordionDetails>
+        <div style={{ margin: -30 }}>
           {!isLoaded ? <p>Loading map....</p> : <AdminMap game={game} />}
-        </AccordionDetails>
+        </div>
       </Accordion>
     </AccordionDetails>
   );

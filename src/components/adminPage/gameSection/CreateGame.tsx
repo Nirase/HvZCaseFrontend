@@ -1,4 +1,5 @@
 import { Button, TextField } from "@mui/material";
+import { maxWidth } from "@mui/system";
 import { useLoadScript } from "@react-google-maps/api";
 import React, { useState } from "react";
 import { createAGame } from "../../../api/apiCalls";
@@ -8,7 +9,13 @@ import Places from "../../gamePage/Places";
 type Props = {
   refreshList: Function;
 };
-const libraries: ("places")[] = ["places"];
+const libraries: (
+  | "drawing"
+  | "geometry"
+  | "localContext"
+  | "places"
+  | "visualization"
+)[] = ["places"];
 
 const CreateGame = ({ refreshList }: Props) => {
   const [name, setName] = useState("");
@@ -50,25 +57,34 @@ const CreateGame = ({ refreshList }: Props) => {
   };
   return (
     <div>
-      <b>Create game {warningText}</b>
-      <br></br>
+      <h3>
+        Create game <b style={{ color: "red" }}>{warningText}</b>
+      </h3>
       <TextField
         id="create-name-input"
         label="Name"
         variant="standard"
         required={true}
         onChange={(e) => setName(e.target.value)}
+        style={{ marginRight: 20 }}
       />
       <TextField
         id="create-desc-input"
         label="Description"
         variant="standard"
-        style={{ marginLeft: "20px" }}
+        style={{ marginRight: 20 }}
         required={true}
         onChange={(e) => setDesc(e.target.value)}
       />
       <br></br>
-      <div style={{ maxWidth: 400, marginTop: 20 }}>
+      <div
+        style={{
+          maxWidth: 400,
+          marginTop: 20,
+          marginBottom: 10,
+          marginRight: 20,
+        }}
+      >
         {!isLoaded ? (
           <p></p>
         ) : (
@@ -91,16 +107,16 @@ const CreateGame = ({ refreshList }: Props) => {
         id="create-start-date-input"
         label=" "
         variant="standard"
-        style={{ marginLeft: "-70px" }}
+        style={{ marginLeft: -70, maxWidth: 115 }}
         onChange={(e) => setStartDate(e.target.value)}
       />
-      <label style={{ marginLeft: "20px" }}>End Date</label>
+      <label style={{ marginLeft: 10 }}>End Date</label>
       <TextField
         type="date"
         id="create-end-date-input"
         label=" "
         variant="standard"
-        style={{ marginLeft: "-65px" }}
+        style={{ marginLeft: -65, maxWidth: 115 }}
         onChange={(e) => setEndDate(e.target.value)}
       />
       <br></br>

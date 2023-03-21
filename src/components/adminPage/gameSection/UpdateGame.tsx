@@ -17,10 +17,17 @@ import Places from "../../gamePage/Places";
 type Props = {
   id: number;
   game: Game;
+  refreshList: Function;
 };
-const libraries: ("places")[] = ["places"];
+const libraries: (
+  | "drawing"
+  | "geometry"
+  | "localContext"
+  | "places"
+  | "visualization"
+)[] = ["places"];
 
-const UpdateGame = ({ id, game }: Props) => {
+const UpdateGame = ({ id, game, refreshList }: Props) => {
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
   const [address, setAddress] = useState("");
@@ -80,6 +87,7 @@ const UpdateGame = ({ id, game }: Props) => {
     }
     console.log(updatedGame);
     await updateGame(id, updatedGame);
+    await refreshList();
   };
   return (
     <div>
@@ -91,13 +99,14 @@ const UpdateGame = ({ id, game }: Props) => {
         label="Name"
         variant="standard"
         defaultValue={game.name}
+        style={{ marginRight: 20 }}
         onChange={(e) => setName(e.target.value as string)}
       />
       <TextField
         id="update-game-desc-input"
         label="Description"
         variant="standard"
-        style={{ marginLeft: 20 }}
+        style={{ marginRight: 20 }}
         defaultValue={game.description}
         onChange={(e) => setDesc(e.target.value as string)}
       />
@@ -125,17 +134,18 @@ const UpdateGame = ({ id, game }: Props) => {
         id="update-start-date-input"
         label=" "
         variant="standard"
-        style={{ marginLeft: -70 }}
+        style={{ marginLeft: -70, maxWidth: 110 }}
         defaultValue={game.startDate}
         onChange={(e) => setStartDate(e.target.value)}
       />
-      <label style={{ marginLeft: 20 }}>End Date</label>
+      <br></br>
+      <label>End Date</label>
       <TextField
         type="date"
         id="update-end-date-input"
         label=" "
         variant="standard"
-        style={{ marginLeft: -65 }}
+        style={{ marginLeft: -65, maxWidth: 110 }}
         defaultValue={game.endDate}
         onChange={(e) => setEndDate(e.target.value)}
       />
