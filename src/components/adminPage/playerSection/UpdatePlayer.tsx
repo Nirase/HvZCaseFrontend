@@ -8,12 +8,12 @@ import {
   TextField,
 } from "@mui/material";
 import React, { useState } from "react";
-import { Player } from "../../../interfaces/player";
+import { IPlayer } from "../../../interfaces/player";
 import { updatePlayerToGame } from "../../../api/apiCalls";
 
 type Props = {
   gameid: number;
-  player: Player;
+  player: IPlayer;
   refreshPlayer: Function;
 };
 
@@ -22,7 +22,7 @@ const UpdatePlayer = ({ gameid, player, refreshPlayer }: Props) => {
   const [isPatientZeroStr, setIsPatientZero] = useState("");
   const [squadId, setSquadId] = useState(0);
 
-  const updatedPlayer: Player = {
+  const updatedPlayer: IPlayer = {
     id: +player.id,
     firstName: player.firstName,
     lastName: player.lastName,

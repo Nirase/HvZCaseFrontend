@@ -1,12 +1,12 @@
-import { Player } from "../../interfaces/player";
-import { Squad } from "../../interfaces/squad";
+import { IPlayer } from "../../interfaces/player";
+import { ISquad } from "../../interfaces/squad";
 import SquadListItem from "./SquadListItem";
 
 type Props = {
-  players: Array<Player>;
-  squads: Array<Squad>;
-  player: Player | undefined;
-  updatePlayer: (player: Player) => void;
+  players: Array<IPlayer>;
+  squads: Array<ISquad>;
+  player: IPlayer | undefined;
+  updatePlayer: (player: IPlayer) => void;
 };
 
 const SquadList = ({ players, squads, player, updatePlayer }: Props) => {
@@ -14,14 +14,14 @@ const SquadList = ({ players, squads, player, updatePlayer }: Props) => {
     <div>
       <h3>Squads active</h3>
       {squads &&
-        squads.map((squad: Squad) => {
+        squads.map((squad: ISquad) => {
           return (
             <div key={squad.id} style={{ marginBottom: "10px" }}>
               <SquadListItem
                 squad={squad}
                 players={players}
                 player={player}
-                updatePlayer={(player: Player) => updatePlayer(player)}
+                updatePlayer={(player: IPlayer) => updatePlayer(player)}
               />
             </div>
           );

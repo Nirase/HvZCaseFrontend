@@ -5,8 +5,8 @@ import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import { styled } from "@mui/material/styles";
 import { useState } from "react";
 import { Button, Typography } from "@mui/material";
-import { CreateKill } from "../../interfaces/marker";
-import { Player } from "../../interfaces/player";
+import { ICreateKill } from "../../interfaces/marker";
+import { IPlayer } from "../../interfaces/player";
 import { useParams } from "react-router-dom";
 import { addKill } from "../../api/apiCalls";
 import Places from "./Places";
@@ -27,7 +27,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 }));
 
 type Props = {
-  player: Player;
+  player: IPlayer;
   setSnackbarRes: (res: any) => void;
   setSnackbarFrom: (from: string) => void;
 };
@@ -45,7 +45,7 @@ const BiteCodeEntry = ({ player, setSnackbarFrom, setSnackbarRes }: Props) => {
 
   const handleKillClick = async () => {
     const time = new Date().toLocaleString();
-    const kill: CreateKill = {
+    const kill: ICreateKill = {
       location,
       description,
       timeOfDeath: time,

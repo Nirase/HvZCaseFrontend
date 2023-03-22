@@ -1,16 +1,16 @@
 import Button from "@mui/material/Button";
 import { useParams } from "react-router";
-import { User } from "../../interfaces/user";
+import { IUser } from "../../interfaces/user";
 import randomWords from "random-words";
-import { addPlayer, Player } from "../../interfaces/player";
-import { addPlayerToGame } from "../../api/apiCalls";
+import { IAddPlayer, IPlayer } from "../../interfaces/player";
+import { AddPlayerToGame } from "../../api/apiCalls";
 
 type Props = {
   gameName: string;
-  user: User;
-  players: Array<Player> | undefined;
-  setPlayer: (player: Player) => void;
-  addToAllPlayers: (allPlayers: Array<Player>) => void;
+  user: IUser;
+  players: Array<IPlayer> | undefined;
+  setPlayer: (player: IPlayer) => void;
+  addToAllPlayers: (allPlayers: Array<IPlayer>) => void;
   setSnackbarRes: (res: any) => void;
   setSnackbarFrom: (from: string) => void;
 };
@@ -28,7 +28,7 @@ const GameRegistration = ({
   const biteCode = randomWords({ min: 3, max: 10 })[0];
 
   const join = async () => {
-    const newPlayer: addPlayer = {
+    const newPlayer: IAddPlayer = {
       isHuman: true,
       isPatientZero: false,
       gameId: +gameId,
@@ -36,7 +36,7 @@ const GameRegistration = ({
       biteCode,
     };
 
-    const addedPlayer = await addPlayerToGame(gameId, newPlayer);
+    const addedPlayer = await AddPlayerToGame(gameId, newPlayer);
     setSnackbarRes(addedPlayer);
     setSnackbarFrom("register for game");
     if (addedPlayer) {

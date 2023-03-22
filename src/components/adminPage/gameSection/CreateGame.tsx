@@ -3,11 +3,13 @@ import { maxWidth } from "@mui/system";
 import { useLoadScript } from "@react-google-maps/api";
 import React, { useState } from "react";
 import { createAGame } from "../../../api/apiCalls";
-import { createGame } from "../../../interfaces/game";
+import { ICreateGame } from "../../../interfaces/game";
 import Places from "../../gamePage/Places";
 
 type Props = {
   refreshList: Function;
+  setSnackbarRes: (res: any) => void;
+  setSnackbarFrom: (from: string) => void;
 };
 const libraries: (
   | "drawing"
@@ -17,7 +19,11 @@ const libraries: (
   | "visualization"
 )[] = ["places"];
 
-const CreateGame = ({ refreshList }: Props) => {
+const CreateGame = ({
+  refreshList,
+  setSnackbarRes,
+  setSnackbarFrom,
+}: Props) => {
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
   const [address, setAddress] = useState("");
@@ -25,7 +31,7 @@ const CreateGame = ({ refreshList }: Props) => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
-  const newGame: createGame = {
+  const newGame: ICreateGame = {
     name: "",
     description: "",
     startDate: "",
@@ -49,10 +55,12 @@ const CreateGame = ({ refreshList }: Props) => {
     newGame.location = address;
     newGame.radius = mapRadius;
     if (name && desc && startDate && endDate && address && mapRadius) {
-      await createAGame(newGame);
+      const createdGame = await createAGame(newGame);
+      setSnackbarFrom("created a game");
+      setSnackbarRes(createdGame);
       await refreshList();
     } else {
-      setWarningText("- Enter all fields");
+      setSnackbarRes("enter all fields");
     }
   };
   return (

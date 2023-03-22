@@ -2,9 +2,9 @@ import { Circle, GoogleMap } from "@react-google-maps/api";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import "../../styles/map.css";
 
-import MissionMarker from "../gamePage/map/MissonMarker";
-import { MissionInfo } from "../../interfaces/marker";
-import { Game } from "../../interfaces/game";
+import MissionMarke from "../gamePage/map/MissonMarker";
+import { IMissionInfo } from "../../interfaces/marker";
+import { IGame } from "../../interfaces/game";
 import { getGeocode, getLatLng } from "use-places-autocomplete";
 import MissonInfo from "../gamePage/map/MissonInfo";
 import { Button, Paper } from "@mui/material";
@@ -13,12 +13,12 @@ type LatLngLiteral = google.maps.LatLngLiteral;
 type MapOptions = google.maps.MapOptions;
 
 type Props = {
-  game: Game;
+  game: IGame;
 };
 
 const AdminMap = ({ game }: Props) => {
   const [mapCenter, setMapCenter] = useState<LatLngLiteral>();
-  const [missoinInfo, setMissonInfo] = useState<MissionInfo>();
+  const [missoinInfo, setMissonInfo] = useState<IMissionInfo>();
 
   const mapRef = useRef<GoogleMap>();
 

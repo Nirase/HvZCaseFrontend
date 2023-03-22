@@ -11,12 +11,12 @@ import { maxWidth } from "@mui/system";
 import { useLoadScript } from "@react-google-maps/api";
 import React, { useState } from "react";
 import { updateGame } from "../../../api/apiCalls";
-import { Game } from "../../../interfaces/game";
+import { IGame } from "../../../interfaces/game";
 import Places from "../../gamePage/Places";
 
 type Props = {
   id: number;
-  game: Game;
+  game: IGame;
   refreshList: Function;
 };
 const libraries: (
@@ -36,7 +36,7 @@ const UpdateGame = ({ id, game, refreshList }: Props) => {
   const [endDate, setEndDate] = useState("");
   const [gameState, setGameState] = useState("");
 
-  const updatedGame: Game = {
+  const updatedGame: IGame = {
     id: id,
     name: game.name,
     description: game.description,

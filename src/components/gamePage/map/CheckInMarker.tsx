@@ -2,13 +2,13 @@ import { faUsersRays } from "@fortawesome/free-solid-svg-icons";
 import { Marker } from "@react-google-maps/api";
 import { useEffect, useState } from "react";
 import { getGeocode, getLatLng } from "use-places-autocomplete";
-import { CheckIn } from "../../../interfaces/marker";
+import { ICheckIn } from "../../../interfaces/marker";
 
 type LatLngLiteral = google.maps.LatLngLiteral;
 
 type Props = {
-  checkIn: CheckIn;
-  setCheckInInfo: (info: CheckIn) => void;
+  checkIn: ICheckIn;
+  setCheckInInfo: (info: ICheckIn) => void;
 };
 
 const CheckInMarker = ({ checkIn, setCheckInInfo }: Props) => {

@@ -1,11 +1,11 @@
 import { Card, CardContent, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { getUser } from "../../api/apiCalls";
-import { Player } from "../../interfaces/player";
-import { User } from "../../interfaces/user";
+import { IPlayer } from "../../interfaces/player";
+import { IUser } from "../../interfaces/user";
 
 type Props = {
-  player: Player;
+  player: IPlayer;
 };
 
 const PlayerListItemDetailed = ({ player }: Props) => {
@@ -18,7 +18,7 @@ const PlayerListItemDetailed = ({ player }: Props) => {
   const firstName = player.firstName;
   const lastName = player.lastName;
 
-  const [user, setUser] = useState<User>();
+  const [user, setUser] = useState<IUser>();
 
   useEffect(() => {
     if (player) {

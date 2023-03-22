@@ -1,6 +1,6 @@
-import { createGame, Game } from "../interfaces/game";
-import { addPlayer, Player } from "../interfaces/player";
-import { AddSquad } from "../interfaces/squad";
+import { ICreateGame, IGame } from "../interfaces/game";
+import { IAddPlayer, IPlayer } from "../interfaces/player";
+import { IAddSquad } from "../interfaces/squad";
 import {
   deleteApiData,
   getApiData,
@@ -60,7 +60,7 @@ const getOneGameWithDetails = async (id: number) => {
   return await res;
 };
 
-const updateGame = async (id: number, game: Game) => {
+const updateGame = async (id: number, game: IGame) => {
   const res = await patchApiData(`api/v1/game/${id}`, game);
 
   if (!res) {
@@ -70,7 +70,7 @@ const updateGame = async (id: number, game: Game) => {
   return await res;
 };
 
-const createAGame = async (game: createGame) => {
+const createAGame = async (game: ICreateGame) => {
   const res = await postApiData(`api/v1/game`, game);
 
   if (!res) {
@@ -109,7 +109,7 @@ const getOnePlayerFromGame = async (gameId: number, playerId: number) => {
   return await res;
 };
 
-const addPlayerToGame = async (gameId: number, player: addPlayer) => {
+const AddPlayerToGame = async (gameId: number, player: IAddPlayer) => {
   const res = await postApiData(`api/v1/game/${gameId}/player`, player);
   if (!res) {
     return undefined;
@@ -118,7 +118,7 @@ const addPlayerToGame = async (gameId: number, player: addPlayer) => {
   return await res;
 };
 
-const updatePlayerToGame = async (id: number, player: Player) => {
+const updatePlayerToGame = async (id: number, player: IPlayer) => {
   const res = await patchApiData(
     `api/v1/game/${id}/player/${player.id}`,
     player
@@ -175,7 +175,7 @@ const getSquads = async (gameId: number) => {
   return await res;
 };
 
-const addSquad = async (gameId: number, squad: AddSquad) => {
+const addSquad = async (gameId: number, squad: IAddSquad) => {
   const res = await postApiData(`api/v1/game/${gameId}/squad`, squad);
   if (!res) {
     return undefined;
@@ -184,7 +184,7 @@ const addSquad = async (gameId: number, squad: AddSquad) => {
   return await res;
 };
 
-const addPlayerToSquad = async (
+const AddPlayerToSquad = async (
   gameId: number,
   squadId: number,
   playerId: number
@@ -250,14 +250,14 @@ export {
   deleteGame,
   getPlayersFromGame,
   getOnePlayerFromGame,
-  addPlayerToGame,
+  AddPlayerToGame,
   updatePlayerToGame,
   deletePlayer,
   getUser,
   getUsers,
   getSquads,
   addSquad,
-  addPlayerToSquad,
+  AddPlayerToSquad,
   removePlayerFromSquad,
   addKill,
   addMessage,

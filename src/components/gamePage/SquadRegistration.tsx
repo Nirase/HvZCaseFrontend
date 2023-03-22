@@ -2,13 +2,13 @@ import { Button, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { addSquad } from "../../api/apiCalls";
-import { Player } from "../../interfaces/player";
-import { AddSquad, Squad } from "../../interfaces/squad";
+import { IPlayer } from "../../interfaces/player";
+import { IAddSquad, ISquad } from "../../interfaces/squad";
 
 type Props = {
-  player: Player;
-  squads: Array<Squad> | undefined;
-  setSquad: (squad: Array<Squad>) => void;
+  player: IPlayer;
+  squads: Array<ISquad> | undefined;
+  setSquad: (squad: Array<ISquad>) => void;
   setSnackbarRes: (res: any) => void;
   setSnackbarFrom: (from: string) => void;
 };
@@ -26,7 +26,7 @@ const SquadRegistration = ({
   const [checkName, setCheckName] = useState<boolean>();
 
   const handleAdd = async () => {
-    const squad: AddSquad = {
+    const squad: IAddSquad = {
       name,
       gameId: +gameId,
       creatorId: id,

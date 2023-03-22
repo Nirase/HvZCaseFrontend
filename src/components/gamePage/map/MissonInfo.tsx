@@ -1,11 +1,11 @@
-import { MissionInfo } from "../../../interfaces/marker";
+import { IMissionInfo } from "../../../interfaces/marker";
 import "../../../styles/map.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 
 type Props = {
-  info: MissionInfo | undefined;
+  info: IMissionInfo | undefined;
   clearInfo: (info: undefined) => void;
 };
 

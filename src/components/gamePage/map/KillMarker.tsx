@@ -2,13 +2,13 @@ import { faSkullCrossbones } from "@fortawesome/free-solid-svg-icons";
 import { Marker } from "@react-google-maps/api";
 import { useEffect, useState } from "react";
 import { getGeocode, getLatLng } from "use-places-autocomplete";
-import { Kill } from "../../../interfaces/marker";
+import { IKill } from "../../../interfaces/marker";
 
 type LatLngLiteral = google.maps.LatLngLiteral;
 
 type Props = {
-  kill: Kill;
-  setKillInfo: (info: Kill) => void;
+  kill: IKill;
+  setKillInfo: (info: IKill) => void;
 };
 
 const KillMarker = ({ kill, setKillInfo }: Props) => {

@@ -1,11 +1,11 @@
-export interface Squad {
+export interface ISquad {
   id: number;
   name: string;
   players: [];
   squadCheckIns: [];
 }
 
-export interface AddSquad {
+export interface IAddSquad {
   name: string;
   gameId: number;
   creatorId: number;

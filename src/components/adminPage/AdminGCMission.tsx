@@ -1,13 +1,13 @@
 import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 import React from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { Game } from "../../interfaces/game";
+import { IGame } from "../../interfaces/game";
 import AdminMap from "./AdminMap";
 import { useLoadScript } from "@react-google-maps/api";
 import { margin } from "@mui/system";
 
 type Props = {
-  game: Game;
+  game: IGame;
 };
 const libraries: (
   | "drawing"

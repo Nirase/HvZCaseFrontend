@@ -3,10 +3,10 @@ import React, { useState } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import UpdateGame from "./gameSection/UpdateGame";
 import DeleteGame from "./gameSection/DeleteGame";
-import { Game } from "../../interfaces/game";
+import { IGame } from "../../interfaces/game";
 
 type Props = {
-  game: Game;
+  game: IGame;
   refreshList: Function;
 };
 
