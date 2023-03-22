@@ -1,24 +1,34 @@
-import { Circle, GoogleMap } from "@react-google-maps/api";
+import { Circle, GoogleMap, Marker } from "@react-google-maps/api";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import "../../styles/map.css";
+import "../styles/map.css";
 
-import MissionMarke from "../gamePage/map/MissonMarker";
-import { IMissionInfo } from "../../interfaces/marker";
-import { IGame } from "../../interfaces/game";
-import { getGeocode, getLatLng } from "use-places-autocomplete";
-import MissonInfo from "../gamePage/map/MissonInfo";
+import MissionMarke from "./gamePage/map/MissonMarker";
+import { ICheckIn, IMissionInfo } from "../interfaces/marker";
+import { IGame } from "../interfaces/game";
+import { getGeocode, getLatLng, LatLng } from "use-places-autocomplete";
+import MissonInfo from "./gamePage/map/MissonInfo";
 import { Button, Paper } from "@mui/material";
 
 type LatLngLiteral = google.maps.LatLngLiteral;
 type MapOptions = google.maps.MapOptions;
+type gLatLng = google.maps.LatLng;
 
 type Props = {
   game: IGame;
+  checkInMarkers?: Array<ICheckIn>;
+  markerAddress: (address: string) => void;
+  page: string;
 };
 
-const AdminMap = ({ game }: Props) => {
+const CreateMarkerMap = ({
+  game,
+  markerAddress,
+  checkInMarkers,
+  page,
+}: Props) => {
   const [mapCenter, setMapCenter] = useState<LatLngLiteral>();
   const [missoinInfo, setMissonInfo] = useState<IMissionInfo>();
+  const [marker, setMarker] = useState<gLatLng>();
 
   const mapRef = useRef<GoogleMap>();
 
@@ -53,33 +63,33 @@ const AdminMap = ({ game }: Props) => {
     center: mapCenter,
     radius: game.radius,
   };
+  const createMarker = async (latLng: google.maps.LatLng | null) => {
+    if (latLng) {
+      const res = await getGeocode({ location: latLng });
+      setMarker(latLng);
+      markerAddress(res[0].formatted_address);
+    }
+  };
 
   return (
     <div className="mapContainer">
-      <Paper className="mapInfoContainer">
-        <div className="mapInfo">
-          {missoinInfo === undefined ? <h3>Map info</h3> : ""}
-
-          <MissonInfo
-            info={missoinInfo}
-            clearInfo={(info: undefined) => setMissonInfo(info)}
-          />
-        </div>
-      </Paper>
-
-      <div className="map">
+      <div className="map" style={{ width: "100%" }}>
         <GoogleMap
           center={mapCenter}
           mapContainerClassName="map-container"
           options={options}
           onLoad={onLoad}
           id="map"
+          onClick={(e) => {
+            createMarker(e.latLng);
+          }}
         >
           {mapCenter && <Circle options={circleOptions} />}
+          {marker && <Marker position={marker} draggable={true} />}
         </GoogleMap>
       </div>
     </div>
   );
 };
 //skapas två circles
-export default AdminMap;
+export default CreateMarkerMap;

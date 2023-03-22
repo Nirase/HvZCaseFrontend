@@ -1,8 +1,8 @@
 import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { IGame } from "../../interfaces/game";
-import AdminMap from "./AdminMap";
+import CreateMarkerMap from "../CreateMarkerMap";
 import { useLoadScript } from "@react-google-maps/api";
 import { margin } from "@mui/system";
 
@@ -22,6 +22,7 @@ const AdminGCMission = ({ game }: Props) => {
     googleMapsApiKey: process.env.REACT_APP_MAP_API_KEY as string,
     libraries: libraries,
   });
+  const [address, setAddress] = useState("");
 
   return (
     <AccordionDetails>
@@ -34,7 +35,15 @@ const AdminGCMission = ({ game }: Props) => {
           <h3>Mission</h3>
         </AccordionSummary>
         <div style={{ margin: -30 }}>
-          {!isLoaded ? <p>Loading map....</p> : <AdminMap game={game} />}
+          {!isLoaded ? (
+            <p>Loading map....</p>
+          ) : (
+            <CreateMarkerMap
+              game={game}
+              markerAddress={(address: string) => setAddress(address)}
+              page={"Admin"}
+            />
+          )}
         </div>
       </Accordion>
     </AccordionDetails>
