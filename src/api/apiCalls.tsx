@@ -272,6 +272,7 @@ export {
   deletePlayer,
   getUser,
   getUsers,
+  addUser,
   getSquads,
   getOneSquadById,
   addSquad,
