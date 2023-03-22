@@ -270,7 +270,6 @@ export {
   AddPlayerToGame,
   updatePlayerToGame,
   deletePlayer,
-  addUser,
   getUser,
   getUsers,
   getSquads,

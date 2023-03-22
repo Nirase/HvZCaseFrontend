@@ -16,6 +16,7 @@ const Header = () => {
     navigate("/");
   };
 
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" style={{ backgroundColor: "#360568" }}>

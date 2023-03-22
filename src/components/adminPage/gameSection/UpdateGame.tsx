@@ -18,6 +18,8 @@ type Props = {
   id: number;
   game: IGame;
   refreshList: Function;
+  setSnackbarRes: (res: any) => void;
+  setSnackbarFrom: (from: string) => void;
 };
 const libraries: (
   | "drawing"
@@ -27,7 +29,13 @@ const libraries: (
   | "visualization"
 )[] = ["places"];
 
-const UpdateGame = ({ id, game, refreshList }: Props) => {
+const UpdateGame = ({
+  id,
+  game,
+  refreshList,
+  setSnackbarRes,
+  setSnackbarFrom,
+}: Props) => {
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
   const [address, setAddress] = useState("");
@@ -73,9 +81,9 @@ const UpdateGame = ({ id, game, refreshList }: Props) => {
       updatedGame.endDate = endDate;
     }
     if (
-      gameState == "Registration" ||
-      gameState == "In progress" ||
-      gameState == "Completed"
+      gameState === "Registration" ||
+      gameState === "In progress" ||
+      gameState === "Completed"
     ) {
       updatedGame.gameState = gameState;
     }
@@ -86,7 +94,9 @@ const UpdateGame = ({ id, game, refreshList }: Props) => {
       updatedGame.radius = mapRadius;
     }
     console.log(updatedGame);
-    await updateGame(id, updatedGame);
+    const updateGameRes = await updateGame(id, updatedGame);
+    setSnackbarFrom(" updated Game: " + id);
+    setSnackbarRes(updateGameRes);
     await refreshList();
   };
   return (

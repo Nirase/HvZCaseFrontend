@@ -23,9 +23,11 @@ import AddPlayer from "./playerSection/AddPlayer";
 
 type Props = {
   game: IGame;
+  setSnackbarRes: (res: any) => void;
+  setSnackbarFrom: (from: string) => void;
 };
 
-const AdminGCPlayer = ({ game }: Props) => {
+const AdminGCPlayer = ({ game, setSnackbarRes, setSnackbarFrom }: Props) => {
   const [players, setPlayers] = useState<Array<IPlayer>>([]);
   const [player, setPlayer] = useState<IPlayer>();
   const [playerID, setPlayerId] = useState("");
@@ -59,15 +61,20 @@ const AdminGCPlayer = ({ game }: Props) => {
     setPlayer(undefined);
     if (playerID != null) {
       const data = await getOnePlayerFromGame(+game.id, +playerID);
-      setPlayer(data);
+      if (data.status !== 404) {
+        setPlayer(data);
+      } else {
+        setSnackbarFrom("player");
+        setSnackbarRes(data);
+      }
     }
   };
 
   let findPlayerCard;
-  if (player != null) {
+  if (player != undefined) {
     findPlayerCard = <PlayerListItemDetailed player={player} />;
   } else {
-    findPlayerCard = <p>player not found</p>;
+    findPlayerCard = <p></p>;
   }
 
   let deleteInput;
@@ -77,6 +84,10 @@ const AdminGCPlayer = ({ game }: Props) => {
         gameId={game.id}
         playerId={player.id}
         deleteFunction={handleRemoveItem}
+        setSnackbarRes={(res: any) => {
+          setSnackbarRes(res);
+        }}
+        setSnackbarFrom={(from: string) => setSnackbarFrom(from)}
       />
     );
   } else {
@@ -89,6 +100,10 @@ const AdminGCPlayer = ({ game }: Props) => {
         gameid={game.id}
         player={player}
         refreshPlayer={fetchOnePlayerFromGame}
+        setSnackbarRes={(res: any) => {
+          setSnackbarRes(res);
+        }}
+        setSnackbarFrom={(from: string) => setSnackbarFrom(from)}
       />
     );
   } else {
@@ -116,7 +131,17 @@ const AdminGCPlayer = ({ game }: Props) => {
               </AccordionSummary>
               <PlayerListDetailed players={players} />
             </Accordion>
-            <AddPlayer gameId={game.id} />
+            <AddPlayer
+              gameId={game.id}
+              players={players}
+              setAddPlayers={(players: Array<IPlayer>) => {
+                setPlayers(players);
+              }}
+              setSnackbarRes={(res: any) => {
+                setSnackbarRes(res);
+              }}
+              setSnackbarFrom={(from: string) => setSnackbarFrom(from)}
+            />
             <div style={{ marginTop: 10 }}>
               <h4>Get Player</h4>
               <TextField
@@ -138,12 +163,10 @@ const AdminGCPlayer = ({ game }: Props) => {
             </div>
             <div style={{ marginTop: 10 }}>
               <h4>Update Player</h4>
-              <p>Id: {playerID}</p>
               {updatePlayer}
             </div>
             <div style={{ marginTop: 10 }}>
               <h4>Delete Player</h4>
-              <p>Id: {playerID}</p>
               {deleteInput}
             </div>
           </AccordionDetails>
