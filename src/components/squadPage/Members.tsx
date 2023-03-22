@@ -1,7 +1,7 @@
 import { Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { getAnything } from "../../api/apiCalls";
-import { Player } from "../../interfaces/player";
+import { IPlayer } from "../../interfaces/player";
 import "../../styles/squad.css";
 
 import MembersTable from "./MembersTable";
@@ -11,17 +11,17 @@ type Props = {
 };
 
 const Members = ({ members }: Props) => {
-  const [membersAsPlayers, setMembersAsPlayers] = useState<Array<Player>>();
-  const [aliveMembers, setAliveMembers] = useState<Array<Player>>();
-  const [deadMembers, setDeadMembers] = useState<Array<Player>>();
+  const [membersAsPlayers, setMembersAsPlayers] = useState<Array<IPlayer>>();
+  const [aliveMembers, setAliveMembers] = useState<Array<IPlayer>>();
+  const [deadMembers, setDeadMembers] = useState<Array<IPlayer>>();
 
   useEffect(() => {
-    let allMembersAsPlayer: Player[] = [];
-    let dead: Player[] = [];
-    let alive: Player[] = [];
+    let allMembersAsPlayer: IPlayer[] = [];
+    let dead: IPlayer[] = [];
+    let alive: IPlayer[] = [];
     const fetchPlayers = async () => {
       members.forEach(async (member: string) => {
-        const fetchedMember: Player = await getAnything(member);
+        const fetchedMember: IPlayer = await getAnything(member);
         allMembersAsPlayer.push(fetchedMember);
         setMembersAsPlayers(allMembersAsPlayer);
         if (fetchedMember.isHuman) {

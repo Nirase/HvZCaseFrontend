@@ -1,5 +1,5 @@
 import { TablePagination } from "@mui/material";
-import { Player } from "../../interfaces/player";
+import { IPlayer } from "../../interfaces/player";
 
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
@@ -29,7 +29,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 type Props = {
-  members: Array<Player>;
+  members: Array<IPlayer>;
 };
 
 const MembersTable = ({ members }: Props) => {

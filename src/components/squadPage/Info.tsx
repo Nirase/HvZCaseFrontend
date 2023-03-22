@@ -1,8 +1,8 @@
 import { Typography } from "@mui/material";
-import { Squad } from "../../interfaces/squad";
+import { ISquad } from "../../interfaces/squad";
 
 type Props = {
-  squad: Squad;
+  squad: ISquad;
 };
 
 const Info = ({ squad }: Props) => {

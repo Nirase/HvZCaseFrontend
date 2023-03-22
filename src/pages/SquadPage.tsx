@@ -5,9 +5,9 @@ import { getAnything, getOneSquadById, getUsers } from "../api/apiCalls";
 import Info from "../components/squadPage/Info";
 import Members from "../components/squadPage/Members";
 
-import { Player } from "../interfaces/player";
-import { Squad } from "../interfaces/squad";
-import { User } from "../interfaces/user";
+import { IPlayer } from "../interfaces/player";
+import { ISquad } from "../interfaces/squad";
+import { IUser } from "../interfaces/user";
 import keycloak from "../keycloak";
 
 const SquadPage = () => {
@@ -15,17 +15,17 @@ const SquadPage = () => {
   const { gameId, squadId }: any = useParams();
 
   const [playerString, setPlayerString] = useState<any>();
-  const [userPlayer, setUserPlayer] = useState<Player>();
+  const [userPlayer, setUserPlayer] = useState<IPlayer>();
 
-  const [squad, setSquad] = useState<Squad>();
+  const [squad, setSquad] = useState<ISquad>();
   const [allowed, setAllowed] = useState(false);
 
   useEffect(() => {
     if (squadId) {
       const fetchUser = async () => {
         const data = await getUsers();
-        const theUser: User = data.find(
-          (user: User) =>
+        const theUser: IUser = data.find(
+          (user: IUser) =>
             user.firstName === keycloak.tokenParsed?.name.split(" ")[0] // change to sub value to check id insted
         );
         const player = theUser.players.find(
