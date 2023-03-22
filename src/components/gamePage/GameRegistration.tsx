@@ -26,6 +26,7 @@ const GameRegistration = ({
 }: Props) => {
   const { gameId }: any = useParams();
   const biteCode = randomWords({ min: 3, max: 10 })[0];
+  const number: number = +gameId + user.id;
 
   const join = async () => {
     const newPlayer: addPlayer = {
@@ -33,7 +34,7 @@ const GameRegistration = ({
       isPatientZero: false,
       gameId: +gameId,
       userId: user.id,
-      biteCode,
+      biteCode: biteCode + number,
     };
 
     const addedPlayer = await addPlayerToGame(gameId, newPlayer);

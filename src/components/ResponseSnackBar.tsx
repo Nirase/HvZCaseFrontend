@@ -30,9 +30,9 @@ const ResponseSnackBar = ({ open, res, from }: Props) => {
     if (res === undefined) {
       setVersion("error");
       setMessage("Oh, something went wrong with your request from " + from);
-    } else if (res.status === 400) {
+    } else if (res.detail) {
       setVersion("warning");
-      setMessage("Oh, something went wrong with your request from " + from);
+      setMessage(res.detail);
     } else if (!res.status) {
       setVersion("success");
       setMessage("You have successfully " + from);
