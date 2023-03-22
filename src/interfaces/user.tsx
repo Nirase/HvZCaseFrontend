@@ -1,11 +1,11 @@
-export interface User {
+export interface IUser {
   id: number;
   keycloakId: string;
   firstName: string;
   lastName: string;
   players: [];
 }
-export interface AddUser{
+export interface IAddUser {
   keycloakId: string;
   firstName: string;
   lastName: string;

@@ -1,11 +1,11 @@
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { Player } from "../../interfaces/player";
+import { IPlayer } from "../../interfaces/player";
 import "../../styles/player.css";
 
 type Props = {
-  player: Player;
+  player: IPlayer;
 };
 
 const PlayerListItem = ({ player }: Props) => {

@@ -1,8 +1,8 @@
-import { Player } from "../../interfaces/player";
+import { IPlayer } from "../../interfaces/player";
 import PlayerListItem from "./PlayerListItem";
 import "../../styles/player.css";
 type Props = {
-  players: Array<Player>;
+  players: Array<IPlayer>;
 };
 
 const PlayerList = ({ players }: Props) => {

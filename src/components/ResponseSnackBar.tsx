@@ -13,12 +13,15 @@ type Props = {
   open: boolean;
   res: any;
   from: string | undefined;
+  setClose: (show: boolean) => void;
 };
 
-const ResponseSnackBar = ({ open, res, from }: Props) => {
+const ResponseSnackBar = ({ open, res, from, setClose }: Props) => {
   const [show, setOpen] = useState(false);
   const [version, setVersion] = useState<AlertColor>();
   const [message, setMessage] = useState<string>();
+
+  console.log(show);
 
   useEffect(() => {
     if (open) {
@@ -30,9 +33,12 @@ const ResponseSnackBar = ({ open, res, from }: Props) => {
     if (res === undefined) {
       setVersion("error");
       setMessage("Oh, something went wrong with your request from " + from);
-    } else if (res.status === 400) {
+    } else if (res.detail) {
       setVersion("warning");
       setMessage("Oh, something went wrong with your request from " + from);
+    } else if (res === "enter all fields") {
+      setVersion("error");
+      setMessage("You have to enter all fields");
     } else if (!res.status) {
       setVersion("success");
       setMessage("You have successfully " + from);
@@ -46,7 +52,7 @@ const ResponseSnackBar = ({ open, res, from }: Props) => {
     if (reason === "clickaway") {
       return;
     }
-
+    setClose(false);
     setOpen(false);
   };
   return (

@@ -1,4 +1,4 @@
-export interface Game {
+export interface IGame {
   id: number;
   name: string;
   description: string;
@@ -12,7 +12,7 @@ export interface Game {
   missions: [];
 }
 
-export interface createGame {
+export interface ICreateGame {
   name: string;
   description: string;
   startDate: string;

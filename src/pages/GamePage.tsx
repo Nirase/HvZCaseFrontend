@@ -15,24 +15,18 @@ import Info from "../components/gamePage/Info";
 import Map from "../components/gamePage/map/Map";
 import PlayerList from "../components/gamePage/PlayerList";
 import SquadList from "../components/gamePage/SquadList";
-import { Game } from "../interfaces/game";
+import { IGame } from "../interfaces/game";
 import "../styles/gamepage.css";
 import keycloak from "../keycloak";
 import { ROLES } from "../roles/roles";
-import { User } from "../interfaces/user";
-import { Player } from "../interfaces/player";
+import { IUser } from "../interfaces/user";
+import { IPlayer } from "../interfaces/player";
 import SquadRegistration from "../components/gamePage/SquadRegistration";
-import { Squad } from "../interfaces/squad";
+import { ISquad } from "../interfaces/squad";
 import ResponseSnackBar from "../components/ResponseSnackBar";
 import ChatBox from "../components/gamePage/chat/ChatBox";
 
-const libraries: (
-  | "drawing"
-  | "geometry"
-  | "localContext"
-  | "places"
-  | "visualization"
-)[] = ["places"];
+const libraries: "places"[] = ["places"];
 
 const GamePage = () => {
   const { isLoaded } = useLoadScript({
@@ -41,12 +35,12 @@ const GamePage = () => {
   });
   const { gameId } = useParams();
 
-  const [game, setGame] = useState<Game>();
-  const [allPlayers, setAllPlayers] = useState<Array<Player>>();
+  const [game, setGame] = useState<IGame>();
+  const [allPlayers, setAllPlayers] = useState<Array<IPlayer>>();
   const [playerString, setPlayerString] = useState<any>();
-  const [player, setPlayer] = useState<Player>();
-  const [user, setUser] = useState<User>();
-  const [squads, setSquads] = useState<Array<Squad>>();
+  const [player, setPlayer] = useState<IPlayer>();
+  const [user, setUser] = useState<IUser>();
+  const [squads, setSquads] = useState<Array<ISquad>>();
 
   const [snackbar, setSnackbar] = useState(false);
   const [snackbarRes, setSnackbarRes] = useState<any>();
@@ -118,8 +112,8 @@ const GamePage = () => {
                     gameName={game.name}
                     user={user}
                     players={allPlayers}
-                    setPlayer={(newPlayer: Player) => setPlayer(newPlayer)}
-                    addToAllPlayers={(allPlayers: Player[]) =>
+                    setPlayer={(newPlayer: IPlayer) => setPlayer(newPlayer)}
+                    addToAllPlayers={(allPlayers: IPlayer[]) =>
                       setAllPlayers(allPlayers)
                     }
                     setSnackbarRes={(res: any) => {
@@ -133,10 +127,9 @@ const GamePage = () => {
             ) : (
               <>
                 <ChatBox game={game} player={player}></ChatBox>
-
                 <div className="biteCode">
                   {player.isHuman && <BiteCode player={player} />}
-                  {!player.isHuman && (
+                  {!player.isHuman && isLoaded ? (
                     <BiteCodeEntry
                       player={player}
                       setSnackbarRes={(res: any) => {
@@ -145,6 +138,8 @@ const GamePage = () => {
                       }}
                       setSnackbarFrom={(from: string) => setSnackbarFrom(from)}
                     />
+                  ) : (
+                    ""
                   )}
                 </div>
               </>
@@ -163,14 +158,14 @@ const GamePage = () => {
                 players={game.players}
                 squads={squads}
                 player={player}
-                updatePlayer={(player: Player) => setPlayer(player)}
+                updatePlayer={(player: IPlayer) => setPlayer(player)}
               />
             )}
             {player && !player.squadId ? (
               <SquadRegistration
                 player={player}
                 squads={squads}
-                setSquad={(squad: Array<Squad>) => {
+                setSquad={(squad: Array<ISquad>) => {
                   setSquads(squad);
                 }}
                 setSnackbarRes={(res: any) => {
@@ -190,6 +185,7 @@ const GamePage = () => {
           open={snackbar}
           res={snackbarRes}
           from={snackbarFrom}
+          setClose={(show: boolean) => setSnackbar(show)}
         />
       </Container>
     );

@@ -11,8 +11,8 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { addPlayer } from "../../../interfaces/player";
-import { addPlayerToGame } from "../../../api/apiCalls";
+import { IAddPlayer } from "../../../interfaces/player";
+import { AddPlayerToGame } from "../../../api/apiCalls";
 
 type Props = {
   gameId: number;
@@ -25,7 +25,7 @@ const AddPlayer = ({ gameId }: Props) => {
   const [userId, setUserId] = useState(0);
   const gameID = gameId;
 
-  const newPlayer: addPlayer = {
+  const newPlayer: IAddPlayer = {
     isHuman: true,
     isPatientZero: false,
     gameId: +gameId,
@@ -54,11 +54,11 @@ const AddPlayer = ({ gameId }: Props) => {
     }
   };
 
-  const addPlayer = async () => {
+  const AddPlayer = async () => {
     newPlayer.userId = userId;
     newPlayer.gameId = +gameID;
     newPlayer.biteCode = "random";
-    await addPlayerToGame(+gameID, newPlayer);
+    await AddPlayerToGame(+gameID, newPlayer);
   };
 
   return (
@@ -118,7 +118,7 @@ const AddPlayer = ({ gameId }: Props) => {
             marginBottom: 20,
             backgroundColor: "#360568",
           }}
-          onClick={addPlayer}
+          onClick={AddPlayer}
         >
           Add Player
         </Button>

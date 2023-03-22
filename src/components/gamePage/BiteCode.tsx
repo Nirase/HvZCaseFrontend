@@ -1,8 +1,8 @@
 import TextField from "@mui/material/TextField";
-import { Player } from "../../interfaces/player";
+import { IPlayer } from "../../interfaces/player";
 
 type Props = {
-  player: Player;
+  player: IPlayer;
 };
 
 const BiteCode = ({ player }: Props) => {

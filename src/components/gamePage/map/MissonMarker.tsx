@@ -6,13 +6,13 @@ import {
 import { Marker } from "@react-google-maps/api";
 import { useEffect, useState } from "react";
 import { getGeocode, getLatLng } from "use-places-autocomplete";
-import { MissionInfo, Mission } from "../../../interfaces/marker";
+import { IMissionInfo, Mission } from "../../../interfaces/marker";
 
 type LatLngLiteral = google.maps.LatLngLiteral;
 
 type Props = {
   missionmarker: Mission;
-  setInfo: (missonInfo: MissionInfo) => void;
+  setInfo: (missonInfo: IMissionInfo) => void;
   isHuman: boolean;
 };
 

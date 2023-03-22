@@ -7,7 +7,7 @@ import keycloak from "../keycloak";
 import HeaderButtons from "./HeaderButtons";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { AddUser } from "../interfaces/user";
+import { IAddUser } from "../interfaces/user";
 import { addUser } from "../api/apiCalls";
 
 const Header = () => {
@@ -15,7 +15,6 @@ const Header = () => {
   const toHome = () => {
     navigate("/");
   };
-
 
   return (
     <Box sx={{ flexGrow: 1 }}>
