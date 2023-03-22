@@ -15,9 +15,17 @@ type Props = {
   gameid: number;
   player: IPlayer;
   refreshPlayer: Function;
+  setSnackbarRes: (res: any) => void;
+  setSnackbarFrom: (from: string) => void;
 };
 
-const UpdatePlayer = ({ gameid, player, refreshPlayer }: Props) => {
+const UpdatePlayer = ({
+  gameid,
+  player,
+  refreshPlayer,
+  setSnackbarRes,
+  setSnackbarFrom,
+}: Props) => {
   const [isHumanStr, setIsHuman] = useState("");
   const [isPatientZeroStr, setIsPatientZero] = useState("");
   const [squadId, setSquadId] = useState(0);
@@ -35,43 +43,52 @@ const UpdatePlayer = ({ gameid, player, refreshPlayer }: Props) => {
 
   const handleChangeHuman = (event: SelectChangeEvent) => {
     setIsHuman(event.target.value as string);
-    if (event.target.value == "true") {
+    if (event.target.value === "true") {
       updatedPlayer.isHuman = true;
       setIsPatientZero("false");
       updatedPlayer.isPatientZero = false;
-    } else if (event.target.value == "false") {
+    } else if (event.target.value === "false") {
       updatedPlayer.isHuman = false;
     }
   };
   const handleChangeIsPatient = (event: SelectChangeEvent) => {
     setIsPatientZero(event.target.value as string);
-    if (event.target.value == "true") {
+    if (event.target.value === "true") {
       setIsHuman("false");
       updatedPlayer.isHuman = false;
       updatedPlayer.isPatientZero = true;
-    } else if (event.target.value == "false") {
+    } else if (event.target.value === "false") {
       updatedPlayer.isPatientZero = false;
     }
   };
 
   const updatePlayer = async () => {
     if (player != null) {
-      if (isHumanStr == "true") {
+      if (isHumanStr === "true") {
         updatedPlayer.isHuman = true;
-      } else if (isHumanStr == "false") {
+      } else if (isHumanStr === "false") {
         updatedPlayer.isHuman = false;
       }
-      if (isPatientZeroStr == "true") {
+      if (isPatientZeroStr === "true") {
         updatedPlayer.isPatientZero = true;
-      } else if (isPatientZeroStr == "false") {
+      } else if (isPatientZeroStr === "false") {
         updatedPlayer.isPatientZero = false;
       }
-      if (squadId == 0) {
+      if (squadId === 0) {
         updatedPlayer.squadId = null;
       } else {
         updatedPlayer.squadId = squadId;
       }
-      await updatePlayerToGame(gameid, updatedPlayer);
+      const updatePlayerRes = await updatePlayerToGame(gameid, updatedPlayer);
+      if (updatePlayerRes.status !== 404) {
+        setSnackbarFrom(" updated player: " + player.id);
+        setSnackbarRes(updatePlayerRes);
+      } else {
+        setSnackbarFrom(
+          " squad " + updatedPlayer.squadId + " in the game. Update failed"
+        );
+        setSnackbarRes(updatePlayerRes);
+      }
       refreshPlayer();
     }
   };
@@ -110,7 +127,7 @@ const UpdatePlayer = ({ gameid, player, refreshPlayer }: Props) => {
         label="Squad Id"
         variant="standard"
         type={"number"}
-        style={{ marginLeft: "20px" }}
+        style={{ marginLeft: 10, marginRight: 10 }}
         onChange={(e) => setSquadId(+e.target.value)}
       />
       <Button

@@ -18,53 +18,23 @@ const PlayerListItemDetailed = ({ player }: Props) => {
   const firstName = player.firstName;
   const lastName = player.lastName;
 
-  const [user, setUser] = useState<IUser>();
-
-  useEffect(() => {
-    if (player) {
-      const fetchUser = async () => {
-        const data = await getUser(+userId);
-        setUser(data);
-      };
-      fetchUser();
-    }
-  }, []);
-
-  if (user) {
-    return (
-      <Card style={{ backgroundColor: "#d5dcf9", margin: 6 }}>
-        <CardContent>
-          <Typography variant="body2">Id: {playerId}</Typography>
-          <Typography variant="body2">
-            Name: {firstName} {lastName}
-          </Typography>
-          <Typography variant="body2">UserId: {userId + ""}</Typography>
-          <Typography variant="body2">isHuman: {isHuman + ""}</Typography>
-          <Typography variant="body2">
-            isPatientZero: {isPatientZero + ""}
-          </Typography>
-          <Typography variant="body2">biteCode: {biteCode + ""}</Typography>
-          <Typography variant="body2">squadId: {squadId + ""}</Typography>
-        </CardContent>
-      </Card>
-    );
-  } else {
-    return (
-      <Card style={{ backgroundColor: "#d5dcf9", margin: 6 }}>
-        <CardContent>
-          <Typography variant="body2">Id: {playerId}</Typography>
-          <Typography variant="body2">Name: Loading...</Typography>
-          <Typography variant="body2">UserId: {userId + ""}</Typography>
-          <Typography variant="body2">isHuman: {isHuman + ""}</Typography>
-          <Typography variant="body2">
-            isPatientZero: {isPatientZero + ""}
-          </Typography>
-          <Typography variant="body2">biteCode: {biteCode + ""}</Typography>
-          <Typography variant="body2">squadId: {squadId + ""}</Typography>
-        </CardContent>
-      </Card>
-    );
-  }
+  return (
+    <Card style={{ backgroundColor: "#d5dcf9", margin: 6 }}>
+      <CardContent>
+        <Typography variant="body2">Id: {playerId}</Typography>
+        <Typography variant="body2">
+          Name: {firstName} {lastName}
+        </Typography>
+        <Typography variant="body2">UserId: {userId + ""}</Typography>
+        <Typography variant="body2">isHuman: {isHuman + ""}</Typography>
+        <Typography variant="body2">
+          isPatientZero: {isPatientZero + ""}
+        </Typography>
+        <Typography variant="body2">biteCode: {biteCode + ""}</Typography>
+        <Typography variant="body2">squadId: {squadId + ""}</Typography>
+      </CardContent>
+    </Card>
+  );
 };
 
 export default PlayerListItemDetailed;

@@ -46,7 +46,7 @@ const AdminMap = ({ game }: Props) => {
     strokeWeight: 2,
     clickable: false,
     draggable: false,
-    editable: true,
+    editable: false,
     visible: true,
     strokeColor: "#8BC34A",
     fillColor: "#8BC34A",

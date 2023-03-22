@@ -6,13 +6,24 @@ type Props = {
   gameId: number;
   playerId: number;
   deleteFunction: Function;
+  setSnackbarRes: (res: any) => void;
+  setSnackbarFrom: (from: string) => void;
 };
 
-const DeletePlayer = ({ gameId, playerId, deleteFunction }: Props) => {
+const DeletePlayer = ({
+  gameId,
+  playerId,
+  deleteFunction,
+  setSnackbarRes,
+  setSnackbarFrom,
+}: Props) => {
   const deletePlayerFromGame = async () => {
     console.log(gameId + " | " + playerId);
     if (gameId != null && playerId != null) {
-      await deletePlayer(gameId, +playerId);
+      const deletePlayerRes = await deletePlayer(gameId, +playerId);
+      setSnackbarFrom(" player: " + playerId);
+      setSnackbarRes(deletePlayerRes);
+
       await deleteFunction();
     }
   };

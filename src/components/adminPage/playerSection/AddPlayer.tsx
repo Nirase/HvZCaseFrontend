@@ -11,14 +11,24 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { IAddPlayer } from "../../../interfaces/player";
+import { IAddPlayer, IPlayer } from "../../../interfaces/player";
 import { AddPlayerToGame } from "../../../api/apiCalls";
 
 type Props = {
   gameId: number;
+  players: Array<IPlayer> | undefined;
+  setAddPlayers: (player: Array<IPlayer>) => void;
+  setSnackbarRes: (res: any) => void;
+  setSnackbarFrom: (from: string) => void;
 };
 
-const AddPlayer = ({ gameId }: Props) => {
+const AddPlayer = ({
+  gameId,
+  players,
+  setAddPlayers,
+  setSnackbarRes,
+  setSnackbarFrom,
+}: Props) => {
   const [isHuman, setIsHuman] = useState("");
   const [isPatientZero, setIsPatientZero] = useState("");
   const [biteCode, setBiteCode] = useState("");
@@ -58,7 +68,23 @@ const AddPlayer = ({ gameId }: Props) => {
     newPlayer.userId = userId;
     newPlayer.gameId = +gameID;
     newPlayer.biteCode = "random";
-    await AddPlayerToGame(+gameID, newPlayer);
+    const addedPlayer = await AddPlayerToGame(+gameID, newPlayer);
+    console.log(addedPlayer);
+    if (addedPlayer) {
+      if (addedPlayer.status != 400) {
+        setSnackbarFrom("added a player");
+        if (players) {
+          const allPlayers = [...players, addedPlayer];
+          setAddPlayers(allPlayers);
+        }
+      } else {
+        setSnackbarFrom(
+          " add player: Can't add player that is already in game"
+        );
+      }
+    }
+
+    setSnackbarRes(addedPlayer);
   };
 
   return (

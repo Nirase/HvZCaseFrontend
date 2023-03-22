@@ -8,9 +8,16 @@ import { IGame } from "../../interfaces/game";
 type Props = {
   game: IGame;
   refreshList: Function;
+  setSnackbarRes: (res: any) => void;
+  setSnackbarFrom: (from: string) => void;
 };
 
-const AdminGCGame = ({ game, refreshList }: Props) => {
+const AdminGCGame = ({
+  game,
+  refreshList,
+  setSnackbarRes,
+  setSnackbarFrom,
+}: Props) => {
   if (game) {
     return (
       <AccordionDetails>
@@ -23,8 +30,23 @@ const AdminGCGame = ({ game, refreshList }: Props) => {
             <h3>Game</h3>
           </AccordionSummary>
           <AccordionDetails>
-            <UpdateGame id={game.id} game={game} refreshList={refreshList} />
-            <DeleteGame id={game.id} refreshList={refreshList} />
+            <UpdateGame
+              id={game.id}
+              game={game}
+              refreshList={refreshList}
+              setSnackbarRes={(res: any) => {
+                setSnackbarRes(res);
+              }}
+              setSnackbarFrom={(from: string) => setSnackbarFrom(from)}
+            />
+            <DeleteGame
+              id={game.id}
+              refreshList={refreshList}
+              setSnackbarRes={(res: any) => {
+                setSnackbarRes(res);
+              }}
+              setSnackbarFrom={(from: string) => setSnackbarFrom(from)}
+            />
           </AccordionDetails>
         </Accordion>
       </AccordionDetails>

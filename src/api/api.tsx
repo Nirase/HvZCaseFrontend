@@ -9,7 +9,9 @@ export const apiFetch = async (endpoint: string, options: object) => {
         "Content-Type": "application/json",
       },
     });
-
+    if (res.status === 204) {
+      return 204;
+    }
     return await res.json();
   } catch {
     return undefined;

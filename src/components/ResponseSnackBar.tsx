@@ -21,8 +21,6 @@ const ResponseSnackBar = ({ open, res, from, setClose }: Props) => {
   const [version, setVersion] = useState<AlertColor>();
   const [message, setMessage] = useState<string>();
 
-  console.log(show);
-
   useEffect(() => {
     if (open) {
       setOpen(true);
@@ -39,6 +37,12 @@ const ResponseSnackBar = ({ open, res, from, setClose }: Props) => {
     } else if (res === "enter all fields") {
       setVersion("error");
       setMessage("You have to enter all fields");
+    } else if (res.status === 404) {
+      setVersion("warning");
+      setMessage("Couldn't find " + from);
+    } else if (res === 204) {
+      setVersion("success");
+      setMessage("You have successfully deleted " + from);
     } else if (!res.status) {
       setVersion("success");
       setMessage("You have successfully " + from);

@@ -35,8 +35,21 @@ const AdminGameCard = ({
             {gameId} | {name}
           </h3>
         </AccordionSummary>
-        <AdminGCGame game={game} refreshList={refreshList} />
-        <AdminGCPlayer game={game} />
+        <AdminGCGame
+          game={game}
+          refreshList={refreshList}
+          setSnackbarRes={(res: any) => {
+            setSnackbarRes(res);
+          }}
+          setSnackbarFrom={(from: string) => setSnackbarFrom(from)}
+        />
+        <AdminGCPlayer
+          game={game}
+          setSnackbarRes={(res: any) => {
+            setSnackbarRes(res);
+          }}
+          setSnackbarFrom={(from: string) => setSnackbarFrom(from)}
+        />
         <AdminGCMission game={game} />
       </Accordion>
     </div>
