@@ -4,7 +4,7 @@ import { useLoadScript } from "@react-google-maps/api";
 import React, { useState } from "react";
 import { createAGame } from "../../../api/apiCalls";
 import { ICreateGame } from "../../../interfaces/game";
-import Places from "../../gamePage/Places";
+import Places from "../../Places";
 
 type Props = {
   refreshList: Function;

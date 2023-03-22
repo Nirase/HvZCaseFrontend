@@ -12,7 +12,7 @@ import { useLoadScript } from "@react-google-maps/api";
 import React, { useState } from "react";
 import { updateGame } from "../../../api/apiCalls";
 import { IGame } from "../../../interfaces/game";
-import Places from "../../gamePage/Places";
+import Places from "../../Places";
 
 type Props = {
   id: number;
