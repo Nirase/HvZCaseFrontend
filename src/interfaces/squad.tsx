@@ -10,3 +10,5 @@ export interface IAddSquad {
   gameId: number;
   creatorId: number;
 }
+
+

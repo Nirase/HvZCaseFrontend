@@ -6,7 +6,7 @@ import MissionMarker from "./MissonMarker";
 import {
   IMissionInfo,
   IKill,
-  Mission,
+  IMission,
   ICheckIn,
 } from "../../../interfaces/marker";
 import { IGame } from "../../../interfaces/game";
@@ -18,7 +18,7 @@ import KillInfo from "./KillInfo";
 import { IPlayer } from "../../../interfaces/player";
 import { ISquad } from "../../../interfaces/squad";
 import CheckInInfo from "./CheckInInfo";
-import { getAnything } from "../../../api/apiCalls";
+import { getAllMissionsInGame, getAnything } from "../../../api/apiCalls";
 import CheckInMarker from "./CheckInMarker";
 
 type LatLngLiteral = google.maps.LatLngLiteral;
@@ -32,6 +32,7 @@ type Props = {
 
 const Map = ({ game, player, squads }: Props) => {
   const [mapCenter, setMapCenter] = useState<LatLngLiteral>();
+  const [missions, setMissions] = useState<Array<IMission>>();
   const [missionInfo, setMissionInfo] = useState<IMissionInfo>();
   const [killInfo, setKillInfo] = useState<IKill>();
   const [checkInInfo, setCheckInInfo] = useState<ICheckIn>();
@@ -71,6 +72,13 @@ const Map = ({ game, player, squads }: Props) => {
         fetchCheckIn(check);
       });
     }
+
+    const fetchMissions = async () => {
+      const res = await getAllMissionsInGame(game.id);
+
+      setMissions(res);
+    };
+    fetchMissions();
   }, []);
 
   const circleOptions = {
@@ -127,22 +135,23 @@ const Map = ({ game, player, squads }: Props) => {
                 radius={game.radius}
                 options={circleOptions}
               />
-              {player &&
-                game.missions.map((marker: Mission) => {
-                  return (
-                    <div key={marker.id}>
-                      <MissionMarker
-                        missionmarker={marker}
-                        setInfo={(info: IMissionInfo) => {
-                          setMissionInfo(info);
-                          setKillInfo(undefined);
-                          setCheckInInfo(undefined);
-                        }}
-                        isHuman={player.isHuman}
-                      />
-                    </div>
-                  );
-                })}
+              {player && missions
+                ? missions.map((marker: IMission) => {
+                    return (
+                      <div key={marker.id}>
+                        <MissionMarker
+                          missionmarker={marker}
+                          setInfo={(info: IMissionInfo) => {
+                            setMissionInfo(info);
+                            setKillInfo(undefined);
+                            setCheckInInfo(undefined);
+                          }}
+                          isHuman={player.isHuman}
+                        />
+                      </div>
+                    );
+                  })
+                : ""}
               {game.kills.map((kill: IKill) => {
                 return (
                   <div key={kill.victimId}>

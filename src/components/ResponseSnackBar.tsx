@@ -21,8 +21,6 @@ const ResponseSnackBar = ({ open, res, from, setClose }: Props) => {
   const [version, setVersion] = useState<AlertColor>();
   const [message, setMessage] = useState<string>();
 
-  console.log(show);
-
   useEffect(() => {
     if (open) {
       setOpen(true);

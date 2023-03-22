@@ -35,6 +35,9 @@ type Props = {
 const MembersTable = ({ members }: Props) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const sortedMembers = [...members].sort(
+    (a, b) => Number(b.isHuman) - Number(a.isHuman)
+  );
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -66,7 +69,7 @@ const MembersTable = ({ members }: Props) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {members.map((row) => (
+          {sortedMembers.map((row) => (
             <StyledTableRow key={row.id}>
               <StyledTableCell component="th" scope="row">
                 {row.firstName} {row.lastName}
@@ -76,6 +79,11 @@ const MembersTable = ({ members }: Props) => {
               </StyledTableCell>
             </StyledTableRow>
           ))}
+          {emptyRows > 0 && (
+            <StyledTableRow style={{ height: 53 * emptyRows }}>
+              <StyledTableCell colSpan={6} />
+            </StyledTableRow>
+          )}
         </TableBody>
       </Table>
       <TablePagination

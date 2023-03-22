@@ -60,8 +60,7 @@ const GamePage = () => {
       const fetchUser = async () => {
         const data = await getUsers();
         const theUser: IUser = data.find(
-          (user: IUser) =>
-            user.keycloakId === keycloak.tokenParsed?.sub // change to sub value to check id insted
+          (user: IUser) => user.keycloakId === keycloak.tokenParsed?.sub
         );
         setUser(theUser);
         const player = theUser.players.find(

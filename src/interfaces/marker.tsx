@@ -5,7 +5,7 @@ export interface IMissionInfo {
   name: string;
 }
 
-export interface Mission extends IMissionInfo {
+export interface IMission extends IMissionInfo {
   id: number;
   visibleToHumans: boolean;
   visibleToZombies: boolean;
@@ -31,6 +31,13 @@ export interface ICreateKill {
 export interface ICheckIn {
   id?: number;
   squad: string;
+  location: string;
+  startDate: string;
+  endDate: string;
+}
+
+export interface ICreateCheckIn {
+  squadId: number;
   location: string;
   startDate: string;
   endDate: string;

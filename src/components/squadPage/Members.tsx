@@ -40,8 +40,12 @@ const Members = ({ members }: Props) => {
     return (
       <div>
         <Typography variant="h5">Members</Typography>
-        <Grid className="membersContainer">
-          <MembersTable members={membersAsPlayers} />
+        <Grid className="membersContainer" sx={{ margin: "10px" }}>
+          {members.length === membersAsPlayers.length ? (
+            <MembersTable members={membersAsPlayers} />
+          ) : (
+            ""
+          )}
         </Grid>
       </div>
     );

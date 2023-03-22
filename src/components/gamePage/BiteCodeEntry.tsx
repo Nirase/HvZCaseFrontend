@@ -9,7 +9,7 @@ import { ICreateKill } from "../../interfaces/marker";
 import { IPlayer } from "../../interfaces/player";
 import { useParams } from "react-router-dom";
 import { addKill } from "../../api/apiCalls";
-import Places from "./Places";
+import Places from "../Places";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;

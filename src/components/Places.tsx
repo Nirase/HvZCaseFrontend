@@ -32,7 +32,6 @@ const Places = ({ setPosition }: Props) => {
       autoComplete
       value={data.find((x) => x.description === value) || null}
       onInputChange={(event, newInputValue) => {
-        console.log("new input " + newInputValue);
         setValue(newInputValue);
       }}
       renderInput={(params) => (

@@ -90,6 +90,7 @@ const deleteGame = async (id: number) => {
 
   return await res;
 };
+
 // player
 const getPlayersFromGame = async (id: number) => {
   const res = await getApiData(`api/v1/game/${id}/player`);
@@ -144,13 +145,13 @@ const deletePlayer = async (id: number, playerId: number) => {
   return await res;
 };
 
+//User
 const addUser = async (user: IAddUser) => {
   const res = await postApiData("api/v1/user", user);
   if (!res) return undefined;
   return await res;
 };
 
-//User
 const getUser = async (id: number) => {
   const res = await getApiData(`api/v1/user/${id}`);
 
@@ -194,6 +195,22 @@ const getOneSquadById = async (gameId: number, squadId: number) => {
 
 const addSquad = async (gameId: number, squad: IAddSquad) => {
   const res = await postApiData(`api/v1/game/${gameId}/squad`, squad);
+  if (!res) {
+    return undefined;
+  }
+
+  return await res;
+};
+
+const addSquadCheckIn = async (
+  gameId: number,
+  squadId: number,
+  checkIn: any
+) => {
+  const res = await postApiData(
+    `api/v1/game/${gameId}/squad/${squadId}/squadcheckin`,
+    checkIn
+  );
   if (!res) {
     return undefined;
   }
@@ -246,6 +263,18 @@ const addKill = async (gameId: number, body: any) => {
   return await res;
 };
 
+//mission
+const getAllMissionsInGame = async (gameId: number) => {
+  const res = await getApiData(`api/v1/game/${gameId}/mission`);
+
+  if (!res) {
+    return undefined;
+  }
+
+  return await res;
+};
+
+//chat
 const addMessage = async (gameId: number, body: any) => {
   const res = await postApiData(`api/v1/chat`, body);
 
@@ -276,8 +305,10 @@ export {
   getSquads,
   getOneSquadById,
   addSquad,
+  addSquadCheckIn,
   AddPlayerToSquad,
   removePlayerFromSquad,
   addKill,
+  getAllMissionsInGame,
   addMessage,
 };
