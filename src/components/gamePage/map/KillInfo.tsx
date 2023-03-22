@@ -1,12 +1,12 @@
-import { Kill } from "../../../interfaces/marker";
+import { IKill } from "../../../interfaces/marker";
 import "../../../styles/map.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
-import { Player } from "../../../interfaces/player";
+import { IPlayer } from "../../../interfaces/player";
 
 type Props = {
-  kill: Kill | undefined;
+  kill: IKill | undefined;
   players: [];
   clearKillInfo: (info: undefined) => void;
 };
@@ -19,7 +19,7 @@ const KillInfo = ({ kill, players, clearKillInfo }: Props) => {
   };
 
   useEffect(() => {
-    const deadOne: any = players.find((x: Player) => x.id === kill?.victimId);
+    const deadOne: any = players.find((x: IPlayer) => x.id === kill?.victimId);
     if (deadOne) {
       setName(deadOne.firstName + " " + deadOne.lastName);
     }

@@ -11,23 +11,23 @@ import {
   getPlayersFromGame,
   getUser,
 } from "../../api/apiCalls";
-import { Game } from "../../interfaces/game";
+import { IGame } from "../../interfaces/game";
 import PlayerListDetailed from "./PlayerListDetailed";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { Player } from "../../interfaces/player";
+import { IPlayer } from "../../interfaces/player";
 import PlayerListItemDetailed from "./PlayerListItemDetailed";
 import UpdatePlayer from "./playerSection/UpdatePlayer";
-import AddPlayer from "./playerSection/AddPlayer";
 import DeletePlayer from "./playerSection/DeletePlayer";
 import { isNull } from "util";
+import AddPlayer from "./playerSection/AddPlayer";
 
 type Props = {
-  game: Game;
+  game: IGame;
 };
 
 const AdminGCPlayer = ({ game }: Props) => {
-  const [players, setPlayers] = useState<Player[]>([]);
-  const [player, setPlayer] = useState<Player>();
+  const [players, setPlayers] = useState<Array<IPlayer>>([]);
+  const [player, setPlayer] = useState<IPlayer>();
   const [playerID, setPlayerId] = useState("");
 
   useEffect(() => {

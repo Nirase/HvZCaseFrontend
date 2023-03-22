@@ -2,17 +2,24 @@ import React from "react";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { Game } from "../../interfaces/game";
+import { IGame } from "../../interfaces/game";
 import AdminGCGame from "./AdminGCGame";
 import AdminGCPlayer from "./AdminGCPlayer";
 import AdminGCMission from "./AdminGCMission";
 
 type Props = {
-  game: Game;
+  game: IGame;
   refreshList: Function;
+  setSnackbarRes: (res: any) => void;
+  setSnackbarFrom: (from: string) => void;
 };
 
-const AdminGameCard = ({ game, refreshList }: Props) => {
+const AdminGameCard = ({
+  game,
+  refreshList,
+  setSnackbarRes,
+  setSnackbarFrom,
+}: Props) => {
   const gameId = game.id;
   const name = game.name;
 

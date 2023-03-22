@@ -1,25 +1,25 @@
-export interface MissionInfo {
+export interface IMissionInfo {
   startDate: string;
   endDate: string;
   description: string;
   name: string;
 }
 
-export interface Mission extends MissionInfo {
+export interface Mission extends IMissionInfo {
   id: number;
   visibleToHumans: boolean;
   visibleToZombies: boolean;
   location: string;
 }
 
-export interface Kill {
+export interface IKill {
   timeOfDeath: string;
   victimId: number;
   location: string;
   description: string;
 }
 
-export interface CreateKill {
+export interface ICreateKill {
   timeOfDeath: string;
   biteCode: string;
   killerId: number;
@@ -28,7 +28,7 @@ export interface CreateKill {
   gameId: number;
 }
 
-export interface CheckIn {
+export interface ICheckIn {
   id?: number;
   squad: string;
   location: string;

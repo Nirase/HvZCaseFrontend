@@ -1,14 +1,29 @@
 import { Button, TextField } from "@mui/material";
+import { maxWidth } from "@mui/system";
+import { useLoadScript } from "@react-google-maps/api";
 import React, { useState } from "react";
 import { createAGame } from "../../../api/apiCalls";
-import { createGame } from "../../../interfaces/game";
+import { ICreateGame } from "../../../interfaces/game";
 import Places from "../../gamePage/Places";
 
 type Props = {
   refreshList: Function;
+  setSnackbarRes: (res: any) => void;
+  setSnackbarFrom: (from: string) => void;
 };
+const libraries: (
+  | "drawing"
+  | "geometry"
+  | "localContext"
+  | "places"
+  | "visualization"
+)[] = ["places"];
 
-const CreateGame = ({ refreshList }: Props) => {
+const CreateGame = ({
+  refreshList,
+  setSnackbarRes,
+  setSnackbarFrom,
+}: Props) => {
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
   const [address, setAddress] = useState("");
@@ -16,7 +31,7 @@ const CreateGame = ({ refreshList }: Props) => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
-  const newGame: createGame = {
+  const newGame: ICreateGame = {
     name: "",
     description: "",
     startDate: "",
@@ -24,6 +39,11 @@ const CreateGame = ({ refreshList }: Props) => {
     location: "",
     radius: 0,
   };
+
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: process.env.REACT_APP_MAP_API_KEY as string,
+    libraries: libraries,
+  });
   const [warningText, setWarningText] = useState("");
 
   const handleCreate = async () => {
@@ -35,34 +55,49 @@ const CreateGame = ({ refreshList }: Props) => {
     newGame.location = address;
     newGame.radius = mapRadius;
     if (name && desc && startDate && endDate && address && mapRadius) {
-      await createAGame(newGame);
+      const createdGame = await createAGame(newGame);
+      setSnackbarFrom("created a game");
+      setSnackbarRes(createdGame);
       await refreshList();
     } else {
-      setWarningText("- Enter all fields");
+      setSnackbarRes("enter all fields");
     }
   };
   return (
     <div>
-      <b>Create game {warningText}</b>
-      <br></br>
+      <h3>
+        Create game <b style={{ color: "red" }}>{warningText}</b>
+      </h3>
       <TextField
         id="create-name-input"
         label="Name"
         variant="standard"
         required={true}
         onChange={(e) => setName(e.target.value)}
+        style={{ marginRight: 20 }}
       />
       <TextField
         id="create-desc-input"
         label="Description"
         variant="standard"
-        style={{ marginLeft: "20px" }}
+        style={{ marginRight: 20 }}
         required={true}
         onChange={(e) => setDesc(e.target.value)}
       />
       <br></br>
-      <div style={{ maxWidth: 400, marginTop: 20 }}>
-        <Places setPosition={(position: string) => setAddress(position)} />
+      <div
+        style={{
+          maxWidth: 400,
+          marginTop: 20,
+          marginBottom: 10,
+          marginRight: 20,
+        }}
+      >
+        {!isLoaded ? (
+          <p></p>
+        ) : (
+          <Places setPosition={(position: string) => setAddress(position)} />
+        )}
       </div>
       <TextField
         type={"number"}
@@ -80,16 +115,16 @@ const CreateGame = ({ refreshList }: Props) => {
         id="create-start-date-input"
         label=" "
         variant="standard"
-        style={{ marginLeft: "-70px" }}
+        style={{ marginLeft: -70, maxWidth: 115 }}
         onChange={(e) => setStartDate(e.target.value)}
       />
-      <label style={{ marginLeft: "20px" }}>End Date</label>
+      <label style={{ marginLeft: 10 }}>End Date</label>
       <TextField
         type="date"
         id="create-end-date-input"
         label=" "
         variant="standard"
-        style={{ marginLeft: "-65px" }}
+        style={{ marginLeft: -65, maxWidth: 115 }}
         onChange={(e) => setEndDate(e.target.value)}
       />
       <br></br>

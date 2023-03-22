@@ -8,17 +8,26 @@ import {
   TextField,
 } from "@mui/material";
 import { maxWidth } from "@mui/system";
+import { useLoadScript } from "@react-google-maps/api";
 import React, { useState } from "react";
 import { updateGame } from "../../../api/apiCalls";
-import { Game } from "../../../interfaces/game";
+import { IGame } from "../../../interfaces/game";
 import Places from "../../gamePage/Places";
 
 type Props = {
   id: number;
-  game: Game;
+  game: IGame;
+  refreshList: Function;
 };
+const libraries: (
+  | "drawing"
+  | "geometry"
+  | "localContext"
+  | "places"
+  | "visualization"
+)[] = ["places"];
 
-const UpdateGame = ({ id, game }: Props) => {
+const UpdateGame = ({ id, game, refreshList }: Props) => {
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
   const [address, setAddress] = useState("");
@@ -27,7 +36,7 @@ const UpdateGame = ({ id, game }: Props) => {
   const [endDate, setEndDate] = useState("");
   const [gameState, setGameState] = useState("");
 
-  const updatedGame: Game = {
+  const updatedGame: IGame = {
     id: id,
     name: game.name,
     description: game.description,
@@ -40,6 +49,11 @@ const UpdateGame = ({ id, game }: Props) => {
     kills: game.kills,
     missions: game.missions,
   };
+
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: process.env.REACT_APP_MAP_API_KEY as string,
+    libraries: libraries,
+  });
 
   const handleChange = (event: SelectChangeEvent) => {
     setGameState(event.target.value as string);
@@ -73,6 +87,7 @@ const UpdateGame = ({ id, game }: Props) => {
     }
     console.log(updatedGame);
     await updateGame(id, updatedGame);
+    await refreshList();
   };
   return (
     <div>
@@ -84,19 +99,24 @@ const UpdateGame = ({ id, game }: Props) => {
         label="Name"
         variant="standard"
         defaultValue={game.name}
+        style={{ marginRight: 20 }}
         onChange={(e) => setName(e.target.value as string)}
       />
       <TextField
         id="update-game-desc-input"
         label="Description"
         variant="standard"
-        style={{ marginLeft: 20 }}
+        style={{ marginRight: 20 }}
         defaultValue={game.description}
         onChange={(e) => setDesc(e.target.value as string)}
       />
       <br></br>
       <div style={{ maxWidth: 600, marginTop: 20, marginBottom: 20 }}>
-        <Places setPosition={(position: string) => setAddress(position)} />
+        {!isLoaded ? (
+          <p></p>
+        ) : (
+          <Places setPosition={(position: string) => setAddress(position)} />
+        )}
       </div>
       <TextField
         type={"number"}
@@ -114,17 +134,18 @@ const UpdateGame = ({ id, game }: Props) => {
         id="update-start-date-input"
         label=" "
         variant="standard"
-        style={{ marginLeft: -70 }}
+        style={{ marginLeft: -70, maxWidth: 110 }}
         defaultValue={game.startDate}
         onChange={(e) => setStartDate(e.target.value)}
       />
-      <label style={{ marginLeft: 20 }}>End Date</label>
+      <br></br>
+      <label>End Date</label>
       <TextField
         type="date"
         id="update-end-date-input"
         label=" "
         variant="standard"
-        style={{ marginLeft: -65 }}
+        style={{ marginLeft: -65, maxWidth: 110 }}
         defaultValue={game.endDate}
         onChange={(e) => setEndDate(e.target.value)}
       />

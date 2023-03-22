@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { getListOfGames } from "../api/apiCalls";
 import GameCard from "../components/landingPage/GameCard";
-import { Game } from "../interfaces/game";
+import { IGame } from "../interfaces/game";
 
 const Home = () => {
   const [games, setGames] = useState([]);
@@ -17,7 +17,7 @@ const Home = () => {
     return (
       <>
         <h1 style={{ marginLeft: 20 }}>Landing Page</h1>
-        {games.map((game: Game) => {
+        {games.map((game: IGame) => {
           return (
             <div key={game.id}>
               <GameCard game={game} />

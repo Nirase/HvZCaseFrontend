@@ -1,8 +1,8 @@
-import { Game } from "../../interfaces/game";
+import { IGame } from "../../interfaces/game";
 import "../../styles/gamepage.css";
 
 type Props = {
-  game: Game;
+  game: IGame;
 };
 
 const Info = ({ game }: Props) => {

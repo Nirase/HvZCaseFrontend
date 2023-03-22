@@ -2,23 +2,23 @@ import { Circle, GoogleMap } from "@react-google-maps/api";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import "../../styles/map.css";
 
-import MissionMarker from "../gamePage/map/MissonMarker";
-import { MissionInfo } from "../../interfaces/marker";
-import { Game } from "../../interfaces/game";
+import MissionMarke from "../gamePage/map/MissonMarker";
+import { IMissionInfo } from "../../interfaces/marker";
+import { IGame } from "../../interfaces/game";
 import { getGeocode, getLatLng } from "use-places-autocomplete";
 import MissonInfo from "../gamePage/map/MissonInfo";
-import { Paper } from "@mui/material";
+import { Button, Paper } from "@mui/material";
 
 type LatLngLiteral = google.maps.LatLngLiteral;
 type MapOptions = google.maps.MapOptions;
 
 type Props = {
-  game: Game;
+  game: IGame;
 };
 
 const AdminMap = ({ game }: Props) => {
   const [mapCenter, setMapCenter] = useState<LatLngLiteral>();
-  const [missoinInfo, setMissonInfo] = useState<MissionInfo>();
+  const [missoinInfo, setMissonInfo] = useState<IMissionInfo>();
 
   const mapRef = useRef<GoogleMap>();
 
@@ -31,7 +31,7 @@ const AdminMap = ({ game }: Props) => {
     }),
     []
   );
-
+  useEffect(() => {}, [game.radius]);
   const onLoad = useCallback((map: any) => (mapRef.current = map), []);
   useEffect(() => {
     const getPosition = async () => {
@@ -40,17 +40,18 @@ const AdminMap = ({ game }: Props) => {
       setMapCenter({ lat, lng });
     };
     getPosition();
-  }, []);
-
+  }, [game.location]);
   const circleOptions = {
     strokeOpacity: 0.5,
     strokeWeight: 2,
     clickable: false,
     draggable: false,
-    editable: false,
+    editable: true,
     visible: true,
     strokeColor: "#8BC34A",
     fillColor: "#8BC34A",
+    center: mapCenter,
+    radius: game.radius,
   };
 
   return (
@@ -74,18 +75,11 @@ const AdminMap = ({ game }: Props) => {
           onLoad={onLoad}
           id="map"
         >
-          {mapCenter && (
-            <>
-              <Circle
-                center={mapCenter}
-                radius={game.radius}
-                options={circleOptions}
-              />
-            </>
-          )}
+          {mapCenter && <Circle options={circleOptions} />}
         </GoogleMap>
       </div>
     </div>
   );
 };
+//skapas två circles
 export default AdminMap;
