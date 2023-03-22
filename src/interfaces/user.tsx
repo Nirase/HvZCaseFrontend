@@ -5,3 +5,8 @@ export interface User {
   lastName: string;
   players: [];
 }
+export interface AddUser{
+  keycloakId: string;
+  firstName: string;
+  lastName: string;
+}

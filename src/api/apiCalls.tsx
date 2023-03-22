@@ -1,6 +1,7 @@
 import { createGame, Game } from "../interfaces/game";
 import { addPlayer, Player } from "../interfaces/player";
 import { AddSquad } from "../interfaces/squad";
+import { AddUser } from "../interfaces/user";
 import {
   deleteApiData,
   getApiData,
@@ -143,6 +144,13 @@ const deletePlayer = async (id: number, playerId: number) => {
   return await res;
 };
 
+const addUser = async(user: AddUser) => {
+  const res = await postApiData("api/v1/user", user);
+  if(!res)
+    return undefined;
+  return await res;
+}
+
 //User
 const getUser = async (id: number) => {
   const res = await getApiData(`api/v1/user/${id}`);
@@ -253,6 +261,7 @@ export {
   addPlayerToGame,
   updatePlayerToGame,
   deletePlayer,
+  addUser,
   getUser,
   getUsers,
   getSquads,

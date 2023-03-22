@@ -6,12 +6,17 @@ import Button from "@mui/material/Button";
 import keycloak from "../keycloak";
 import HeaderButtons from "./HeaderButtons";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { AddUser } from "../interfaces/user";
+import { addUser } from "../api/apiCalls";
 
 const Header = () => {
   const navigate = useNavigate();
   const toHome = () => {
     navigate("/");
   };
+
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" style={{ backgroundColor: "#360568" }}>
