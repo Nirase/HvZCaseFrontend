@@ -59,9 +59,9 @@ const GamePage = () => {
 
       const fetchUser = async () => {
         const data = await getUsers();
-        const theUser: IUser = data.find(
-          (user: IUser) =>
-            user.firstName === keycloak.tokenParsed?.name.split(" ")[0] // change to sub value to check id insted
+        const theUser: User = data.find(
+          (user: User) =>
+            user.keycloakId === keycloak.tokenParsed?.sub // change to sub value to check id insted
         );
         setUser(theUser);
         const player = theUser.players.find(
@@ -102,7 +102,6 @@ const GamePage = () => {
         }}
       >
         <Info game={game} />
-        {/* <ChatBox game={game} player={player}></ChatBox> */}
 
         {!admin && (
           <>
@@ -127,6 +126,7 @@ const GamePage = () => {
               </>
             ) : (
               <>
+                <ChatBox game={game} player={player}></ChatBox>
                 <div className="biteCode">
                   {player.isHuman && <BiteCode player={player} />}
                   {!player.isHuman && isLoaded ? (
