@@ -1,9 +1,9 @@
 import React from "react";
-import { Player } from "../../interfaces/player";
+import { IPlayer } from "../../interfaces/player";
 import PlayerListItemDetailed from "./PlayerListItemDetailed";
 
 type Props = {
-  players: Array<Player>;
+  players: Array<IPlayer>;
 };
 const PlayerListDetailed = ({ players }: Props) => {
   return (

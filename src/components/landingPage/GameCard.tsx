@@ -1,5 +1,5 @@
 import React from "react";
-import { Game } from "../../interfaces/game";
+import { IGame } from "../../interfaces/game";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -10,7 +10,7 @@ import keycloak from "../../keycloak";
 import { useNavigate } from "react-router-dom";
 
 type Props = {
-  game: Game;
+  game: IGame;
 };
 
 const GameCard = ({ game }: Props) => {

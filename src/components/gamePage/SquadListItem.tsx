@@ -4,18 +4,18 @@ import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import {
-  addPlayerToSquad,
+  AddPlayerToSquad,
   removePlayerFromSquad,
   updatePlayerToGame,
 } from "../../api/apiCalls";
-import { Player } from "../../interfaces/player";
-import { Squad } from "../../interfaces/squad";
+import { IPlayer } from "../../interfaces/player";
+import { ISquad } from "../../interfaces/squad";
 
 type Props = {
-  squad: Squad;
-  players: Array<Player>;
-  player: Player | undefined;
-  updatePlayer: (player: Player) => void;
+  squad: ISquad;
+  players: Array<IPlayer>;
+  player: IPlayer | undefined;
+  updatePlayer: (player: IPlayer) => void;
 };
 
 const SquadListItem = ({ squad, players, player, updatePlayer }: Props) => {
@@ -29,7 +29,7 @@ const SquadListItem = ({ squad, players, player, updatePlayer }: Props) => {
     squad.players.forEach((player: string) => {
       const id = player.split("/")[5];
       nrMembers += 1;
-      const person: any = players.find((player: Player) => player.id === +id);
+      const person: any = players.find((player: IPlayer) => player.id === +id);
 
       if (person) {
         if (!person.isHuman) {
@@ -43,10 +43,10 @@ const SquadListItem = ({ squad, players, player, updatePlayer }: Props) => {
 
   const handleJoin = async () => {
     if (player) {
-      const playerCopy: Player = { ...player };
+      const playerCopy: IPlayer = { ...player };
       playerCopy.squadId = squad.id;
 
-      await addPlayerToSquad(+gameId, squad.id, player.id);
+      await AddPlayerToSquad(+gameId, squad.id, player.id);
       updatePlayer(playerCopy);
       setAmountOfMembers(amountOfMembers + 1);
     }
@@ -54,7 +54,7 @@ const SquadListItem = ({ squad, players, player, updatePlayer }: Props) => {
 
   const handleLeave = async () => {
     if (player) {
-      const playerCopy: Player = { ...player };
+      const playerCopy: IPlayer = { ...player };
       playerCopy.squadId = null;
 
       await removePlayerFromSquad(+gameId, squad.id, player.id);

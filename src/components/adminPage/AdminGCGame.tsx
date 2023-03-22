@@ -3,10 +3,10 @@ import React, { useState } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import UpdateGame from "./gameSection/UpdateGame";
 import DeleteGame from "./gameSection/DeleteGame";
-import { Game } from "../../interfaces/game";
+import { IGame } from "../../interfaces/game";
 
 type Props = {
-  game: Game;
+  game: IGame;
   refreshList: Function;
 };
 
@@ -23,7 +23,7 @@ const AdminGCGame = ({ game, refreshList }: Props) => {
             <h3>Game</h3>
           </AccordionSummary>
           <AccordionDetails>
-            <UpdateGame id={game.id} game={game} />
+            <UpdateGame id={game.id} game={game} refreshList={refreshList} />
             <DeleteGame id={game.id} refreshList={refreshList} />
           </AccordionDetails>
         </Accordion>

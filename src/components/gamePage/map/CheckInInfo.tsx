@@ -1,10 +1,10 @@
-import { CheckIn } from "../../../interfaces/marker";
+import { ICheckIn } from "../../../interfaces/marker";
 import "../../../styles/map.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 type Props = {
-  checkIn: CheckIn | undefined;
+  checkIn: ICheckIn | undefined;
 
   clearCheckInInfo: (info: undefined) => void;
 };

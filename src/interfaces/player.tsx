@@ -1,4 +1,4 @@
-export interface Player {
+export interface IPlayer {
   id: number;
   userId: number;
   firstName: string;
@@ -9,7 +9,7 @@ export interface Player {
   squadId: number | null;
 }
 
-export interface addPlayer {
+export interface IAddPlayer {
   userId: number;
   isHuman: boolean;
   isPatientZero: boolean;
