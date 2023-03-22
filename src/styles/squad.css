@@ -1,0 +1,15 @@
+.membersContainer {
+  display: flex;
+}
+
+.playerCard {
+  margin-bottom: 10px;
+}
+
+.cardContent:last-child {
+  padding-bottom: 16px !important;
+}
+
+.MuiTable-root {
+  min-width: 450px !important;
+}

@@ -33,7 +33,7 @@ const ResponseSnackBar = ({ open, res, from, setClose }: Props) => {
     if (res === undefined) {
       setVersion("error");
       setMessage("Oh, something went wrong with your request from " + from);
-    } else if (res.status === 400) {
+    } else if (res.detail) {
       setVersion("warning");
       setMessage("Oh, something went wrong with your request from " + from);
     } else if (res === "enter all fields") {

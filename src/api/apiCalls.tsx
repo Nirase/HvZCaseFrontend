@@ -182,6 +182,16 @@ const getSquads = async (gameId: number) => {
   return await res;
 };
 
+const getOneSquadById = async (gameId: number, squadId: number) => {
+  const res = await getApiData(`api/v1/game/${gameId}/squad/${squadId}`);
+
+  if (!res) {
+    return undefined;
+  }
+
+  return await res;
+};
+
 const addSquad = async (gameId: number, squad: IAddSquad) => {
   const res = await postApiData(`api/v1/game/${gameId}/squad`, squad);
   if (!res) {
@@ -264,6 +274,7 @@ export {
   getUser,
   getUsers,
   getSquads,
+  getOneSquadById,
   addSquad,
   AddPlayerToSquad,
   removePlayerFromSquad,
