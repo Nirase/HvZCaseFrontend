@@ -3,11 +3,13 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import "../styles/map.css";
 
 import MissionMarke from "./gamePage/map/MissonMarker";
-import { ICheckIn, IMissionInfo } from "../interfaces/marker";
+import { ICheckIn, IMission, IMissionInfo } from "../interfaces/marker";
 import { IGame } from "../interfaces/game";
 import { getGeocode, getLatLng, LatLng } from "use-places-autocomplete";
 import MissonInfo from "./gamePage/map/MissonInfo";
 import { Button, Paper } from "@mui/material";
+import { getAllMissionsInGame } from "../api/apiCalls";
+import MissionMarker from "./gamePage/map/MissonMarker";
 
 type LatLngLiteral = google.maps.LatLngLiteral;
 type MapOptions = google.maps.MapOptions;
@@ -27,11 +29,11 @@ const CreateMarkerMap = ({
   page,
 }: Props) => {
   const [mapCenter, setMapCenter] = useState<LatLngLiteral>();
-  const [missoinInfo, setMissonInfo] = useState<IMissionInfo>();
+  const [missoinInfo, setMissionInfo] = useState<IMissionInfo>();
+  const [missions, setMissions] = useState<Array<IMission>>();
   const [marker, setMarker] = useState<gLatLng>();
 
   const mapRef = useRef<GoogleMap>();
-
   const options = useMemo<MapOptions>(
     () => ({
       zoom: 15,
@@ -41,8 +43,11 @@ const CreateMarkerMap = ({
     }),
     []
   );
+
   useEffect(() => {}, [game.radius]);
+
   const onLoad = useCallback((map: any) => (mapRef.current = map), []);
+
   useEffect(() => {
     const getPosition = async () => {
       const result = await getGeocode({ address: game.location });
@@ -51,6 +56,7 @@ const CreateMarkerMap = ({
     };
     getPosition();
   }, [game.location]);
+
   const circleOptions = {
     strokeOpacity: 0.5,
     strokeWeight: 2,
@@ -63,6 +69,7 @@ const CreateMarkerMap = ({
     center: mapCenter,
     radius: game.radius,
   };
+
   const createMarker = async (latLng: google.maps.LatLng | null) => {
     if (latLng) {
       const res = await getGeocode({ location: latLng });
@@ -70,6 +77,17 @@ const CreateMarkerMap = ({
       markerAddress(res[0].formatted_address);
     }
   };
+
+  useEffect(() => {
+    if (page === "admin") {
+      const fetchMissions = async () => {
+        const res = await getAllMissionsInGame(game.id);
+
+        setMissions(res);
+      };
+      fetchMissions();
+    }
+  }, []);
 
   return (
     <div className="mapContainer">
@@ -86,6 +104,21 @@ const CreateMarkerMap = ({
         >
           {mapCenter && <Circle options={circleOptions} />}
           {marker && <Marker position={marker} draggable={true} />}
+          {missions
+            ? missions.map((marker: IMission) => {
+                return (
+                  <div key={marker.id}>
+                    <MissionMarker
+                      missionmarker={marker}
+                      setInfo={(info: IMissionInfo) => {
+                        setMissionInfo(info);
+                      }}
+                      isHuman={false}
+                    />
+                  </div>
+                );
+              })
+            : ""}
         </GoogleMap>
       </div>
     </div>

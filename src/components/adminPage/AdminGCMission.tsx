@@ -5,6 +5,8 @@ import { IGame } from "../../interfaces/game";
 import CreateMarkerMap from "../CreateMarkerMap";
 import { useLoadScript } from "@react-google-maps/api";
 import { margin } from "@mui/system";
+import MissonInfo from "../gamePage/map/MissonInfo";
+import { ICreateMission, IMissionInfo } from "../../interfaces/marker";
 
 type Props = {
   game: IGame;
@@ -23,6 +25,7 @@ const AdminGCMission = ({ game }: Props) => {
     libraries: libraries,
   });
   const [address, setAddress] = useState("");
+  const [missionInfo, setMissionInfo] = useState<ICreateMission>();
 
   return (
     <AccordionDetails>
@@ -41,7 +44,7 @@ const AdminGCMission = ({ game }: Props) => {
             <CreateMarkerMap
               game={game}
               markerAddress={(address: string) => setAddress(address)}
-              page={"Admin"}
+              page={"admin"}
             />
           )}
         </div>
