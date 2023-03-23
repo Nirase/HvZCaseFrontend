@@ -97,7 +97,7 @@ const CreateMarkerMap = ({
 
   return (
     <div className="mapContainer">
-      <div className="map" style={{ width: "100%" }}>
+      <div className="map" style={{ width: "100%", height: "100%" }}>
         <GoogleMap
           center={mapCenter}
           mapContainerClassName="map-container"
