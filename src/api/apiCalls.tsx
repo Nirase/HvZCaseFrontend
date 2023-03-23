@@ -203,6 +203,18 @@ const getOneSquadById = async (gameId: number, squadId: number) => {
   return await res;
 };
 
+const getOneSquadByIdWithDetails = async (gameId: number, squadId: number) => {
+  const res = await getApiData(
+    `api/v1/game/${gameId}/squad/${squadId}/withdetails`
+  );
+
+  if (!res) {
+    return undefined;
+  }
+
+  return await res;
+};
+
 const addSquad = async (gameId: number, squad: IAddSquad) => {
   const res = await postApiData(`api/v1/game/${gameId}/squad`, squad);
   if (!res) {
@@ -315,6 +327,7 @@ export {
   addUser,
   getSquads,
   getOneSquadById,
+  getOneSquadByIdWithDetails,
   addSquad,
   addSquadCheckIn,
   AddPlayerToSquad,

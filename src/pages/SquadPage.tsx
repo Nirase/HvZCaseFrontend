@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   getAnything,
-  getOneSquadById,
+  getOneSquadByIdWithDetails,
   getUserByKeyCloakId,
 } from "../api/apiCalls";
 import ResponseSnackBar from "../components/ResponseSnackBar";
@@ -15,7 +15,7 @@ import Members from "../components/squadPage/Members";
 
 import { IPlayer } from "../interfaces/player";
 import { ISquad } from "../interfaces/squad";
-import { IUser } from "../interfaces/user";
+
 import keycloak from "../keycloak";
 
 const libraries: "places"[] = ["places"];
@@ -53,7 +53,7 @@ const SquadPage = () => {
       }
 
       const fetchSquad = async () => {
-        const data = await getOneSquadById(+gameId, +squadId);
+        const data = await getOneSquadByIdWithDetails(+gameId, +squadId);
         setSquad(data);
       };
       fetchSquad();
@@ -74,9 +74,7 @@ const SquadPage = () => {
   useEffect(() => {
     if (userPlayer) {
       if (squad) {
-        const isMember = squad.players.find(
-          (x: string) => +x.split("/")[5] === userPlayer.id
-        );
+        const isMember = squad.players.find((x: any) => x.id === userPlayer.id);
         if (isMember) {
           setAllowed(true);
         } else {

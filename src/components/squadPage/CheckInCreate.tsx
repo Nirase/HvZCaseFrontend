@@ -3,23 +3,31 @@ import Button from "@mui/material/Button";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { addSquadCheckIn } from "../../api/apiCalls";
-import { ICreateCheckIn } from "../../interfaces/marker";
-import Places from "../Places";
+import { ICheckIn, ICreateCheckIn } from "../../interfaces/marker";
+
 type Props = {
   setSnackbarRes: (res: any) => void;
   setSnackbarFrom: (from: string) => void;
   marker: string;
+  allCheckIns: Array<ICheckIn> | undefined;
+  setAllCheckIns: (cheks: Array<ICheckIn>) => void;
 };
 
-const CheckInCreate = ({ setSnackbarFrom, setSnackbarRes, marker }: Props) => {
+const CheckInCreate = ({
+  setSnackbarFrom,
+  setSnackbarRes,
+  marker,
+  allCheckIns,
+  setAllCheckIns,
+}: Props) => {
   const { gameId, squadId }: any = useParams();
-  const [location, setLocation] = useState("");
+
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
   const handleCreateClick = async () => {
     const check: ICreateCheckIn = {
-      location,
+      location: marker,
       squadId,
       startDate,
       endDate,
@@ -29,44 +37,49 @@ const CheckInCreate = ({ setSnackbarFrom, setSnackbarRes, marker }: Props) => {
     setSnackbarRes(data);
     setSnackbarFrom("created a check in");
     console.log(data);
+    if (allCheckIns) {
+      const all = [...allCheckIns, data];
+      setAllCheckIns(all);
+      setEndDate("");
+      setStartDate("");
+    }
   };
 
   return (
-    <div>
-      <Places
-        setPosition={(position: string) => setLocation(position)}
-        marker={marker}
+    <div style={{ width: "30%", display: "flex", flexDirection: "column" }}>
+      <label>Location</label>
+      <TextField
+        id="create-checkin-input"
+        variant="standard"
+        required={true}
+        value={marker}
+        fullWidth
+        sx={{ mb: 2 }}
+        InputProps={{
+          readOnly: true,
+        }}
       />
-      <div style={{ marginBottom: "10px", marginTop: "10px" }}>
-        <label>Start Date</label>
-        <TextField
-          type="date"
-          id="create-start-date-input"
-          label=" "
-          variant="standard"
-          style={{
-            marginLeft: -65,
-            maxWidth: 115,
-            marginRight: 15,
-            marginTop: 5,
-          }}
-          onChange={(e) => setStartDate(e.target.value)}
-        />
-        <label style={{ marginLeft: 10 }}>End Date</label>
-        <TextField
-          type="date"
-          id="create-end-date-input"
-          label=" "
-          variant="standard"
-          style={{
-            marginLeft: -65,
-            maxWidth: 115,
-            marginRight: 15,
-            marginTop: 5,
-          }}
-          onChange={(e) => setEndDate(e.target.value)}
-        />
-      </div>
+
+      <label>Start Date</label>
+      <TextField
+        type="date"
+        id="create-start-date-input"
+        label=" "
+        variant="standard"
+        fullWidth
+        sx={{ mb: 2 }}
+        onChange={(e) => setStartDate(e.target.value)}
+      />
+      <label>End Date</label>
+      <TextField
+        type="date"
+        id="create-end-date-input"
+        label=" "
+        variant="standard"
+        fullWidth
+        sx={{ mb: 2 }}
+        onChange={(e) => setEndDate(e.target.value)}
+      />
 
       <Button
         variant="contained"

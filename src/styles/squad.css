@@ -13,3 +13,8 @@
 .MuiTable-root {
   min-width: 450px !important;
 }
+
+.checkInCreateContainer {
+  display: flex;
+  align-items: center;
+}

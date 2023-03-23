@@ -5,10 +5,9 @@ import { useEffect } from "react";
 
 type Props = {
   setPosition: (position: string) => void;
-  marker?: string;
 };
 
-const Places = ({ setPosition, marker }: Props) => {
+const Places = ({ setPosition }: Props) => {
   const {
     ready,
     value,
@@ -25,15 +24,8 @@ const Places = ({ setPosition, marker }: Props) => {
   };
 
   useEffect(() => {
-    console.log("effexct", marker);
-    if (marker) {
-      console.log("hej");
-      setValue(marker);
-    }
-
-    console.log("value", value);
-  }, [marker]);
-  console.log("value2", value);
+    setValue("");
+  }, []);
 
   return (
     <Autocomplete

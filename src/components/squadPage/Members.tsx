@@ -7,51 +7,26 @@ import "../../styles/squad.css";
 import MembersTable from "./MembersTable";
 
 type Props = {
-  members: Array<string>;
+  members: Array<IPlayer>;
 };
 
 const Members = ({ members }: Props) => {
-  const [membersAsPlayers, setMembersAsPlayers] = useState<Array<IPlayer>>();
   const [aliveMembers, setAliveMembers] = useState<Array<IPlayer>>();
   const [deadMembers, setDeadMembers] = useState<Array<IPlayer>>();
 
   useEffect(() => {
-    let allMembersAsPlayer: IPlayer[] = [];
-    let dead: IPlayer[] = [];
+    let dead: number = 0;
     let alive: IPlayer[] = [];
-
-    const fetchPlayers = async (member: string) => {
-      const fetchedMember: IPlayer = await getAnything(member);
-      allMembersAsPlayer.push(fetchedMember);
-      setMembersAsPlayers(allMembersAsPlayer);
-      if (fetchedMember.isHuman) {
-        alive.push(fetchedMember);
-        setAliveMembers(alive);
-      } else {
-        dead.push(fetchedMember);
-        setDeadMembers(dead);
-      }
-    };
-
-    members.forEach((member: string) => {
-      fetchPlayers(member);
-    });
   }, []);
 
-  if (membersAsPlayers) {
-    return (
-      <div>
-        <Typography variant="h4">Members</Typography>
+  return (
+    <div>
+      <Typography variant="h4">Members</Typography>
 
-        <Grid className="membersContainer" sx={{ margin: "10px" }}>
-          {members.length === membersAsPlayers.length ? (
-            <MembersTable members={membersAsPlayers} />
-          ) : (
-            ""
-          )}
-        </Grid>
-      </div>
-    );
-  } else return null;
+      <Grid className="membersContainer" sx={{ margin: "10px" }}>
+        <MembersTable members={members} />
+      </Grid>
+    </div>
+  );
 };
 export default Members;

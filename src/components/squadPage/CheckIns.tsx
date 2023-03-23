@@ -6,6 +6,7 @@ import { ICheckIn } from "../../interfaces/marker";
 import { ISquad } from "../../interfaces/squad";
 import CreateMarkerMap from "../CreateMarkerMap";
 import CheckInCreate from "./CheckInCreate";
+import "../../styles/squad.css";
 
 type Props = {
   squad: ISquad;
@@ -17,7 +18,7 @@ const CheckIns = ({ squad, setSnackbarFrom, setSnackbarRes }: Props) => {
   const { gameId, squadId }: any = useParams();
   const [game, setGame] = useState<IGame>();
   const [address, setAddress] = useState("");
-  const [CheckIns, setCheckIns] = useState<Array<ICheckIn>>();
+  const [checkIns, setCheckIns] = useState<Array<ICheckIn>>();
 
   useEffect(() => {
     const fetchGame = async () => {
@@ -25,31 +26,24 @@ const CheckIns = ({ squad, setSnackbarFrom, setSnackbarRes }: Props) => {
       setGame(res);
     };
     fetchGame();
-
-    let fetchedChecks: any = [];
-    const fetchChecks = async (path: string) => {
-      const res = await getAnything(path);
-      fetchedChecks.push(res);
-      setCheckIns(fetchedChecks);
-    };
-    squad.squadCheckIns.forEach((check: string) => {
-      fetchChecks(check);
-    });
+    setCheckIns(squad.squadCheckIns);
   }, []);
 
   if (game) {
     return (
-      <div>
+      <div className="checkInCreateContainer">
         <CheckInCreate
           setSnackbarFrom={(from: string) => setSnackbarFrom(from)}
           setSnackbarRes={(res: any) => setSnackbarRes(res)}
           marker={address}
+          allCheckIns={checkIns}
+          setAllCheckIns={(cheks: Array<ICheckIn>) => setCheckIns(cheks)}
         />
         <CreateMarkerMap
           game={game}
           markerAddress={(address: string) => setAddress(address)}
           page={"squad"}
-          checkInMarkers={CheckIns}
+          checkInMarkers={checkIns}
         />
       </div>
     );
