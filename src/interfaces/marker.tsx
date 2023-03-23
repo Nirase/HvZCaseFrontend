@@ -15,6 +15,7 @@ export interface ICreateMission extends IMissionInfo {
   visibleToHumans: boolean;
   visibleToZombies: boolean;
   location: string;
+  gameId: number;
 }
 
 export interface IKill {

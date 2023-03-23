@@ -21,49 +21,47 @@ initialize()
   .then(() => {
     // If No Keycloak Error occurred - Display the App
     root.render(
-      <React.StrictMode>
-        <BrowserRouter>
-          <Header />
-          <main className="container">
-            <Routes>
-              <Route path="/" element={<LandingPage />} />
-              <Route
-                path="/admin"
-                element={
-                  <KeycloakRoute role={ROLES.Admin}>
-                    <AdminPage />
-                  </KeycloakRoute>
-                }
-              />
-              <Route
-                path="/profile"
-                element={
-                  <KeycloakRoute role={(ROLES.Admin, ROLES.User)}>
-                    <ProfilePage />
-                  </KeycloakRoute>
-                }
-              />
-              <Route
-                path="/game/:gameId"
-                element={
-                  <KeycloakRoute role={ROLES.User}>
-                    <GamePage />
-                  </KeycloakRoute>
-                }
-              />
-              <Route
-                path="/game/:gameId/squad/:squadId"
-                element={
-                  <KeycloakRoute role={ROLES.User}>
-                    <SquadPage />
-                  </KeycloakRoute>
-                }
-              />
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-          </main>
-        </BrowserRouter>
-      </React.StrictMode>
+      <BrowserRouter>
+        <Header />
+        <main className="container">
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route
+              path="/admin"
+              element={
+                <KeycloakRoute role={ROLES.Admin}>
+                  <AdminPage />
+                </KeycloakRoute>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <KeycloakRoute role={(ROLES.Admin, ROLES.User)}>
+                  <ProfilePage />
+                </KeycloakRoute>
+              }
+            />
+            <Route
+              path="/game/:gameId"
+              element={
+                <KeycloakRoute role={ROLES.User}>
+                  <GamePage />
+                </KeycloakRoute>
+              }
+            />
+            <Route
+              path="/game/:gameId/squad/:squadId"
+              element={
+                <KeycloakRoute role={ROLES.User}>
+                  <SquadPage />
+                </KeycloakRoute>
+              }
+            />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </main>
+      </BrowserRouter>
     );
   })
   .catch(() => {

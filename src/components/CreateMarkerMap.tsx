@@ -18,7 +18,10 @@ type gLatLng = google.maps.LatLng;
 type Props = {
   game: IGame;
   checkInMarkers?: Array<ICheckIn>;
+  missionMarkers?: Array<IMission>;
   markerAddress: (address: string) => void;
+  missionInfo?: (selectedMission: IMissionInfo) => void;
+  missionId?: (selectedMissionId: number) => void;
   page: string;
 };
 
@@ -26,10 +29,12 @@ const CreateMarkerMap = ({
   game,
   markerAddress,
   checkInMarkers,
+  missionMarkers,
+  missionInfo,
+  missionId,
   page,
 }: Props) => {
   const [mapCenter, setMapCenter] = useState<LatLngLiteral>();
-  const [missoinInfo, setMissionInfo] = useState<IMissionInfo>();
   const [missions, setMissions] = useState<Array<IMission>>();
   const [marker, setMarker] = useState<gLatLng>();
 
@@ -44,7 +49,9 @@ const CreateMarkerMap = ({
     []
   );
 
-  useEffect(() => {}, [game.radius]);
+  useEffect(() => {
+    setMissions(missionMarkers);
+  }, [missionMarkers]);
 
   const onLoad = useCallback((map: any) => (mapRef.current = map), []);
 
@@ -78,16 +85,15 @@ const CreateMarkerMap = ({
     }
   };
 
-  useEffect(() => {
-    if (page === "admin") {
-      const fetchMissions = async () => {
-        const res = await getAllMissionsInGame(game.id);
-
-        setMissions(res);
-      };
-      fetchMissions();
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (page === "admin") {
+  //     const fetchMissions = async () => {
+  //       const res = await getAllMissionsInGame(game.id);
+  //       setMissions(res);
+  //     };
+  //     fetchMissions();
+  //   }
+  // }, []);
 
   return (
     <div className="mapContainer">
@@ -104,16 +110,18 @@ const CreateMarkerMap = ({
         >
           {mapCenter && <Circle options={circleOptions} />}
           {marker && <Marker position={marker} draggable={true} />}
-          {missions
+          {missions && missionInfo && missionId
             ? missions.map((marker: IMission) => {
                 return (
                   <div key={marker.id}>
                     <MissionMarker
                       missionmarker={marker}
                       setInfo={(info: IMissionInfo) => {
-                        setMissionInfo(info);
+                        missionInfo(info);
                       }}
-                      isHuman={false}
+                      setId={(id: number) => {
+                        missionId(id);
+                      }}
                     />
                   </div>
                 );

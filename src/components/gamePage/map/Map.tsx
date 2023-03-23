@@ -146,7 +146,6 @@ const Map = ({ game, player, squads }: Props) => {
                             setKillInfo(undefined);
                             setCheckInInfo(undefined);
                           }}
-                          isHuman={player.isHuman}
                         />
                       </div>
                     );
