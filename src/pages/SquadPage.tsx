@@ -2,7 +2,11 @@ import Container from "@mui/material/Container";
 import { useLoadScript } from "@react-google-maps/api";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getAnything, getOneSquadById, getUsers } from "../api/apiCalls";
+import {
+  getAnything,
+  getOneSquadById,
+  getUserByKeyCloakId,
+} from "../api/apiCalls";
 import ResponseSnackBar from "../components/ResponseSnackBar";
 
 import CheckIns from "../components/squadPage/CheckIns";
@@ -35,17 +39,18 @@ const SquadPage = () => {
 
   useEffect(() => {
     if (squadId) {
-      const fetchUser = async () => {
-        const data = await getUsers();
-        const theUser: IUser = data.find(
-          (user: IUser) => user.keycloakId === keycloak.tokenParsed?.sub // change to sub value to check id insted
-        );
-        const player = theUser.players.find(
-          (player: string) => player.split("/")[3] === gameId
-        );
-        setPlayerString(player);
-      };
-      fetchUser();
+      const id: string | undefined = keycloak.tokenParsed?.sub;
+      if (id) {
+        const fetchUser = async () => {
+          const data = await getUserByKeyCloakId(id);
+
+          const player = data.players.find(
+            (player: string) => player.split("/")[3] === gameId
+          );
+          setPlayerString(player);
+        };
+        fetchUser();
+      }
 
       const fetchSquad = async () => {
         const data = await getOneSquadById(+gameId, +squadId);

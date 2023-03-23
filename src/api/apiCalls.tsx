@@ -152,8 +152,18 @@ const addUser = async (user: IAddUser) => {
   return await res;
 };
 
-const getUser = async (id: number) => {
+const getUserById = async (id: number) => {
   const res = await getApiData(`api/v1/user/${id}`);
+
+  if (!res) {
+    return undefined;
+  }
+
+  return await res;
+};
+
+const getUserByKeyCloakId = async (keyCloackId: string) => {
+  const res = await getApiData(`api/v1/user/keycloak/${keyCloackId}`);
 
   if (!res) {
     return undefined;
@@ -299,7 +309,8 @@ export {
   AddPlayerToGame,
   updatePlayerToGame,
   deletePlayer,
-  getUser,
+  getUserById,
+  getUserByKeyCloakId,
   getUsers,
   addUser,
   getSquads,

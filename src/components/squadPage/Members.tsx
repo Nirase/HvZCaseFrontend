@@ -19,27 +19,30 @@ const Members = ({ members }: Props) => {
     let allMembersAsPlayer: IPlayer[] = [];
     let dead: IPlayer[] = [];
     let alive: IPlayer[] = [];
-    const fetchPlayers = async () => {
-      members.forEach(async (member: string) => {
-        const fetchedMember: IPlayer = await getAnything(member);
-        allMembersAsPlayer.push(fetchedMember);
-        setMembersAsPlayers(allMembersAsPlayer);
-        if (fetchedMember.isHuman) {
-          alive.push(fetchedMember);
-          setAliveMembers(alive);
-        } else {
-          dead.push(fetchedMember);
-          setDeadMembers(dead);
-        }
-      });
+
+    const fetchPlayers = async (member: string) => {
+      const fetchedMember: IPlayer = await getAnything(member);
+      allMembersAsPlayer.push(fetchedMember);
+      setMembersAsPlayers(allMembersAsPlayer);
+      if (fetchedMember.isHuman) {
+        alive.push(fetchedMember);
+        setAliveMembers(alive);
+      } else {
+        dead.push(fetchedMember);
+        setDeadMembers(dead);
+      }
     };
-    fetchPlayers();
+
+    members.forEach((member: string) => {
+      fetchPlayers(member);
+    });
   }, []);
 
   if (membersAsPlayers) {
     return (
       <div>
-        <Typography variant="h5">Members</Typography>
+        <Typography variant="h4">Members</Typography>
+
         <Grid className="membersContainer" sx={{ margin: "10px" }}>
           {members.length === membersAsPlayers.length ? (
             <MembersTable members={membersAsPlayers} />

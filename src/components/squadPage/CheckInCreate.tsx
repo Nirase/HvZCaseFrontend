@@ -8,9 +8,10 @@ import Places from "../Places";
 type Props = {
   setSnackbarRes: (res: any) => void;
   setSnackbarFrom: (from: string) => void;
+  marker: string;
 };
 
-const CheckInCreate = ({ setSnackbarFrom, setSnackbarRes }: Props) => {
+const CheckInCreate = ({ setSnackbarFrom, setSnackbarRes, marker }: Props) => {
   const { gameId, squadId }: any = useParams();
   const [location, setLocation] = useState("");
   const [startDate, setStartDate] = useState("");
@@ -32,23 +33,41 @@ const CheckInCreate = ({ setSnackbarFrom, setSnackbarRes }: Props) => {
 
   return (
     <div>
-      <Places setPosition={(position: string) => setLocation(position)} />
-      <label>Start Date</label>
-      <TextField
-        type="date"
-        id="create-start-date-input"
-        label=" "
-        variant="outlined"
-        onChange={(e) => setStartDate(e.target.value)}
+      <Places
+        setPosition={(position: string) => setLocation(position)}
+        marker={marker}
       />
-      <label style={{ marginLeft: 10 }}>End Date</label>
-      <TextField
-        type="date"
-        id="create-end-date-input"
-        label=" "
-        variant="outlined"
-        onChange={(e) => setEndDate(e.target.value)}
-      />
+      <div style={{ marginBottom: "10px", marginTop: "10px" }}>
+        <label>Start Date</label>
+        <TextField
+          type="date"
+          id="create-start-date-input"
+          label=" "
+          variant="standard"
+          style={{
+            marginLeft: -65,
+            maxWidth: 115,
+            marginRight: 15,
+            marginTop: 5,
+          }}
+          onChange={(e) => setStartDate(e.target.value)}
+        />
+        <label style={{ marginLeft: 10 }}>End Date</label>
+        <TextField
+          type="date"
+          id="create-end-date-input"
+          label=" "
+          variant="standard"
+          style={{
+            marginLeft: -65,
+            maxWidth: 115,
+            marginRight: 15,
+            marginTop: 5,
+          }}
+          onChange={(e) => setEndDate(e.target.value)}
+        />
+      </div>
+
       <Button
         variant="contained"
         style={{ backgroundColor: "secondary" }}

@@ -6,7 +6,7 @@ import {
   getAnything,
   getOneGameWithDetails,
   getSquads,
-  getUsers,
+  getUserByKeyCloakId,
 } from "../api/apiCalls";
 import BiteCode from "../components/gamePage/BiteCode";
 import BiteCodeEntry from "../components/gamePage/BiteCodeEntry";
@@ -56,19 +56,19 @@ const GamePage = () => {
         setAllPlayers(theGame.players);
       };
       fetchOneGame();
+      const id: string | undefined = keycloak.tokenParsed?.sub;
+      if (id) {
+        const fetchUser = async () => {
+          const data = await getUserByKeyCloakId(id);
 
-      const fetchUser = async () => {
-        const data = await getUsers();
-        const theUser: IUser = data.find(
-          (user: IUser) => user.keycloakId === keycloak.tokenParsed?.sub
-        );
-        setUser(theUser);
-        const player = theUser.players.find(
-          (player: string) => player.split("/")[3] === gameId
-        );
-        setPlayerString(player);
-      };
-      fetchUser();
+          setUser(data);
+          const player = data.players.find(
+            (player: string) => player.split("/")[3] === gameId
+          );
+          setPlayerString(player);
+        };
+        fetchUser();
+      }
 
       const fetchSquads = async () => {
         const data = await getSquads(+gameId);
@@ -88,6 +88,7 @@ const GamePage = () => {
       fetchPlayer();
     }
   }, [playerString]);
+  console.log(player);
 
   if (game && user) {
     return (

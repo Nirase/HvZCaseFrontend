@@ -5,9 +5,9 @@ import "../styles/map.css";
 import MissionMarke from "./gamePage/map/MissonMarker";
 import { ICheckIn, IMissionInfo } from "../interfaces/marker";
 import { IGame } from "../interfaces/game";
-import { getGeocode, getLatLng, LatLng } from "use-places-autocomplete";
-import MissonInfo from "./gamePage/map/MissonInfo";
-import { Button, Paper } from "@mui/material";
+import { getGeocode, getLatLng } from "use-places-autocomplete";
+
+import CheckInMarker from "./gamePage/map/CheckInMarker";
 
 type LatLngLiteral = google.maps.LatLngLiteral;
 type MapOptions = google.maps.MapOptions;
@@ -27,7 +27,7 @@ const CreateMarkerMap = ({
   page,
 }: Props) => {
   const [mapCenter, setMapCenter] = useState<LatLngLiteral>();
-  const [missoinInfo, setMissonInfo] = useState<IMissionInfo>();
+  const [missionInfo, setMissionInfo] = useState<IMissionInfo>();
   const [marker, setMarker] = useState<gLatLng>();
 
   const mapRef = useRef<GoogleMap>();
@@ -43,6 +43,7 @@ const CreateMarkerMap = ({
   );
   useEffect(() => {}, [game.radius]);
   const onLoad = useCallback((map: any) => (mapRef.current = map), []);
+
   useEffect(() => {
     const getPosition = async () => {
       const result = await getGeocode({ address: game.location });
@@ -51,6 +52,7 @@ const CreateMarkerMap = ({
     };
     getPosition();
   }, [game.location]);
+
   const circleOptions = {
     strokeOpacity: 0.5,
     strokeWeight: 2,
@@ -64,6 +66,14 @@ const CreateMarkerMap = ({
     radius: game.radius,
   };
   const createMarker = async (latLng: google.maps.LatLng | null) => {
+    if (latLng) {
+      const res = await getGeocode({ location: latLng });
+      setMarker(latLng);
+      markerAddress(res[0].formatted_address);
+    }
+  };
+
+  const draggedMarker = async (latLng: google.maps.LatLng | null) => {
     if (latLng) {
       const res = await getGeocode({ location: latLng });
       setMarker(latLng);
@@ -85,7 +95,24 @@ const CreateMarkerMap = ({
           }}
         >
           {mapCenter && <Circle options={circleOptions} />}
-          {marker && <Marker position={marker} draggable={true} />}
+          {marker && (
+            <Marker
+              position={marker}
+              draggable={true}
+              onDragEnd={(e) => draggedMarker(e.latLng)}
+            />
+          )}
+          {checkInMarkers &&
+            checkInMarkers.map((check: ICheckIn) => {
+              return (
+                <div key={check.id}>
+                  <CheckInMarker
+                    checkIn={check}
+                    setCheckInInfo={(info: ICheckIn) => ""}
+                  />
+                </div>
+              );
+            })}
         </GoogleMap>
       </div>
     </div>

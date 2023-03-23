@@ -6,11 +6,7 @@ import {
   TextField,
 } from "@mui/material";
 import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
-import {
-  getOnePlayerFromGame,
-  getPlayersFromGame,
-  getUser,
-} from "../../api/apiCalls";
+import { getOnePlayerFromGame, getPlayersFromGame } from "../../api/apiCalls";
 import { IGame } from "../../interfaces/game";
 import PlayerListDetailed from "./PlayerListDetailed";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
