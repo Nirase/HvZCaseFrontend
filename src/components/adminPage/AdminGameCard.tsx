@@ -50,7 +50,14 @@ const AdminGameCard = ({
           }}
           setSnackbarFrom={(from: string) => setSnackbarFrom(from)}
         />
-        <AdminGCMission game={game} />
+        <AdminGCMission
+          game={game}
+          refreshList={refreshList}
+          setSnackbarRes={(res: any) => {
+            setSnackbarRes(res);
+          }}
+          setSnackbarFrom={(from: string) => setSnackbarFrom(from)}
+        />
       </Accordion>
     </div>
   );

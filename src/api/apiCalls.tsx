@@ -1,4 +1,5 @@
 import { ICreateGame, IGame } from "../interfaces/game";
+import { ICreateMission } from "../interfaces/marker";
 import { IAddPlayer, IPlayer } from "../interfaces/player";
 import { IAddSquad } from "../interfaces/squad";
 import { IAddUser } from "../interfaces/user";
@@ -274,6 +275,27 @@ const getAllMissionsInGame = async (gameId: number) => {
   return await res;
 };
 
+const createMission = async (gameId: number, mission: ICreateMission) => {
+  const res = await postApiData(`api/v1/game/${gameId}/mission`, mission);
+  console.log(res);
+  if (!res) {
+    return undefined;
+  }
+
+  return await res;
+};
+const deleteMission = async (gameId: number, missionId: number) => {
+  const res = await deleteApiData(
+    `api/v1/game/${gameId}/mission?id=${missionId}`
+  );
+  console.log(res);
+  if (!res) {
+    return undefined;
+  }
+
+  return await res;
+};
+
 //chat
 const addMessage = async (gameId: number, body: any) => {
   const res = await postApiData(`api/v1/chat`, body);
@@ -310,5 +332,7 @@ export {
   removePlayerFromSquad,
   addKill,
   getAllMissionsInGame,
+  createMission,
+  deleteMission,
   addMessage,
 };

@@ -11,6 +11,12 @@ export interface IMission extends IMissionInfo {
   visibleToZombies: boolean;
   location: string;
 }
+export interface ICreateMission extends IMissionInfo {
+  visibleToHumans: boolean;
+  visibleToZombies: boolean;
+  location: string;
+  gameId: number;
+}
 
 export interface IKill {
   timeOfDeath: string;

@@ -45,21 +45,21 @@ const AddPlayer = ({
 
   const handleChangeHuman = (event: SelectChangeEvent) => {
     setIsHuman(event.target.value as string);
-    if (event.target.value == "true") {
+    if (event.target.value === "true") {
       newPlayer.isHuman = true;
       setIsPatientZero("false");
       newPlayer.isPatientZero = false;
-    } else if (event.target.value == "false") {
+    } else if (event.target.value === "false") {
       newPlayer.isHuman = false;
     }
   };
   const handleChangeIsPatient = (event: SelectChangeEvent) => {
     setIsPatientZero(event.target.value as string);
-    if (event.target.value == "true") {
+    if (event.target.value === "true") {
       setIsHuman("false");
       newPlayer.isHuman = false;
       newPlayer.isPatientZero = true;
-    } else if (event.target.value == "false") {
+    } else if (event.target.value === "false") {
       newPlayer.isPatientZero = false;
     }
   };

@@ -13,10 +13,10 @@ type LatLngLiteral = google.maps.LatLngLiteral;
 type Props = {
   missionmarker: IMission;
   setInfo: (missonInfo: IMissionInfo) => void;
-  isHuman: boolean;
+  setId?: (id: number) => void; //return mission id
 };
 
-const MissionMarker = ({ missionmarker, setInfo, isHuman }: Props) => {
+const MissionMarker = ({ missionmarker, setInfo, setId }: Props) => {
   // markers
   const missions = {
     path: faPoo.icon[4] as string,
@@ -74,17 +74,24 @@ const MissionMarker = ({ missionmarker, setInfo, isHuman }: Props) => {
       description,
       name: missionmarker.name,
     };
-
+    if (setId) {
+      console.log(missionmarker.id);
+      setId(missionmarker.id);
+    }
+    console.log(info);
     setInfo(info);
   };
 
   useEffect(() => {
     const getPosition = async () => {
+      console.log("test");
       const result = await getGeocode({ address: missionmarker.location });
       const { lat, lng } = await getLatLng(result[0]);
       setPosition({ lat, lng });
     };
-    getPosition();
+    if (todaysDate <= endDate) {
+      getPosition();
+    }
     //set marker symbol
     if (missionmarker.visibleToHumans && missionmarker.visibleToZombies) {
       setIcon(missions);
@@ -95,13 +102,9 @@ const MissionMarker = ({ missionmarker, setInfo, isHuman }: Props) => {
     }
   }, []);
 
-  //if (todaysDate <= endDate) {
-
   if (position) {
     return <Marker position={position} icon={icon} onClick={handelSelect} />;
   } else return null;
-
-  //} else return null;
 };
 
 export default MissionMarker;
