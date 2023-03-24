@@ -8,14 +8,11 @@ import {
   getUserByKeyCloakId,
 } from "../api/apiCalls";
 import ResponseSnackBar from "../components/ResponseSnackBar";
-
 import CheckIns from "../components/squadPage/CheckIns";
 import Info from "../components/squadPage/Info";
 import Members from "../components/squadPage/Members";
-
 import { IPlayer } from "../interfaces/player";
 import { ISquad } from "../interfaces/squad";
-
 import keycloak from "../keycloak";
 
 const libraries: "places"[] = ["places"];

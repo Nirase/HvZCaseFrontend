@@ -1,14 +1,11 @@
 import { Circle, GoogleMap, Marker } from "@react-google-maps/api";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import "../styles/map.css";
+import "../styles/createMarkerMap.css";
 
-import MissionMarke from "./gamePage/map/MissonMarker";
 import { ICheckIn, IMission, IMissionInfo } from "../interfaces/marker";
 import { IGame } from "../interfaces/game";
-import { getGeocode, getLatLng, LatLng } from "use-places-autocomplete";
-import MissonInfo from "./gamePage/map/MissonInfo";
-import { Button, Paper } from "@mui/material";
-import { getAllMissionsInGame } from "../api/apiCalls";
+import { getGeocode, getLatLng } from "use-places-autocomplete";
+
 import MissionMarker from "./gamePage/map/MissonMarker";
 
 import CheckInMarker from "./gamePage/map/CheckInMarker";
@@ -96,11 +93,11 @@ const CreateMarkerMap = ({
   };
 
   return (
-    <div className="mapContainer" style={{ width: "80%" }}>
-      <div className="map" style={{ width: "100%", height: "100%" }}>
+    <div className="mapContainer2">
+      <div className="map2">
         <GoogleMap
           center={mapCenter}
-          mapContainerClassName="map-container"
+          mapContainerClassName="map-container2"
           options={options}
           onLoad={onLoad}
           id="map"

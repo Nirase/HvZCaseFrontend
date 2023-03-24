@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getAnything, getOneGame } from "../../api/apiCalls";
+import { getOneGame } from "../../api/apiCalls";
 import { IGame } from "../../interfaces/game";
 import { ICheckIn } from "../../interfaces/marker";
 import { ISquad } from "../../interfaces/squad";
@@ -15,7 +15,7 @@ type Props = {
 };
 
 const CheckIns = ({ squad, setSnackbarFrom, setSnackbarRes }: Props) => {
-  const { gameId, squadId }: any = useParams();
+  const { gameId }: any = useParams();
   const [game, setGame] = useState<IGame>();
   const [address, setAddress] = useState("");
   const [checkIns, setCheckIns] = useState<Array<ICheckIn>>();
