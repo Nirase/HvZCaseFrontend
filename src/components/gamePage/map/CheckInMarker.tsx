@@ -1,14 +1,15 @@
 import { faUsersRays } from "@fortawesome/free-solid-svg-icons";
-import { Marker } from "@react-google-maps/api";
+import { InfoWindow, Marker } from "@react-google-maps/api";
 import { useEffect, useState } from "react";
 import { getGeocode, getLatLng } from "use-places-autocomplete";
 import { ICheckIn } from "../../../interfaces/marker";
+import InfoWindowMap from "../../InfoWindowMap";
 
 type LatLngLiteral = google.maps.LatLngLiteral;
 
 type Props = {
   checkIn: ICheckIn;
-  setCheckInInfo: (info: ICheckIn) => void;
+  setCheckInInfo: (info: ICheckIn, position: LatLngLiteral) => void;
 };
 
 const CheckInMarker = ({ checkIn, setCheckInInfo }: Props) => {
@@ -32,7 +33,9 @@ const CheckInMarker = ({ checkIn, setCheckInInfo }: Props) => {
   const [position, setPosition] = useState<LatLngLiteral>();
 
   const handelSelect = () => {
-    setCheckInInfo(checkIn);
+    if (position) {
+      setCheckInInfo(checkIn, position);
+    }
   };
 
   useEffect(() => {
@@ -52,7 +55,9 @@ const CheckInMarker = ({ checkIn, setCheckInInfo }: Props) => {
 
   if (position) {
     return (
-      <Marker position={position} icon={checkInIcon} onClick={handelSelect} />
+      <>
+        <Marker position={position} icon={checkInIcon} onClick={handelSelect} />
+      </>
     );
   } else {
     return null;

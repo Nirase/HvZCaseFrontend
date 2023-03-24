@@ -12,7 +12,7 @@ type LatLngLiteral = google.maps.LatLngLiteral;
 
 type Props = {
   missionmarker: IMission;
-  setInfo: (missonInfo: IMissionInfo) => void;
+  setInfo: (missonInfo: IMissionInfo, position: LatLngLiteral) => void;
   setId?: (id: number) => void; //return mission id
 };
 
@@ -77,7 +77,9 @@ const MissionMarker = ({ missionmarker, setInfo, setId }: Props) => {
     if (setId) {
       setId(missionmarker.id);
     }
-    setInfo(info);
+    if (position) {
+      setInfo(info, position);
+    }
   };
 
   useEffect(() => {
