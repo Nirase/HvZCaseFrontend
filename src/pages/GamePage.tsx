@@ -90,6 +90,26 @@ const GamePage = () => {
     }
   }, [playerString]);
 
+  let tests;
+  if (player && !player.squadId) {
+    tests = (
+      <SquadRegistration
+        player={player}
+        squads={squads}
+        setSquad={(squad: Array<ISquad>) => {
+          setSquads(squad);
+        }}
+        setSnackbarRes={(res: any) => {
+          setSnackbarRes(res);
+          setSnackbar(true);
+        }}
+        setSnackbarFrom={(from: string) => setSnackbarFrom(from)}
+      />
+    );
+  } else {
+    tests = <p></p>;
+  }
+
   if (game && user) {
     return (
       <Container
@@ -173,22 +193,7 @@ const GamePage = () => {
                 setSnackbarFrom={(from: string) => setSnackbarFrom(from)}
               />
             )}
-            {player && !player.squadId ? (
-              <SquadRegistration
-                player={player}
-                squads={squads}
-                setSquad={(squad: Array<ISquad>) => {
-                  setSquads(squad);
-                }}
-                setSnackbarRes={(res: any) => {
-                  setSnackbarRes(res);
-                  setSnackbar(true);
-                }}
-                setSnackbarFrom={(from: string) => setSnackbarFrom(from)}
-              />
-            ) : (
-              ""
-            )}
+            {!admin && <>{tests}</>}
           </div>
 
           {allPlayers && <PlayerList players={allPlayers} />}

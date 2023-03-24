@@ -34,16 +34,19 @@ const CheckInCreate = ({
       startDate,
       endDate,
     };
-
-    const data = await addSquadCheckIn(+gameId, +squadId, check);
-    setSnackbarRes(data);
-    setSnackbarFrom("created a check in");
-    console.log(data);
-    if (allCheckIns) {
-      const all = [...allCheckIns, data];
-      setAllCheckIns(all);
-      setEndDate("");
-      setStartDate("");
+    if (startDate && endDate) {
+      const data = await addSquadCheckIn(+gameId, +squadId, check);
+      setSnackbarRes(data);
+      setSnackbarFrom("created a check in");
+      console.log(data);
+      if (allCheckIns) {
+        const all = [...allCheckIns, data];
+        setAllCheckIns(all);
+        setEndDate("");
+        setStartDate("");
+      }
+    } else {
+      setSnackbarRes("enter all fields");
     }
   };
   console.log(startDate);

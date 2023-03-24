@@ -11,6 +11,8 @@ import {
 } from "../../api/apiCalls";
 import { IPlayer } from "../../interfaces/player";
 import { ISquad } from "../../interfaces/squad";
+import keycloak from "../../keycloak";
+import { ROLES } from "../../roles/roles";
 
 type Props = {
   squad: ISquad;
@@ -84,7 +86,7 @@ const SquadListItem = ({
   };
 
   let showButton;
-  if (player?.squadId === null) {
+  if (player?.squadId === null && !keycloak.hasRealmRole(ROLES.Admin)) {
     showButton = (
       <Button
         size="small"
