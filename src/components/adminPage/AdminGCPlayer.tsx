@@ -215,7 +215,9 @@ const AdminGCPlayer = ({ game, setSnackbarRes, setSnackbarFrom }: Props) => {
         >
           <h3>Player</h3>
         </AccordionSummary>
-        <div>loading..</div>
+        <AccordionDetails>
+          <div>loading..</div>
+        </AccordionDetails>
       </Accordion>
     );
   }

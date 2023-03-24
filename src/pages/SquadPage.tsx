@@ -7,9 +7,11 @@ import {
   getOneSquadByIdWithDetails,
   getUserByKeyCloakId,
 } from "../api/apiCalls";
+import { IconButton } from "@mui/material";
 import ResponseSnackBar from "../components/ResponseSnackBar";
 import CheckIns from "../components/squadPage/CheckIns";
 import Info from "../components/squadPage/Info";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Members from "../components/squadPage/Members";
 import { IPlayer } from "../interfaces/player";
 import { ISquad } from "../interfaces/squad";
@@ -82,6 +84,10 @@ const SquadPage = () => {
     }
   }, [userPlayer, squad]);
 
+  const returnToGamePage = () => {
+    navigate("/game/" + gameId);
+  };
+
   if (isLoaded && allowed) {
     return (
       <Container
@@ -93,6 +99,15 @@ const SquadPage = () => {
           borderRadius: "10px",
         }}
       >
+        <IconButton
+          className="backButton"
+          aria-label="upload picture"
+          component="label"
+          style={{ marginTop: 10, marginLeft: -15 }}
+          onClick={returnToGamePage}
+        >
+          <ArrowBackIcon style={{ fontSize: 50 }} />
+        </IconButton>
         {squad && (
           <>
             <Info squad={squad} />
