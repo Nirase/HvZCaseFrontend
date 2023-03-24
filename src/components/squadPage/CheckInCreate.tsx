@@ -47,7 +47,11 @@ const CheckInCreate = ({
 
   return (
     <div style={{ width: "30%", display: "flex", flexDirection: "column" }}>
-      <label>Location</label>
+      <p>
+        Choose a location by clicking on the map, you can move the red marker by
+        dragging it if you want another location
+      </p>
+      <label style={{ fontWeight: "bold" }}>Location</label>
       <TextField
         id="create-checkin-input"
         variant="standard"
@@ -60,7 +64,7 @@ const CheckInCreate = ({
         }}
       />
 
-      <label>Start Date</label>
+      <label style={{ fontWeight: "bold" }}>Start Date</label>
       <TextField
         type="date"
         id="create-start-date-input"
@@ -70,7 +74,7 @@ const CheckInCreate = ({
         sx={{ mb: 2 }}
         onChange={(e) => setStartDate(e.target.value)}
       />
-      <label>End Date</label>
+      <label style={{ fontWeight: "bold" }}>End Date</label>
       <TextField
         type="date"
         id="create-end-date-input"

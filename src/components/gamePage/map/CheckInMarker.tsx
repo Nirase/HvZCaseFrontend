@@ -36,26 +36,27 @@ const CheckInMarker = ({ checkIn, setCheckInInfo }: Props) => {
   };
 
   useEffect(() => {
-    if (checkIn.location) {
-      const getPosition = async () => {
-        const result = await getGeocode({
-          address: checkIn.location,
-        });
-        const { lat, lng } = await getLatLng(result[0]);
-        setPosition({ lat, lng });
-      };
-      getPosition();
+    if (todaysDate <= endDate) {
+      if (checkIn.location) {
+        const getPosition = async () => {
+          const result = await getGeocode({
+            address: checkIn.location,
+          });
+          const { lat, lng } = await getLatLng(result[0]);
+          setPosition({ lat, lng });
+        };
+        getPosition();
+      }
     }
   }, []);
-  if (todaysDate <= endDate) {
-    if (position) {
-      return (
-        <Marker position={position} icon={checkInIcon} onClick={handelSelect} />
-      );
-    } else {
-      return null;
-    }
-  } else return null;
+
+  if (position) {
+    return (
+      <Marker position={position} icon={checkInIcon} onClick={handelSelect} />
+    );
+  } else {
+    return null;
+  }
 };
 
 export default CheckInMarker;
