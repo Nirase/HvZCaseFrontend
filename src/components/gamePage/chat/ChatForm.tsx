@@ -1,6 +1,8 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   Button,
   Grid,
+  InputAdornment,
   MenuItem,
   Paper,
   Select,
@@ -11,49 +13,36 @@ import { addMessage } from "../../../api/apiCalls";
 import { IChannel } from "../../../interfaces/channel";
 import { IGame } from "../../../interfaces/game";
 import { IPlayer } from "../../../interfaces/player";
+import { faReply } from "@fortawesome/free-solid-svg-icons";
+import { useState } from "react";
 
 type Props = {
-  player: IPlayer | undefined;
-  game: IGame;
-  options: IChannel[];
+  handleSubmit: any;
+  handleSubmitClick: any;
 };
 
-const ChatForm = ({ player, game, options }: Props) => {
-  const sendMessage = async (event: any) => {
-    if (!player) return;
-    event.preventDefault();
-    await addMessage(game.id, {
-      gameId: game.id,
-      channelId: event.target.channelId.value,
-      playerId: player?.id,
-      contents: event.target.msg.value,
-    });
-  };
+const ChatForm = ({handleSubmit, handleSubmitClick} : Props) => {
+
+  const [message, setMessage] = useState("");
+
+  const onTextChange = (event: any) => 
+  {
+    setMessage(event.target.value)
+    console.log(message);
+  }
 
   return (
-    <Paper sx={{ bgcolor: "#4C443C" }}>
-      <form onSubmit={sendMessage} style={{ margin: 0, padding: 0 }}>
-        <Grid container alignItems="center">
-          <Grid item xs={false} sm={2}>
-            <Select name="channelId" fullWidth defaultValue={1}>
-              {options?.map((x: IChannel) => (
-                <MenuItem key={x.id} value={x.id}>
-                  {x.name}
-                </MenuItem>
-              ))}
-            </Select>
-          </Grid>
-          <Grid item xs={12} sm={8}>
-            <TextField name="msg" fullWidth />
-          </Grid>
-          <Grid item xs={false} sm={2}>
-            <Button type="submit" variant="contained" color="primary" fullWidth>
-              Send
-            </Button>
-          </Grid>
-        </Grid>
-      </form>
-    </Paper>
+    <form onSubmit={handleSubmit}>
+        <TextField onChange={onTextChange} name="msg" placeholder="Enter message..." InputProps={{endAdornment:(
+          <InputAdornment position="end">
+          <FontAwesomeIcon
+          icon={faReply}
+          onClick={handleSubmitClick(message)}
+          className="cross"
+        />
+          </InputAdornment>
+        ), sx: {height: "50px"}}} fullWidth />
+    </form>
   );
 };
 

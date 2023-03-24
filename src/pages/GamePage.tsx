@@ -24,7 +24,7 @@ import { IPlayer } from "../interfaces/player";
 import SquadRegistration from "../components/gamePage/SquadRegistration";
 import { ISquad } from "../interfaces/squad";
 import ResponseSnackBar from "../components/ResponseSnackBar";
-import ChatBox from "../components/gamePage/chat/ChatBox";
+import Messenger from "../components/gamePage/chat/Messenger";
 
 const libraries: "places"[] = ["places"];
 
@@ -125,7 +125,7 @@ const GamePage = () => {
               </>
             ) : (
               <>
-                <ChatBox game={game} player={player}></ChatBox>
+                <Messenger game={game} player={player}></Messenger>
                 <div className="biteCode">
                   {player.isHuman && <BiteCode player={player} />}
                   {!player.isHuman && isLoaded ? (

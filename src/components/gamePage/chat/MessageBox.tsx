@@ -67,11 +67,11 @@ const MessageBox = ({ game, options }: Props) => {
       ref={bottomRef}
       sx={{
         border: 1,
-        minHeight: "250px",
-        maxHeight: "250px",
+        minHeight: "200px",
+        maxHeight: "200px",
         maxWidth: "sm",
         overflow: "auto",
-        bgcolor: "#4C443C",
+        bgcolor: "#C0C0F2",
       }}
     >
       {messages.slice(1).map((msg, index) => (
