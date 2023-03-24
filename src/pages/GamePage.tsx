@@ -125,7 +125,12 @@ const GamePage = () => {
                 )}
               </>
             ) : (
-              <Grid container>
+              <Grid
+                container
+                spacing={2}
+                justifyContent="space-around"
+                alignItems="center"
+              >
                 <Grid item xs={12} md={6} minWidth="250px">
                   <Messenger game={game} player={player}></Messenger>
                 </Grid>
