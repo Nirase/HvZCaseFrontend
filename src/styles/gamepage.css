@@ -4,6 +4,10 @@
   flex-wrap: wrap;
 }
 
+.squadList {
+  width: 30%;
+}
+
 .infoContainer {
   display: flex;
   align-items: center;
@@ -20,4 +24,10 @@
   display: flex;
   justify-content: space-evenly;
   margin-top: 20px;
+}
+
+@media (max-width: 830px) {
+  .squadList {
+    width: 100%;
+  }
 }

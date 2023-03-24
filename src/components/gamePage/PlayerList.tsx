@@ -7,7 +7,7 @@ type Props = {
 
 const PlayerList = ({ players }: Props) => {
   return (
-    <div>
+    <div className="playerList">
       <h3>List of players</h3>
       {players.map((player) => {
         return (

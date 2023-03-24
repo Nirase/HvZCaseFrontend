@@ -89,7 +89,6 @@ const GamePage = () => {
       fetchPlayer();
     }
   }, [playerString]);
-  console.log(player);
 
   if (game && user) {
     return (
@@ -127,13 +126,12 @@ const GamePage = () => {
               </>
             ) : (
               <Grid container>
-                <Grid item xs={6} minWidth="250px">
+                <Grid item xs={12} md={6} minWidth="250px">
                   <Messenger game={game} player={player}></Messenger>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12} md={6}>
                   {player.isHuman && <BiteCode player={player} />}
                   {!player.isHuman && isLoaded ? (
-
                     <BiteCodeEntry
                       player={player}
                       setSnackbarRes={(res: any) => {
@@ -142,11 +140,10 @@ const GamePage = () => {
                       }}
                       setSnackbarFrom={(from: string) => setSnackbarFrom(from)}
                     />
-                    ) : (
+                  ) : (
                     ""
-                  )
-                  }
-                  </Grid>
+                  )}
+                </Grid>
               </Grid>
             )}
           </>
@@ -157,13 +154,18 @@ const GamePage = () => {
           <Map game={game} player={player} squads={squads} />
         )}
         <div className="lists">
-          <div style={{ width: "30%" }}>
+          <div className="squadList">
             {squads && (
               <SquadList
                 players={game.players}
                 squads={squads}
                 player={player}
                 updatePlayer={(player: IPlayer) => setPlayer(player)}
+                setSnackbarRes={(res: any) => {
+                  setSnackbarRes(res);
+                  setSnackbar(true);
+                }}
+                setSnackbarFrom={(from: string) => setSnackbarFrom(from)}
               />
             )}
             {player && !player.squadId ? (
