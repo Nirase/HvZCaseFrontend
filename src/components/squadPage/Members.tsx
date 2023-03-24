@@ -1,6 +1,4 @@
 import { Grid, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
-import { getAnything } from "../../api/apiCalls";
 import { IPlayer } from "../../interfaces/player";
 import "../../styles/squad.css";
 
@@ -11,14 +9,6 @@ type Props = {
 };
 
 const Members = ({ members }: Props) => {
-  const [aliveMembers, setAliveMembers] = useState<Array<IPlayer>>();
-  const [deadMembers, setDeadMembers] = useState<Array<IPlayer>>();
-
-  useEffect(() => {
-    let dead: number = 0;
-    let alive: IPlayer[] = [];
-  }, []);
-
   return (
     <div>
       <Typography variant="h4">Members</Typography>

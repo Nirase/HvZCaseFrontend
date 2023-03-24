@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { addSquadCheckIn } from "../../api/apiCalls";
 import { ICheckIn, ICreateCheckIn } from "../../interfaces/marker";
+import "../../styles/squad.css";
 
 type Props = {
   setSnackbarRes: (res: any) => void;
@@ -46,7 +47,7 @@ const CheckInCreate = ({
   };
 
   return (
-    <div style={{ width: "30%", display: "flex", flexDirection: "column" }}>
+    <div className="locationCreate">
       <p>
         Choose a location by clicking on the map, you can move the red marker by
         dragging it if you want another location
