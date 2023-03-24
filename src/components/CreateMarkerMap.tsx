@@ -40,6 +40,7 @@ const CreateMarkerMap = ({
   const [marker, setMarker] = useState<gLatLng>();
   const [checkInInfo, setCheckInInfo] = useState<ICheckIn>();
   const [infoWindow, setInfoWindow] = useState<LatLngLiteral>();
+  const [missionWindowInfo, setmissionWindowInfo] = useState<IMissionInfo>();
 
   const mapRef = useRef<GoogleMap>();
   const options = useMemo<MapOptions>(
@@ -147,6 +148,7 @@ const CreateMarkerMap = ({
                         position: LatLngLiteral
                       ) => {
                         missionInfo(info);
+                        setmissionWindowInfo(info);
                         setInfoWindow(position);
                       }}
                       setId={(id: number) => {
@@ -169,7 +171,7 @@ const CreateMarkerMap = ({
               {missionInfo && (
                 <InfoWindowMap
                   position={infoWindow}
-                  markerInfo={missionInfo}
+                  markerInfo={missionWindowInfo}
                   onClose={(close: undefined) => setInfoWindow(close)}
                 />
               )}
