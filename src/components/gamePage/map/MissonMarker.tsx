@@ -1,7 +1,7 @@
 import {
-  faPoo,
   faBiohazard,
   faSnowflake,
+  faTriangleExclamation,
 } from "@fortawesome/free-solid-svg-icons";
 import { Marker } from "@react-google-maps/api";
 import { useEffect, useState } from "react";
@@ -19,14 +19,14 @@ type Props = {
 const MissionMarker = ({ missionmarker, setInfo, setId }: Props) => {
   // markers
   const missions = {
-    path: faPoo.icon[4] as string,
-    fillColor: "#6e231e",
+    path: faTriangleExclamation.icon[4] as string,
+    fillColor: "#ffb347",
     strokeWeight: 1,
     fillOpacity: 1,
     scale: 0.05,
     anchor: new google.maps.Point(
-      faPoo.icon[0] / 2, // width
-      faPoo.icon[1] // height
+      faTriangleExclamation.icon[0] / 2, // width
+      faTriangleExclamation.icon[1] // height
     ),
     strokeColor: "#ffffff",
   };

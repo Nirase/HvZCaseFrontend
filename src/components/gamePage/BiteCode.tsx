@@ -7,7 +7,7 @@ type Props = {
 
 const BiteCode = ({ player }: Props) => {
   return (
-    <div>
+    <div style={{ display: "flex", justifyContent: "center" }}>
       <TextField
         id="BiteCode"
         variant="outlined"
