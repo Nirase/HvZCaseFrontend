@@ -69,11 +69,11 @@ const Messenger = ({ game, player }: Props) => {
     <>
     {channels.length > 0 ? 
     
-    <Grid container sx={{height: "250px"}}>
-      <Grid item xs={2} sx={{height: "100%"}} bgcolor="#C0C0F2">
+    <Grid container sx={{height: "250px"}} minWidth="250px">
+      <Grid item xs={4} sx={{height: "100%"}} bgcolor="#C0C0F2">
         <ChannelList channels={channels} setChosenChannel={setChosenChannel}/>  
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={8}>
         <ChatBox game={game} handleSubmit={handleSubmit} handleSubmitClick={handleSubmitClick} channels={channels}></ChatBox>
       </Grid>
     </Grid> : 

@@ -61,7 +61,7 @@ const BiteCodeEntry = ({ player, setSnackbarFrom, setSnackbarRes }: Props) => {
   };
 
   return (
-    <div style={{ width: "50%" }}>
+    <div style={{ width: "100%" }}>
       <div style={{ display: "flex", alignItems: "center" }}>
         <TextField
           id="BiteCodeEntry"

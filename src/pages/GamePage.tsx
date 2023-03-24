@@ -25,6 +25,7 @@ import SquadRegistration from "../components/gamePage/SquadRegistration";
 import { ISquad } from "../interfaces/squad";
 import ResponseSnackBar from "../components/ResponseSnackBar";
 import Messenger from "../components/gamePage/chat/Messenger";
+import { Grid } from "@mui/material";
 
 const libraries: "places"[] = ["places"];
 
@@ -124,11 +125,14 @@ const GamePage = () => {
                 )}
               </>
             ) : (
-              <>
-                <Messenger game={game} player={player}></Messenger>
-                <div className="biteCode">
+              <Grid container>
+                <Grid item xs={6} minWidth="250px">
+                  <Messenger game={game} player={player}></Messenger>
+                </Grid>
+                <Grid item xs={6}>
                   {player.isHuman && <BiteCode player={player} />}
                   {!player.isHuman && isLoaded ? (
+
                     <BiteCodeEntry
                       player={player}
                       setSnackbarRes={(res: any) => {
@@ -137,11 +141,12 @@ const GamePage = () => {
                       }}
                       setSnackbarFrom={(from: string) => setSnackbarFrom(from)}
                     />
-                  ) : (
+                    ) : (
                     ""
-                  )}
-                </div>
-              </>
+                  )
+                  }
+                  </Grid>
+              </Grid>
             )}
           </>
         )}
