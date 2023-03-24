@@ -83,6 +83,22 @@ const SquadListItem = ({
     navigate("/game/" + gameId + "/squad/" + squad.id);
   };
 
+  let showButton;
+  if (player?.squadId === null) {
+    showButton = (
+      <Button
+        size="small"
+        variant="outlined"
+        color="secondary"
+        onClick={handleJoin}
+      >
+        Join
+      </Button>
+    );
+  } else {
+    showButton = <p></p>;
+  }
+
   return (
     <Card>
       <CardContent>
@@ -117,14 +133,7 @@ const SquadListItem = ({
                 </Button>
               </>
             ) : (
-              <Button
-                size="small"
-                variant="outlined"
-                color="secondary"
-                onClick={handleJoin}
-              >
-                Join
-              </Button>
+              showButton
             )}
           </>
         )}
