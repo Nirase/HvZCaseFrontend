@@ -9,6 +9,8 @@ import { getGeocode, getLatLng } from "use-places-autocomplete";
 import MissionMarker from "./gamePage/map/MissonMarker";
 
 import CheckInMarker from "./gamePage/map/CheckInMarker";
+import InfoWindowMap from "./InfoWindowMap";
+import CheckInInfo from "./gamePage/map/CheckInInfo";
 
 type LatLngLiteral = google.maps.LatLngLiteral;
 type MapOptions = google.maps.MapOptions;
@@ -36,6 +38,8 @@ const CreateMarkerMap = ({
   const [mapCenter, setMapCenter] = useState<LatLngLiteral>();
   const [missions, setMissions] = useState<Array<IMission>>();
   const [marker, setMarker] = useState<gLatLng>();
+  const [checkInInfo, setCheckInInfo] = useState<ICheckIn>();
+  const [infoWindow, setInfoWindow] = useState<LatLngLiteral>();
 
   const mapRef = useRef<GoogleMap>();
   const options = useMemo<MapOptions>(
@@ -107,11 +111,13 @@ const CreateMarkerMap = ({
         >
           {mapCenter && <Circle options={circleOptions} />}
           {marker && (
-            <Marker
-              position={marker}
-              draggable={true}
-              onDragEnd={(e) => draggedMarker(e.latLng)}
-            />
+            <>
+              <Marker
+                position={marker}
+                draggable={true}
+                onDragEnd={(e) => draggedMarker(e.latLng)}
+              />
+            </>
           )}
           {checkInMarkers &&
             checkInMarkers.map((check: ICheckIn) => {
@@ -119,7 +125,13 @@ const CreateMarkerMap = ({
                 <div key={check.id}>
                   <CheckInMarker
                     checkIn={check}
-                    setCheckInInfo={(info: ICheckIn) => ""}
+                    setCheckInInfo={(
+                      info: ICheckIn,
+                      position: LatLngLiteral
+                    ) => {
+                      setCheckInInfo(info);
+                      setInfoWindow(position);
+                    }}
                   />
                 </div>
               );
@@ -130,8 +142,12 @@ const CreateMarkerMap = ({
                   <div key={marker.id}>
                     <MissionMarker
                       missionmarker={marker}
-                      setInfo={(info: IMissionInfo) => {
+                      setInfo={(
+                        info: IMissionInfo,
+                        position: LatLngLiteral
+                      ) => {
                         missionInfo(info);
+                        setInfoWindow(position);
                       }}
                       setId={(id: number) => {
                         missionId(id);
@@ -141,6 +157,24 @@ const CreateMarkerMap = ({
                 );
               })
             : ""}
+          {infoWindow && (
+            <>
+              {checkInInfo && (
+                <InfoWindowMap
+                  position={infoWindow}
+                  markerInfo={checkInInfo}
+                  onClose={(close: undefined) => setInfoWindow(close)}
+                />
+              )}
+              {missionInfo && (
+                <InfoWindowMap
+                  position={infoWindow}
+                  markerInfo={missionInfo}
+                  onClose={(close: undefined) => setInfoWindow(close)}
+                />
+              )}
+            </>
+          )}
         </GoogleMap>
       </div>
     </div>
