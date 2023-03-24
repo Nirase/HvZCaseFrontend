@@ -32,6 +32,7 @@ const AdminGCPlayer = ({ game, setSnackbarRes, setSnackbarFrom }: Props) => {
   const [playerID, setPlayerId] = useState("");
   const [playerIDInput, setPlayerIDInput] = useState("");
 
+  //loads existing players
   useEffect(() => {
     if (game) {
       const fetchPlayersFromGame = async () => {
@@ -43,18 +44,31 @@ const AdminGCPlayer = ({ game, setSnackbarRes, setSnackbarFrom }: Props) => {
     }
   }, []);
 
+  //sets the playerId when playercard is pressed
   useEffect(() => {
     if (player) {
       setPlayerId(player.id.toString());
     }
   }, [player]);
-  //[players] for fetch list update
+
+  //updates playerList after updates
+  useEffect(() => {
+    const newPlayerList = [...players];
+    for (let i = 0; i < players.length; i++) {
+      if (players[i].userId === player?.userId) {
+        newPlayerList[i] = player;
+      }
+    }
+    setPlayers(newPlayerList);
+  }, [player]);
+
+  //updates playerId in order to find user
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newInput = event.target.value;
     setPlayerId(newInput);
   };
 
-  //need to run twice for list removal - how to fix
+  //removes player from playerlist
   const handleRemoveItem = () => {
     setPlayers((current) =>
       current.filter((tempPlayer) => tempPlayer.id !== player?.id)
@@ -67,6 +81,7 @@ const AdminGCPlayer = ({ game, setSnackbarRes, setSnackbarFrom }: Props) => {
     if (playerID != null) {
       const data = await getOnePlayerFromGame(+game.id, +playerID);
       if (data.status !== 404) {
+        console.log("hej");
         setPlayer(data);
       } else {
         setSnackbarRes(data);
@@ -102,6 +117,7 @@ const AdminGCPlayer = ({ game, setSnackbarRes, setSnackbarFrom }: Props) => {
   } else {
     deleteInput = <p></p>;
   }
+
   let updatePlayer;
   if (player != null) {
     updatePlayer = (
@@ -118,6 +134,7 @@ const AdminGCPlayer = ({ game, setSnackbarRes, setSnackbarFrom }: Props) => {
   } else {
     updatePlayer = <p>Get a player to update!</p>;
   }
+
   if (players) {
     return (
       <AccordionDetails>
@@ -190,10 +207,16 @@ const AdminGCPlayer = ({ game, setSnackbarRes, setSnackbarFrom }: Props) => {
     );
   } else {
     return (
-      <div>
-        <h2>Player</h2>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+          <h3>Player</h3>
+        </AccordionSummary>
         <div>loading..</div>
-      </div>
+      </Accordion>
     );
   }
 };
