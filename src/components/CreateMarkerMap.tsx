@@ -11,6 +11,8 @@ import { Button, Paper } from "@mui/material";
 import { getAllMissionsInGame } from "../api/apiCalls";
 import MissionMarker from "./gamePage/map/MissonMarker";
 
+import CheckInMarker from "./gamePage/map/CheckInMarker";
+
 type LatLngLiteral = google.maps.LatLngLiteral;
 type MapOptions = google.maps.MapOptions;
 type gLatLng = google.maps.LatLng;
@@ -85,18 +87,16 @@ const CreateMarkerMap = ({
     }
   };
 
-  // useEffect(() => {
-  //   if (page === "admin") {
-  //     const fetchMissions = async () => {
-  //       const res = await getAllMissionsInGame(game.id);
-  //       setMissions(res);
-  //     };
-  //     fetchMissions();
-  //   }
-  // }, []);
+  const draggedMarker = async (latLng: google.maps.LatLng | null) => {
+    if (latLng) {
+      const res = await getGeocode({ location: latLng });
+      setMarker(latLng);
+      markerAddress(res[0].formatted_address);
+    }
+  };
 
   return (
-    <div className="mapContainer">
+    <div className="mapContainer" style={{ width: "80%" }}>
       <div className="map" style={{ width: "100%", height: "100%" }}>
         <GoogleMap
           center={mapCenter}
@@ -109,7 +109,24 @@ const CreateMarkerMap = ({
           }}
         >
           {mapCenter && <Circle options={circleOptions} />}
-          {marker && <Marker position={marker} draggable={true} />}
+          {marker && (
+            <Marker
+              position={marker}
+              draggable={true}
+              onDragEnd={(e) => draggedMarker(e.latLng)}
+            />
+          )}
+          {checkInMarkers &&
+            checkInMarkers.map((check: ICheckIn) => {
+              return (
+                <div key={check.id}>
+                  <CheckInMarker
+                    checkIn={check}
+                    setCheckInInfo={(info: ICheckIn) => ""}
+                  />
+                </div>
+              );
+            })}
           {missions && missionInfo && missionId
             ? missions.map((marker: IMission) => {
                 return (

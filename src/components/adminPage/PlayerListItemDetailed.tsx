@@ -1,8 +1,6 @@
 import { Card, CardContent, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { getUser } from "../../api/apiCalls";
 import { IPlayer } from "../../interfaces/player";
-import { IUser } from "../../interfaces/user";
 
 type Props = {
   player: IPlayer;

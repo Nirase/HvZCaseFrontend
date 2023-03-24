@@ -116,7 +116,7 @@ const BiteCodeEntry = ({ player, setSnackbarFrom, setSnackbarRes }: Props) => {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
-          <Typography paragraph>Rnter description of kill</Typography>
+          <Typography paragraph>Enter description of kill</Typography>
         </div>
       </Collapse>
     </div>

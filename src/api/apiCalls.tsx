@@ -153,8 +153,18 @@ const addUser = async (user: IAddUser) => {
   return await res;
 };
 
-const getUser = async (id: number) => {
+const getUserById = async (id: number) => {
   const res = await getApiData(`api/v1/user/${id}`);
+
+  if (!res) {
+    return undefined;
+  }
+
+  return await res;
+};
+
+const getUserByKeyCloakId = async (keyCloackId: string) => {
+  const res = await getApiData(`api/v1/user/keycloak/${keyCloackId}`);
 
   if (!res) {
     return undefined;
@@ -186,6 +196,18 @@ const getSquads = async (gameId: number) => {
 
 const getOneSquadById = async (gameId: number, squadId: number) => {
   const res = await getApiData(`api/v1/game/${gameId}/squad/${squadId}`);
+
+  if (!res) {
+    return undefined;
+  }
+
+  return await res;
+};
+
+const getOneSquadByIdWithDetails = async (gameId: number, squadId: number) => {
+  const res = await getApiData(
+    `api/v1/game/${gameId}/squad/${squadId}/withdetails`
+  );
 
   if (!res) {
     return undefined;
@@ -321,11 +343,13 @@ export {
   AddPlayerToGame,
   updatePlayerToGame,
   deletePlayer,
-  getUser,
+  getUserById,
+  getUserByKeyCloakId,
   getUsers,
   addUser,
   getSquads,
   getOneSquadById,
+  getOneSquadByIdWithDetails,
   addSquad,
   addSquadCheckIn,
   AddPlayerToSquad,

@@ -2,7 +2,11 @@ import Container from "@mui/material/Container";
 import { useLoadScript } from "@react-google-maps/api";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getAnything, getOneSquadById, getUsers } from "../api/apiCalls";
+import {
+  getAnything,
+  getOneSquadByIdWithDetails,
+  getUserByKeyCloakId,
+} from "../api/apiCalls";
 import ResponseSnackBar from "../components/ResponseSnackBar";
 
 import CheckIns from "../components/squadPage/CheckIns";
@@ -11,7 +15,7 @@ import Members from "../components/squadPage/Members";
 
 import { IPlayer } from "../interfaces/player";
 import { ISquad } from "../interfaces/squad";
-import { IUser } from "../interfaces/user";
+
 import keycloak from "../keycloak";
 
 const libraries: "places"[] = ["places"];
@@ -35,20 +39,21 @@ const SquadPage = () => {
 
   useEffect(() => {
     if (squadId) {
-      const fetchUser = async () => {
-        const data = await getUsers();
-        const theUser: IUser = data.find(
-          (user: IUser) => user.keycloakId === keycloak.tokenParsed?.sub // change to sub value to check id insted
-        );
-        const player = theUser.players.find(
-          (player: string) => player.split("/")[3] === gameId
-        );
-        setPlayerString(player);
-      };
-      fetchUser();
+      const id: string | undefined = keycloak.tokenParsed?.sub;
+      if (id) {
+        const fetchUser = async () => {
+          const data = await getUserByKeyCloakId(id);
+
+          const player = data.players.find(
+            (player: string) => player.split("/")[3] === gameId
+          );
+          setPlayerString(player);
+        };
+        fetchUser();
+      }
 
       const fetchSquad = async () => {
-        const data = await getOneSquadById(+gameId, +squadId);
+        const data = await getOneSquadByIdWithDetails(+gameId, +squadId);
         setSquad(data);
       };
       fetchSquad();
@@ -69,9 +74,7 @@ const SquadPage = () => {
   useEffect(() => {
     if (userPlayer) {
       if (squad) {
-        const isMember = squad.players.find(
-          (x: string) => +x.split("/")[5] === userPlayer.id
-        );
+        const isMember = squad.players.find((x: any) => x.id === userPlayer.id);
         if (isMember) {
           setAllowed(true);
         } else {
