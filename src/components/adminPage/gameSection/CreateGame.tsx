@@ -4,6 +4,7 @@ import { useLoadScript } from "@react-google-maps/api";
 import React, { useState } from "react";
 import { createAGame } from "../../../api/apiCalls";
 import { ICreateGame } from "../../../interfaces/game";
+import DatePickerComponent from "../../DatePicker";
 import Places from "../../Places";
 
 type Props = {
@@ -109,24 +110,22 @@ const CreateGame = ({
         onChange={(e) => setRadius(+e.target.value)}
       />
       <br></br>
-      <label>Start Date</label>
-      <TextField
-        type="date"
-        id="create-start-date-input"
-        label=" "
-        variant="standard"
-        style={{ marginLeft: -70, maxWidth: 115 }}
-        onChange={(e) => setStartDate(e.target.value)}
-      />
-      <label style={{ marginLeft: 10 }}>End Date</label>
-      <TextField
-        type="date"
-        id="create-end-date-input"
-        label=" "
-        variant="standard"
-        style={{ marginLeft: -65, maxWidth: 115 }}
-        onChange={(e) => setEndDate(e.target.value)}
-      />
+      <div className="datePicker">
+        <label style={{ fontWeight: "bold", marginTop: "8px" }}>
+          Start Date*
+        </label>
+
+        <DatePickerComponent
+          sendSelectedDate={(Date: string) => setStartDate(Date)}
+        />
+        <label style={{ fontWeight: "bold", marginTop: "8px" }}>
+          End Date*
+        </label>
+
+        <DatePickerComponent
+          sendSelectedDate={(Date: string) => setEndDate(Date)}
+        />
+      </div>
       <br></br>
       <Button
         id="create-game-button"

@@ -126,6 +126,7 @@ const AddPlayer = ({
           variant="standard"
           style={{ marginLeft: "20px" }}
           onChange={(e) => setUserId(+e.target.value)}
+          required
         />
         <FormControl fullWidth style={{ marginTop: 20 }}>
           <InputLabel id="add-player-ishuman-input"> isHuman </InputLabel>

@@ -25,6 +25,7 @@ import {
   deleteMission,
   getAllMissionsInGame,
 } from "../../api/apiCalls";
+import DatePickerComponent from "../DatePicker";
 
 type Props = {
   game: IGame;
@@ -147,27 +148,22 @@ const AdminGCMission = ({ game, setSnackbarRes, setSnackbarFrom }: Props) => {
               inputProps={{ readOnly: true }}
             />
             <br></br>
-            <label>Start Date</label>
-            <TextField
-              type="date"
-              id="update-start-date-input"
-              label=" "
-              variant="standard"
-              style={{ marginLeft: -70, maxWidth: 110 }}
-              defaultValue={""}
-              onChange={(e) => setStartDate(e.target.value)}
-            />
-            <br></br>
-            <label>End Date</label>
-            <TextField
-              type="date"
-              id="update-end-date-input"
-              label=" "
-              variant="standard"
-              style={{ marginLeft: -65, maxWidth: 110 }}
-              defaultValue={""}
-              onChange={(e) => setEndDate(e.target.value)}
-            />
+            <div className="datePickerMission">
+              <label style={{ fontWeight: "bold", marginTop: "8px" }}>
+                Start Date*
+              </label>
+
+              <DatePickerComponent
+                sendSelectedDate={(Date: string) => setStartDate(Date)}
+              />
+              <label style={{ fontWeight: "bold", marginTop: "8px" }}>
+                End Date*
+              </label>
+
+              <DatePickerComponent
+                sendSelectedDate={(Date: string) => setEndDate(Date)}
+              />
+            </div>
             <FormGroup>
               <FormControlLabel
                 control={
