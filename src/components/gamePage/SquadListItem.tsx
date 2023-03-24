@@ -17,9 +17,18 @@ type Props = {
   players: Array<IPlayer>;
   player: IPlayer | undefined;
   updatePlayer: (player: IPlayer) => void;
+  setSnackbarRes: (res: any) => void;
+  setSnackbarFrom: (from: string) => void;
 };
 
-const SquadListItem = ({ squad, players, player, updatePlayer }: Props) => {
+const SquadListItem = ({
+  squad,
+  players,
+  player,
+  updatePlayer,
+  setSnackbarRes,
+  setSnackbarFrom,
+}: Props) => {
   const [amountOfMembers, setAmountOfMembers] = useState<number>(0);
   const [dead, setDead] = useState<number>(0);
   const { gameId }: any = useParams();
@@ -49,7 +58,9 @@ const SquadListItem = ({ squad, players, player, updatePlayer }: Props) => {
       const playerCopy: IPlayer = { ...player };
       playerCopy.squadId = squad.id;
 
-      await AddPlayerToSquad(+gameId, squad.id, player.id);
+      const res = await AddPlayerToSquad(+gameId, squad.id, player.id);
+      setSnackbarRes(res);
+      setSnackbarFrom("joined a squad");
       updatePlayer(playerCopy);
       setAmountOfMembers(amountOfMembers + 1);
     }
@@ -60,7 +71,9 @@ const SquadListItem = ({ squad, players, player, updatePlayer }: Props) => {
       const playerCopy: IPlayer = { ...player };
       playerCopy.squadId = null;
 
-      await removePlayerFromSquad(+gameId, squad.id, player.id);
+      const res = await removePlayerFromSquad(+gameId, squad.id, player.id);
+      setSnackbarRes(res);
+      setSnackbarFrom("left a squad");
       updatePlayer(playerCopy);
       setAmountOfMembers(amountOfMembers - 1);
     }

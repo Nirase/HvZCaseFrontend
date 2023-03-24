@@ -7,9 +7,18 @@ type Props = {
   squads: Array<ISquad>;
   player: IPlayer | undefined;
   updatePlayer: (player: IPlayer) => void;
+  setSnackbarRes: (res: any) => void;
+  setSnackbarFrom: (from: string) => void;
 };
 
-const SquadList = ({ players, squads, player, updatePlayer }: Props) => {
+const SquadList = ({
+  players,
+  squads,
+  player,
+  updatePlayer,
+  setSnackbarRes,
+  setSnackbarFrom,
+}: Props) => {
   return (
     <div>
       <h3>Squads active</h3>
@@ -22,6 +31,10 @@ const SquadList = ({ players, squads, player, updatePlayer }: Props) => {
                 players={players}
                 player={player}
                 updatePlayer={(player: IPlayer) => updatePlayer(player)}
+                setSnackbarRes={(res: any) => {
+                  setSnackbarRes(res);
+                }}
+                setSnackbarFrom={(from: string) => setSnackbarFrom(from)}
               />
             </div>
           );
