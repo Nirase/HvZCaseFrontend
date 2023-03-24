@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { addSquadCheckIn } from "../../api/apiCalls";
 import { ICheckIn, ICreateCheckIn } from "../../interfaces/marker";
 import "../../styles/squad.css";
+import DatePickerComponent from "../DatePicker";
 
 type Props = {
   setSnackbarRes: (res: any) => void;
@@ -45,7 +46,8 @@ const CheckInCreate = ({
       setStartDate("");
     }
   };
-
+  console.log(startDate);
+  console.log(endDate);
   return (
     <div className="locationCreate">
       <p>
@@ -66,30 +68,21 @@ const CheckInCreate = ({
       />
 
       <label style={{ fontWeight: "bold" }}>Start Date</label>
-      <TextField
-        type="date"
-        id="create-start-date-input"
-        label=" "
-        variant="standard"
-        fullWidth
-        sx={{ mb: 2 }}
-        onChange={(e) => setStartDate(e.target.value)}
+
+      <DatePickerComponent
+        sendSelectedDate={(Date: string) => setStartDate(Date)}
       />
-      <label style={{ fontWeight: "bold" }}>End Date</label>
-      <TextField
-        type="date"
-        id="create-end-date-input"
-        label=" "
-        variant="standard"
-        fullWidth
-        sx={{ mb: 2 }}
-        onChange={(e) => setEndDate(e.target.value)}
+      <label style={{ fontWeight: "bold", marginTop: "8px" }}>End Date</label>
+
+      <DatePickerComponent
+        sendSelectedDate={(Date: string) => setEndDate(Date)}
       />
 
       <Button
         variant="contained"
         style={{ backgroundColor: "secondary" }}
         onClick={handleCreateClick}
+        sx={{ mt: 2 }}
       >
         Create
       </Button>
