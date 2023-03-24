@@ -33,13 +33,10 @@ const ResponseSnackBar = ({ open, res, from, setClose }: Props) => {
       setMessage("Oh, something went wrong with your request from " + from);
     } else if (res.detail) {
       setVersion("warning");
-      setMessage("Oh, something went wrong with your request from " + from);
+      setMessage(res.detail);
     } else if (res === "enter all fields") {
       setVersion("error");
       setMessage("You have to enter all fields");
-    } else if (res.status === 404) {
-      setVersion("warning");
-      setMessage("Couldn't find " + from);
     } else if (res === 204) {
       setVersion("success");
       setMessage("You have successfully deleted " + from);

@@ -4,7 +4,7 @@ export interface IGame {
   description: string;
   startDate: string;
   endDate: string;
-  gameState?: "Registration" | "In progress" | "Completed";
+  gameState?: "Registration" | "InProgress" | "Completed";
   location: string;
   radius: number;
   players: [];

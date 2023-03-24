@@ -75,16 +75,13 @@ const MissionMarker = ({ missionmarker, setInfo, setId }: Props) => {
       name: missionmarker.name,
     };
     if (setId) {
-      console.log(missionmarker.id);
       setId(missionmarker.id);
     }
-    console.log(info);
     setInfo(info);
   };
 
   useEffect(() => {
     const getPosition = async () => {
-      console.log("test");
       const result = await getGeocode({ address: missionmarker.location });
       const { lat, lng } = await getLatLng(result[0]);
       setPosition({ lat, lng });

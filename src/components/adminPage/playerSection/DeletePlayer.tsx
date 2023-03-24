@@ -18,13 +18,14 @@ const DeletePlayer = ({
   setSnackbarFrom,
 }: Props) => {
   const deletePlayerFromGame = async () => {
-    console.log(gameId + " | " + playerId);
+    console.log(gameId + " " + playerId);
     if (gameId != null && playerId != null) {
       const deletePlayerRes = await deletePlayer(gameId, +playerId);
       setSnackbarFrom(" player: " + playerId);
       setSnackbarRes(deletePlayerRes);
-
-      await deleteFunction();
+      if (deletePlayerRes === 204) {
+        await deleteFunction();
+      }
     }
   };
 

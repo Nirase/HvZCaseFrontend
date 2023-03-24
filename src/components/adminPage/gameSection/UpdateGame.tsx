@@ -82,7 +82,7 @@ const UpdateGame = ({
     }
     if (
       gameState === "Registration" ||
-      gameState === "In progress" ||
+      gameState === "InProgress" ||
       gameState === "Completed"
     ) {
       updatedGame.gameState = gameState;
@@ -93,8 +93,9 @@ const UpdateGame = ({
     if (mapRadius) {
       updatedGame.radius = mapRadius;
     }
-    console.log(updatedGame);
+
     const updateGameRes = await updateGame(id, updatedGame);
+    console.log(game);
     setSnackbarFrom(" updated Game: " + id);
     setSnackbarRes(updateGameRes);
     await refreshList();
@@ -171,7 +172,7 @@ const UpdateGame = ({
           defaultValue={game.gameState}
         >
           <MenuItem value={"Registration"}>Registration</MenuItem>
-          <MenuItem value={"In progress"}>In Progress</MenuItem>
+          <MenuItem value={"InProgress"}>In Progress</MenuItem>
           <MenuItem value={"Completed"}>Complete</MenuItem>
         </Select>
       </FormControl>

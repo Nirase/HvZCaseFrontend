@@ -1,12 +1,15 @@
 import { Card, CardContent, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { IPlayer } from "../../interfaces/player";
+import { IUser } from "../../interfaces/user";
+import "../../styles/adminPage.css";
 
 type Props = {
   player: IPlayer;
+  setPlayer?: (returnplayer: IPlayer) => void;
 };
 
-const PlayerListItemDetailed = ({ player }: Props) => {
+const PlayerListItemDetailed = ({ player, setPlayer }: Props) => {
   const playerId = player.id;
   const userId = player.userId;
   const isHuman = player.isHuman;
@@ -16,8 +19,14 @@ const PlayerListItemDetailed = ({ player }: Props) => {
   const firstName = player.firstName;
   const lastName = player.lastName;
 
+  const handleClick = () => {
+    if (setPlayer) {
+      setPlayer(player);
+    }
+  };
+
   return (
-    <Card style={{ backgroundColor: "#d5dcf9", margin: 6 }}>
+    <Card className="adminplayercard" style={{}} onClick={handleClick}>
       <CardContent>
         <Typography variant="body2">Id: {playerId}</Typography>
         <Typography variant="body2">
