@@ -28,7 +28,6 @@ const ChatForm = ({handleSubmit, handleSubmitClick} : Props) => {
   const onTextChange = (event: any) => 
   {
     setMessage(event.target.value)
-    console.log(message);
   }
 
   return (
@@ -37,7 +36,7 @@ const ChatForm = ({handleSubmit, handleSubmitClick} : Props) => {
           <InputAdornment position="end">
           <FontAwesomeIcon
           icon={faReply}
-          onClick={handleSubmitClick(message)}
+          onClick={() => handleSubmitClick(message)}
           className="cross"
         />
           </InputAdornment>

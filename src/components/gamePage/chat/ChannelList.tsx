@@ -26,7 +26,7 @@ const ChannelList = ({channels, setChosenChannel} : Props) => {
 
         {channels.map((x) => {
             return (
-                <ChannelListItem channel={x} handleClick={handleListItemClick} selectedIndex={selectedIndex}></ChannelListItem>
+                <ChannelListItem key={x.id} channel={x} handleClick={handleListItemClick} selectedIndex={selectedIndex}></ChannelListItem>
             );
         })}
         </List>

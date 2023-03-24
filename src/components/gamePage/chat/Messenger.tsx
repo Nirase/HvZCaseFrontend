@@ -31,6 +31,13 @@ const Messenger = ({ game, player }: Props) => {
     }
   }, []);
 
+  useEffect(() => {
+    if(channels)
+    {
+      setChosenChannel(channels[0]);
+    }
+  }, [channels])
+
   const handleSubmit = async(event: any) => 
   {
     console.log("event", event);
@@ -38,7 +45,7 @@ const Messenger = ({ game, player }: Props) => {
     event.preventDefault();
     await addMessage(game.id, {
       gameId: game.id,
-      channelId: chosenChannel,
+      channelId: chosenChannel?.id,
       playerId: player?.id,
       contents: event.target.msg.value,
     });
@@ -50,7 +57,7 @@ const Messenger = ({ game, player }: Props) => {
     if (!player) return;
     await addMessage(game.id, {
       gameId: game.id,
-      channelId: chosenChannel,
+      channelId: chosenChannel?.id,
       playerId: player?.id,
       contents: message,
     });
