@@ -102,6 +102,15 @@ const getPlayersFromGame = async (id: number) => {
 
   return await res;
 };
+const getPlayersFromGameWithDetails = async (id: number) => {
+  const res = await getApiData(`api/v1/game/${id}/player/withdetails`);
+
+  if (!res) {
+    return undefined;
+  }
+
+  return await res;
+};
 const getOnePlayerFromGame = async (gameId: number, playerId: number) => {
   const res = await getApiData(`api/v1/game/${gameId}/player/${playerId}`);
 
@@ -277,7 +286,6 @@ const getAllMissionsInGame = async (gameId: number) => {
 
 const createMission = async (gameId: number, mission: ICreateMission) => {
   const res = await postApiData(`api/v1/game/${gameId}/mission`, mission);
-  console.log(res);
   if (!res) {
     return undefined;
   }
@@ -288,7 +296,6 @@ const deleteMission = async (gameId: number, missionId: number) => {
   const res = await deleteApiData(
     `api/v1/game/${gameId}/mission?id=${missionId}`
   );
-  console.log(res);
   if (!res) {
     return undefined;
   }
@@ -317,6 +324,7 @@ export {
   createAGame,
   deleteGame,
   getPlayersFromGame,
+  getPlayersFromGameWithDetails,
   getOnePlayerFromGame,
   AddPlayerToGame,
   updatePlayerToGame,

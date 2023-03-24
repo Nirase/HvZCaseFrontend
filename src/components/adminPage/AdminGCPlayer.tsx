@@ -8,8 +8,7 @@ import {
 import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
 import {
   getOnePlayerFromGame,
-  getPlayersFromGame,
-  getUser,
+  getPlayersFromGameWithDetails,
 } from "../../api/apiCalls";
 import { IGame } from "../../interfaces/game";
 import PlayerListDetailed from "./PlayerListDetailed";
@@ -31,18 +30,24 @@ const AdminGCPlayer = ({ game, setSnackbarRes, setSnackbarFrom }: Props) => {
   const [players, setPlayers] = useState<Array<IPlayer>>([]);
   const [player, setPlayer] = useState<IPlayer>();
   const [playerID, setPlayerId] = useState("");
+  const [playerIDInput, setPlayerIDInput] = useState("");
 
   useEffect(() => {
     if (game) {
       const fetchPlayersFromGame = async () => {
-        const data = await getPlayersFromGame(+game.id);
+        const data = await getPlayersFromGameWithDetails(+game.id);
         setPlayers(data);
       };
 
       fetchPlayersFromGame();
     }
-  }, [player]);
+  }, []);
 
+  useEffect(() => {
+    if (player) {
+      setPlayerId(player.id.toString());
+    }
+  }, [player]);
   //[players] for fetch list update
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newInput = event.target.value;
@@ -52,7 +57,7 @@ const AdminGCPlayer = ({ game, setSnackbarRes, setSnackbarFrom }: Props) => {
   //need to run twice for list removal - how to fix
   const handleRemoveItem = () => {
     setPlayers((current) =>
-      current.filter((player) => player.id !== +playerID)
+      current.filter((tempPlayer) => tempPlayer.id !== player?.id)
     );
     setPlayer(undefined);
   };
@@ -64,7 +69,6 @@ const AdminGCPlayer = ({ game, setSnackbarRes, setSnackbarFrom }: Props) => {
       if (data.status !== 404) {
         setPlayer(data);
       } else {
-        setSnackbarFrom("player");
         setSnackbarRes(data);
       }
     }
@@ -72,7 +76,12 @@ const AdminGCPlayer = ({ game, setSnackbarRes, setSnackbarFrom }: Props) => {
 
   let findPlayerCard;
   if (player != undefined) {
-    findPlayerCard = <PlayerListItemDetailed player={player} />;
+    findPlayerCard = (
+      <div>
+        <p>selected player</p>
+        <PlayerListItemDetailed player={player} />
+      </div>
+    );
   } else {
     findPlayerCard = <p></p>;
   }
@@ -91,7 +100,7 @@ const AdminGCPlayer = ({ game, setSnackbarRes, setSnackbarFrom }: Props) => {
       />
     );
   } else {
-    deleteInput = <p>Get a player to delete!</p>;
+    deleteInput = <p></p>;
   }
   let updatePlayer;
   if (player != null) {
@@ -129,7 +138,10 @@ const AdminGCPlayer = ({ game, setSnackbarRes, setSnackbarFrom }: Props) => {
               >
                 <h4>List of players </h4>
               </AccordionSummary>
-              <PlayerListDetailed players={players} />
+              <PlayerListDetailed
+                players={players}
+                propPlayer={(player: IPlayer) => setPlayer(player)}
+              />
             </Accordion>
             <AddPlayer
               gameId={game.id}
@@ -144,30 +156,33 @@ const AdminGCPlayer = ({ game, setSnackbarRes, setSnackbarFrom }: Props) => {
             />
             <div style={{ marginTop: 10 }}>
               <h4>Get Player</h4>
+              <p>Get player by searching for Id or select from player list</p>
               <TextField
                 type={"number"}
                 id="get-playerid-input"
                 label="Id"
                 onChange={handleInputChange}
                 variant="standard"
+                value={playerID}
+                style={{ marginRight: 20 }}
               />
-              <br></br>
               <Button
                 variant="contained"
-                style={{ marginTop: 10, backgroundColor: "#360568" }}
+                style={{
+                  marginTop: 10,
+                  marginRight: 10,
+                  backgroundColor: "#360568",
+                }}
                 onClick={fetchOnePlayerFromGame}
               >
                 Get player
               </Button>
+              {deleteInput}
               <div>{findPlayerCard}</div>
             </div>
             <div style={{ marginTop: 10 }}>
               <h4>Update Player</h4>
               {updatePlayer}
-            </div>
-            <div style={{ marginTop: 10 }}>
-              <h4>Delete Player</h4>
-              {deleteInput}
             </div>
           </AccordionDetails>
         </Accordion>

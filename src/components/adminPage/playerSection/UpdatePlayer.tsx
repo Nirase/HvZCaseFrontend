@@ -127,9 +127,10 @@ const UpdatePlayer = ({
         label="Squad Id"
         variant="standard"
         type={"number"}
-        style={{ marginLeft: 10, marginRight: 10 }}
+        style={{ marginRight: 10 }}
         onChange={(e) => setSquadId(+e.target.value)}
       />
+      <br></br>
       <Button
         variant="contained"
         style={{ marginTop: 10, backgroundColor: "#360568" }}

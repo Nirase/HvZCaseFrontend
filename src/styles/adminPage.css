@@ -1,0 +1,29 @@
+/* player part */
+.adminplayercard {
+  background-color: #d5dcf9 !important;
+  margin: 6px !important;
+  cursor: pointer !important;
+}
+
+.adminplayercard :hover {
+  background-color: #cbd2ef;
+}
+
+/* mission part */
+.createMissionContainer {
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 830px) {
+  .createMissionContainer {
+    flex-direction: column-reverse;
+    height: 100vh;
+    align-items: center;
+  }
+
+  .map {
+    height: 35vh;
+    width: 100%;
+  }
+}

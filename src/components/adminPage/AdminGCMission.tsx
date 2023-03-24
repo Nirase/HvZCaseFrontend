@@ -86,7 +86,7 @@ const AdminGCMission = ({ game, setSnackbarRes, setSnackbarFrom }: Props) => {
     newMission.location = address;
     newMission.visibleToHumans = humanChecked;
     newMission.visibleToZombies = zombieChecked;
-    console.log(newMission);
+
     if (name && desc && startDate && endDate && address) {
       const createdMission = await createMission(game.id, newMission);
       setSnackbarFrom("created a mission");
@@ -98,8 +98,6 @@ const AdminGCMission = ({ game, setSnackbarRes, setSnackbarFrom }: Props) => {
   };
 
   const handleDelete = async () => {
-    console.log(missionInfo);
-    console.log(id);
     const deleteMissionRes = await deleteMission(game.id, id);
     setSnackbarFrom(" mission: " + id);
     setSnackbarRes(deleteMissionRes);
@@ -120,11 +118,106 @@ const AdminGCMission = ({ game, setSnackbarRes, setSnackbarFrom }: Props) => {
         >
           <h3>Mission</h3>
         </AccordionSummary>
-        <div style={{ margin: -30 }}>
+        <div className="createMissionContainer">
+          <section style={{ margin: 20 }}>
+            <TextField
+              id="create-mission-name-input"
+              label="Name"
+              variant="standard"
+              required={true}
+              onChange={(e) => setName(e.target.value)}
+              style={{ marginRight: 20 }}
+            />
+            <TextField
+              id="create-mission-desc-input"
+              label="Description"
+              variant="standard"
+              required={true}
+              onChange={(e) => setDesc(e.target.value)}
+              style={{ marginRight: 20 }}
+            />
+            <br></br>
+            <TextField
+              id="create-mission-address-input"
+              label="Address"
+              variant="standard"
+              required={true}
+              value={address}
+              style={{ marginRight: 20 }}
+              inputProps={{ readOnly: true }}
+            />
+            <br></br>
+            <label>Start Date</label>
+            <TextField
+              type="date"
+              id="update-start-date-input"
+              label=" "
+              variant="standard"
+              style={{ marginLeft: -70, maxWidth: 110 }}
+              defaultValue={""}
+              onChange={(e) => setStartDate(e.target.value)}
+            />
+            <br></br>
+            <label>End Date</label>
+            <TextField
+              type="date"
+              id="update-end-date-input"
+              label=" "
+              variant="standard"
+              style={{ marginLeft: -65, maxWidth: 110 }}
+              defaultValue={""}
+              onChange={(e) => setEndDate(e.target.value)}
+            />
+            <FormGroup>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={humanChecked}
+                    onClick={() => setHumanChecked(!humanChecked)}
+                  />
+                }
+                label="Visable to humans"
+                style={{ maxWidth: 200 }}
+              />
+              <FormControlLabel
+                id="zomb-check"
+                control={
+                  <Checkbox
+                    checked={zombieChecked}
+                    onClick={() => setZombieChecked(!zombieChecked)}
+                  />
+                }
+                label="Visable to zombies"
+                style={{ maxWidth: 200 }}
+              />
+            </FormGroup>
+            <br></br>
+            <Button
+              id="create-game-button"
+              variant="contained"
+              style={{
+                marginTop: 10,
+                marginRight: 20,
+                backgroundColor: "#360568",
+              }}
+              onClick={handleCreate}
+            >
+              Create marker
+            </Button>
+            <Button
+              id="create-game-button"
+              variant="contained"
+              style={{ marginTop: 10, backgroundColor: "#360568" }}
+              onClick={handleDelete}
+            >
+              Delete marker
+            </Button>
+          </section>
           {!isLoaded ? (
             <p>Loading map....</p>
           ) : (
             <CreateMarkerMap
+              key={game.id}
               game={game}
               missionMarkers={missions}
               markerAddress={(address: string) => setAddress(address)}
@@ -138,94 +231,6 @@ const AdminGCMission = ({ game, setSnackbarRes, setSnackbarFrom }: Props) => {
             />
           )}
         </div>
-        <section style={{ margin: 20 }}>
-          <TextField
-            id="create-mission-name-input"
-            label="Name"
-            variant="standard"
-            required={true}
-            onChange={(e) => setName(e.target.value)}
-            style={{ marginRight: 20 }}
-          />
-          <TextField
-            id="create-mission-desc-input"
-            label="Description"
-            variant="standard"
-            required={true}
-            onChange={(e) => setDesc(e.target.value)}
-            style={{ marginRight: 20 }}
-          />
-          <br></br>
-          <TextField
-            id="create-mission-address-input"
-            label="Address"
-            variant="standard"
-            required={true}
-            value={address}
-            style={{ marginRight: 20 }}
-            inputProps={{ readOnly: true }}
-          />
-          <br></br>
-          <label>Start Date</label>
-          <TextField
-            type="date"
-            id="update-start-date-input"
-            label=" "
-            variant="standard"
-            style={{ marginLeft: -70, maxWidth: 110 }}
-            defaultValue={""}
-            onChange={(e) => setStartDate(e.target.value)}
-          />
-          <br></br>
-          <label>End Date</label>
-          <TextField
-            type="date"
-            id="update-end-date-input"
-            label=" "
-            variant="standard"
-            style={{ marginLeft: -65, maxWidth: 110 }}
-            defaultValue={""}
-            onChange={(e) => setEndDate(e.target.value)}
-          />
-          <FormGroup>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={humanChecked}
-                  onClick={() => setHumanChecked(!humanChecked)}
-                />
-              }
-              label="Visable to humans"
-            />
-            <FormControlLabel
-              id="zomb-check"
-              control={
-                <Checkbox
-                  checked={zombieChecked}
-                  onClick={() => setZombieChecked(!zombieChecked)}
-                />
-              }
-              label="Visable to zombies"
-            />
-          </FormGroup>
-          <br></br>
-          <Button
-            id="create-game-button"
-            variant="contained"
-            style={{ marginTop: 10, backgroundColor: "#360568" }}
-            onClick={handleCreate}
-          >
-            Create marker
-          </Button>
-          <Button
-            id="create-game-button"
-            variant="contained"
-            style={{ marginTop: 10, backgroundColor: "#360568" }}
-            onClick={handleDelete}
-          >
-            Delete marker
-          </Button>
-        </section>
       </Accordion>
     </AccordionDetails>
   );

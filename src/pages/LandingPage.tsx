@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getListOfGames } from "../api/apiCalls";
 import GameCard from "../components/landingPage/GameCard";
 import { IGame } from "../interfaces/game";
+import keycloak from "../keycloak";
 
 const Home = () => {
   const [games, setGames] = useState([]);
@@ -16,6 +17,11 @@ const Home = () => {
     return (
       <>
         <h1 style={{ marginLeft: 20 }}>Landing Page</h1>
+        {!keycloak.authenticated && (
+          <h4 style={{ marginLeft: 20 }}>
+            Log in to get more info about the games
+          </h4>
+        )}
         {games.map((game: IGame) => {
           return (
             <div key={game.id}>
