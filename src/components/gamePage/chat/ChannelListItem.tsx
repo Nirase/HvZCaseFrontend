@@ -13,7 +13,7 @@ const ChannelListItem = ({channel, handleClick, selectedIndex}: Props) =>
         <ListItemButton
         selected={selectedIndex === channel.id}
         
-        onClick={(event: React.MouseEvent<HTMLDivElement, MouseEvent>) => handleClick(event, channel.id)}
+        onClick={() => handleClick(channel.id)}
         >
             <ListItemText primary={channel.name} />
         </ListItemButton>
