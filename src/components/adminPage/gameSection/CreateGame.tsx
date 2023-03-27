@@ -3,12 +3,13 @@ import { maxWidth } from "@mui/system";
 import { useLoadScript } from "@react-google-maps/api";
 import React, { useState } from "react";
 import { createAGame } from "../../../api/apiCalls";
-import { ICreateGame } from "../../../interfaces/game";
+import { ICreateGame, IGame } from "../../../interfaces/game";
 import DatePickerComponent from "../../DatePicker";
 import Places from "../../Places";
 
 type Props = {
-  refreshList: Function;
+  allGames: Array<IGame> | undefined;
+  setAddGames: (games: Array<IGame>) => void;
   setSnackbarRes: (res: any) => void;
   setSnackbarFrom: (from: string) => void;
 };
@@ -21,7 +22,8 @@ const libraries: (
 )[] = ["places"];
 
 const CreateGame = ({
-  refreshList,
+  allGames,
+  setAddGames,
   setSnackbarRes,
   setSnackbarFrom,
 }: Props) => {
@@ -59,7 +61,10 @@ const CreateGame = ({
       const createdGame = await createAGame(newGame);
       setSnackbarFrom("created a game");
       setSnackbarRes(createdGame);
-      await refreshList();
+      if (allGames) {
+        const newAllGames = [...allGames, createdGame];
+        setAddGames(newAllGames);
+      }
     } else {
       setSnackbarRes("enter all fields");
     }

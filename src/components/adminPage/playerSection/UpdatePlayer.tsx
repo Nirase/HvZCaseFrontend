@@ -37,7 +37,7 @@ const UpdatePlayer = ({
     isHuman: player.isHuman,
     isPatientZero: player.isPatientZero,
     userId: player.userId,
-    biteCode: "random",
+    biteCode: player.biteCode,
     squadId: squadId,
   };
 
@@ -89,7 +89,7 @@ const UpdatePlayer = ({
         );
         setSnackbarRes(updatePlayerRes);
       }
-      refreshPlayer();
+      refreshPlayer(updatedPlayer);
     }
   };
   return (

@@ -4,17 +4,20 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import UpdateGame from "./gameSection/UpdateGame";
 import DeleteGame from "./gameSection/DeleteGame";
 import { IGame } from "../../interfaces/game";
+import { deleteGame } from "../../api/apiCalls";
 
 type Props = {
   game: IGame;
-  refreshList: Function;
+  updateGames: Function;
+  handleDeleteGame: Function;
   setSnackbarRes: (res: any) => void;
   setSnackbarFrom: (from: string) => void;
 };
 
 const AdminGCGame = ({
   game,
-  refreshList,
+  updateGames,
+  handleDeleteGame,
   setSnackbarRes,
   setSnackbarFrom,
 }: Props) => {
@@ -33,7 +36,7 @@ const AdminGCGame = ({
             <UpdateGame
               id={game.id}
               game={game}
-              refreshList={refreshList}
+              updateGameFunc={updateGames}
               setSnackbarRes={(res: any) => {
                 setSnackbarRes(res);
               }}
@@ -41,7 +44,7 @@ const AdminGCGame = ({
             />
             <DeleteGame
               id={game.id}
-              refreshList={refreshList}
+              handleDeleteGame={handleDeleteGame}
               setSnackbarRes={(res: any) => {
                 setSnackbarRes(res);
               }}

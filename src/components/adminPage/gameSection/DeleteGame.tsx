@@ -5,14 +5,14 @@ import { deleteGame } from "../../../api/apiCalls";
 
 type Props = {
   id: number;
-  refreshList: Function;
+  handleDeleteGame: Function;
   setSnackbarRes: (res: any) => void;
   setSnackbarFrom: (from: string) => void;
 };
 
 const DeleteGame = ({
   id,
-  refreshList,
+  handleDeleteGame,
   setSnackbarRes,
   setSnackbarFrom,
 }: Props) => {
@@ -20,7 +20,7 @@ const DeleteGame = ({
     const deleteGameRes = await deleteGame(+id);
     setSnackbarFrom(" game: " + id);
     setSnackbarRes(deleteGameRes);
-    await refreshList();
+    handleDeleteGame(id);
   };
 
   return (

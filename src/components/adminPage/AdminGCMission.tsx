@@ -29,7 +29,6 @@ import DatePickerComponent from "../DatePicker";
 
 type Props = {
   game: IGame;
-  refreshList: Function;
   setSnackbarRes: (res: any) => void;
   setSnackbarFrom: (from: string) => void;
 };

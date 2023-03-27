@@ -17,7 +17,8 @@ import Places from "../../Places";
 type Props = {
   id: number;
   game: IGame;
-  refreshList: Function;
+  updateGameFunc: Function;
+  //refreshList: Function;
   setSnackbarRes: (res: any) => void;
   setSnackbarFrom: (from: string) => void;
 };
@@ -32,7 +33,8 @@ const libraries: (
 const UpdateGame = ({
   id,
   game,
-  refreshList,
+  updateGameFunc,
+  //refreshList,
   setSnackbarRes,
   setSnackbarFrom,
 }: Props) => {
@@ -97,7 +99,8 @@ const UpdateGame = ({
     const updateGameRes = await updateGame(id, updatedGame);
     setSnackbarFrom(" updated Game: " + id);
     setSnackbarRes(updateGameRes);
-    await refreshList();
+    updateGameFunc(updatedGame);
+    //await refreshList();
   };
   return (
     <div>
