@@ -6,17 +6,20 @@ import { IGame } from "../../interfaces/game";
 import AdminGCGame from "./AdminGCGame";
 import AdminGCPlayer from "./AdminGCPlayer";
 import AdminGCMission from "./AdminGCMission";
+import { deleteGame } from "../../api/apiCalls";
 
 type Props = {
   game: IGame;
-  refreshList: Function;
+  updateGames: Function;
+  handleDeleteGame: Function;
   setSnackbarRes: (res: any) => void;
   setSnackbarFrom: (from: string) => void;
 };
 
 const AdminGameCard = ({
   game,
-  refreshList,
+  updateGames,
+  handleDeleteGame,
   setSnackbarRes,
   setSnackbarFrom,
 }: Props) => {
@@ -37,7 +40,8 @@ const AdminGameCard = ({
         </AccordionSummary>
         <AdminGCGame
           game={game}
-          refreshList={refreshList}
+          updateGames={updateGames}
+          handleDeleteGame={handleDeleteGame}
           setSnackbarRes={(res: any) => {
             setSnackbarRes(res);
           }}
@@ -52,7 +56,6 @@ const AdminGameCard = ({
         />
         <AdminGCMission
           game={game}
-          refreshList={refreshList}
           setSnackbarRes={(res: any) => {
             setSnackbarRes(res);
           }}

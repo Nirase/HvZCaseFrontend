@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { getListOfGames } from "../api/apiCalls";
 import AdminGameCard from "../components/adminPage/AdminGameCard";
 import CreateGame from "../components/adminPage/gameSection/CreateGame";
+import GameRegistration from "../components/gamePage/GameRegistration";
 import ResponseSnackBar from "../components/ResponseSnackBar";
 import { IGame } from "../interfaces/game";
 
 const AdminPage = () => {
-  const [games, setGames] = useState([]);
+  const [game, setGame] = useState<IGame>();
+  const [games, setGames] = useState<Array<IGame>>([]);
   const [snackbar, setSnackbar] = useState(false);
   const [snackbarRes, setSnackbarRes] = useState<any>();
   const [snackbarFrom, setSnackbarFrom] = useState<string>();
@@ -19,20 +21,34 @@ const AdminPage = () => {
     fetchGames();
   }, []);
 
-  const refreshGameList = async () => {
-    const fetchGames = async () => {
-      const data = await getListOfGames();
-      setGames(data);
-    };
-    fetchGames();
+  const handleDeleteGame = (gameID: number) => {
+    setGames((current) => current.filter((tempGame) => tempGame.id !== gameID));
   };
+  const handleUpdateGame = (uGame: IGame) => {
+    setGame(undefined);
+    setGame(uGame);
+  };
+
+  useEffect(() => {
+    const newGameList = [...games];
+    for (let i = 0; i < games.length; i++) {
+      if (games[i].id === game?.id) {
+        newGameList[i] = game;
+      }
+    }
+    setGames(newGameList);
+  }, [game]);
+
   if (games) {
     return (
       <div>
         <div style={{ marginLeft: 20 }}>
           <h1>Admin Page </h1>
           <CreateGame
-            refreshList={refreshGameList}
+            allGames={games}
+            setAddGames={(games: Array<IGame>) => {
+              setGames(games);
+            }}
             setSnackbarRes={(res: any) => {
               setSnackbarRes(res);
               setSnackbar(true);
@@ -47,7 +63,8 @@ const AdminPage = () => {
               <div key={game.id} style={{ margin: 10 }}>
                 <AdminGameCard
                   game={game}
-                  refreshList={refreshGameList}
+                  updateGames={handleUpdateGame}
+                  handleDeleteGame={handleDeleteGame}
                   setSnackbarRes={(res: any) => {
                     setSnackbarRes(res);
                     setSnackbar(true);
@@ -71,7 +88,10 @@ const AdminPage = () => {
       <div style={{ marginLeft: 20 }}>
         <h1>Admin Page </h1>
         <CreateGame
-          refreshList={refreshGameList}
+          allGames={games}
+          setAddGames={(games: Array<IGame>) => {
+            setGames(games);
+          }}
           setSnackbarRes={(res: any) => {
             setSnackbarRes(res);
             setSnackbar(true);

@@ -30,7 +30,6 @@ const AdminGCPlayer = ({ game, setSnackbarRes, setSnackbarFrom }: Props) => {
   const [players, setPlayers] = useState<Array<IPlayer>>([]);
   const [player, setPlayer] = useState<IPlayer>();
   const [playerID, setPlayerId] = useState("");
-  const [playerIDInput, setPlayerIDInput] = useState("");
 
   //loads existing players
   useEffect(() => {
@@ -87,6 +86,12 @@ const AdminGCPlayer = ({ game, setSnackbarRes, setSnackbarFrom }: Props) => {
       }
     }
   };
+  const updatePlayerCard = (uPlayer: IPlayer) => {
+    setPlayer(undefined);
+    if (playerID != null) {
+      setPlayer(uPlayer);
+    }
+  };
 
   let findPlayerCard;
   if (player != undefined) {
@@ -123,7 +128,7 @@ const AdminGCPlayer = ({ game, setSnackbarRes, setSnackbarFrom }: Props) => {
       <UpdatePlayer
         gameid={game.id}
         player={player}
-        refreshPlayer={fetchOnePlayerFromGame}
+        refreshPlayer={updatePlayerCard}
         setSnackbarRes={(res: any) => {
           setSnackbarRes(res);
         }}
