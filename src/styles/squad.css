@@ -1,0 +1,40 @@
+.membersContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.playerCard {
+  margin-bottom: 10px;
+}
+
+.cardContent:last-child {
+  padding-bottom: 16px !important;
+}
+
+.MuiTable-root {
+  min-width: 450px !important;
+}
+
+.checkInCreateContainer {
+  display: flex;
+  align-items: center;
+}
+
+.locationCreate {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+}
+.backButton {
+  color: #360568 !important;
+}
+@media (max-width: 830px) {
+  .checkInCreateContainer {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .locationCreate {
+    width: 100%;
+  }
+}
