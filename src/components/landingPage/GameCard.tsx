@@ -68,7 +68,7 @@ const GameCard = ({ game }: Props) => {
         {keycloak.hasRealmRole(ROLES.User) && (
           <CardActions>
             <Button size="small" onClick={() => toGame()}>
-              Game
+              Open Game
             </Button>
           </CardActions>
         )}
