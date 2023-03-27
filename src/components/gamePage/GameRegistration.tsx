@@ -38,6 +38,7 @@ const GameRegistration = ({
     };
 
     const addedPlayer = await AddPlayerToGame(gameId, newPlayer);
+
     setSnackbarRes(addedPlayer);
     setSnackbarFrom("register for game");
     if (addedPlayer) {
