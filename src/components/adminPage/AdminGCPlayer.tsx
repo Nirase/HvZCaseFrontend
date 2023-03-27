@@ -176,7 +176,7 @@ const AdminGCPlayer = ({ game, setSnackbarRes, setSnackbarFrom }: Props) => {
               setSnackbarFrom={(from: string) => setSnackbarFrom(from)}
             />
             <div style={{ marginTop: 10 }}>
-              <h4>Get Player</h4>
+              <h4>Select Player</h4>
               <p>Get player by searching for Id or select from player list</p>
               <TextField
                 type={"number"}
