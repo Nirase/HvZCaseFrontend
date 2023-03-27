@@ -14,18 +14,18 @@ type Props = {
 
 const Messenger = ({ game, player }: Props) => {
   let gameId = game.id;
-  const [channels, setOptions] = useState<IChannel[]>([]);
+  const [channels, setChannels] = useState<IChannel[]>([]);
   const [chosenChannel, setChosenChannel] = useState<IChannel | undefined>(undefined);
 
   useEffect(() => {
     if (gameId) {
-      const fetchOptions = async () => {
+      const fetchChannels = async () => {
         const data = await getAnything(`api/v1/game/${gameId}/channel`);
         const channels: IChannel[] = Object.values(data);
-        setOptions(channels);
+        setChannels(channels);
       };
 
-      fetchOptions();
+      fetchChannels();
     }
   }, []);
 
@@ -35,7 +35,7 @@ const Messenger = ({ game, player }: Props) => {
       const fetchOptions = async () => {
         const data = await getAnything(`api/v1/game/${gameId}/channel`);
         const channels: IChannel[] = Object.values(data);
-        setOptions(channels);
+        setChannels(channels);
       };
 
       fetchOptions();
@@ -51,7 +51,6 @@ const Messenger = ({ game, player }: Props) => {
 
   const handleSubmit = async(event: any) => 
   {
-    console.log("event", event);
     if (!player) return;
     event.preventDefault();
     await addMessage(game.id, {

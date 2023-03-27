@@ -15,7 +15,7 @@ const ChannelList = ({channels, setChosenChannel} : Props) => {
       index: number,
     ) => {
       setSelectedIndex(index);
-      setChosenChannel(index);
+      setChosenChannel(channels.find(x => x.id === index));
     };
 
     return (
