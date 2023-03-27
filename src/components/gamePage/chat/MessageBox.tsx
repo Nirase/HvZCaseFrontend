@@ -10,7 +10,7 @@ type Props = {
   options: IChannel[];
 };
 
-const MessageBox = ({ game, options }: Props) => {
+const MessageBox = ({ game, options: channels }: Props) => {
   const [messages, setMessages] = useState([["", "", ""]]);
   const bottomRef = useRef<null | HTMLDivElement>(null);
 
@@ -26,11 +26,11 @@ const MessageBox = ({ game, options }: Props) => {
       cluster: "eu",
     });
 
-    options.forEach((x: IChannel) => {
+    channels.forEach((x: IChannel) => {
       pusher.unsubscribe(x.name);
     });
 
-    options.forEach((x: IChannel) => {
+    channels.forEach((x: IChannel) => {
       let channel = pusher.subscribe(x.name);
       channel.bind("MessageRecieved", function (data: any) {
         setMessages((messages) => [
@@ -41,11 +41,11 @@ const MessageBox = ({ game, options }: Props) => {
     });
 
     return () => {
-      options.forEach((x: IChannel) => {
+      channels.forEach((x: IChannel) => {
         pusher.unsubscribe(x.name);
       });
     };
-  }, [options]);
+  }, [channels]);
 
   useEffect(() => {
     const fetchOldMessages = async () => {

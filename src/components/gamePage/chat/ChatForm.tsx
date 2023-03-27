@@ -1,18 +1,8 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  Button,
-  Grid,
   InputAdornment,
-  MenuItem,
-  Paper,
-  Select,
   TextField,
 } from "@mui/material";
-import { Container } from "@mui/system";
-import { addMessage } from "../../../api/apiCalls";
-import { IChannel } from "../../../interfaces/channel";
-import { IGame } from "../../../interfaces/game";
-import { IPlayer } from "../../../interfaces/player";
 import { faReply } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 

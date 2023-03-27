@@ -1,4 +1,4 @@
-import { Box, Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
+import { Box, List } from "@mui/material";
 import { useState } from "react";
 import IChannel from "../../../interfaces/channel";
 import ChannelListItem from "./ChannelListItem";
