@@ -7,7 +7,19 @@ type Props = {
 
 const BiteCode = ({ player }: Props) => {
   return (
-    <div style={{ display: "flex", justifyContent: "center" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
+      <h3>Your bite code</h3>
+      <p>
+        This is the code to give the
+        <span style={{ fontFamily: "Butcherman" }}> Zombie </span> when they tag
+        you
+      </p>
       <TextField
         id="BiteCode"
         variant="outlined"

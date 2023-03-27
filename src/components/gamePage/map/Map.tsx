@@ -65,14 +65,21 @@ const Map = ({ game, player, squads }: Props) => {
       let fetchedSquads: any = [];
       const playerSquad = squads.find((squad) => squad.id === player?.squadId);
 
-      const fetchCheckIn = async (path: string) => {
-        const res = await getAnything(path);
-        fetchedSquads.push(res);
-        setSquadsCheckIn(fetchedSquads);
-      };
-      playerSquad?.squadCheckIns.forEach((check: string) => {
-        fetchCheckIn(check);
-      });
+      if (playerSquad) {
+        const fetchCheckIn = async (path: string) => {
+          const res = await getAnything(path);
+          fetchedSquads.push(res);
+
+          if (fetchedSquads.length === playerSquad.squadCheckIns.length) {
+            setSquadsCheckIn(fetchedSquads);
+          }
+        };
+        playerSquad?.squadCheckIns.forEach((check: string) => {
+          fetchCheckIn(check);
+        });
+      } else {
+        setSquadsCheckIn(undefined);
+      }
     }
   }, [player]);
 
