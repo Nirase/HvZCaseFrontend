@@ -1,10 +1,8 @@
-import { Container, Grid, makeStyles } from "@mui/material";
-import MessageBox from "./MessageBox";
-import { getAnything, addMessage, getUsers } from "../../../api/apiCalls";
+import { Grid } from "@mui/material";
+import { getAnything, addMessage } from "../../../api/apiCalls";
 import { useEffect, useState } from "react";
 import { IPlayer } from "../../../interfaces/player";
 import { IGame } from "../../../interfaces/game";
-import ChatForm from "./ChatForm";
 import { IChannel } from "../../../interfaces/channel";
 import ChannelList from "./ChannelList";
 import ChatBox from "./ChatBox";
@@ -30,6 +28,19 @@ const Messenger = ({ game, player }: Props) => {
       fetchOptions();
     }
   }, []);
+
+
+  useEffect(() => {
+    if (gameId) {
+      const fetchOptions = async () => {
+        const data = await getAnything(`api/v1/game/${gameId}/channel`);
+        const channels: IChannel[] = Object.values(data);
+        setOptions(channels);
+      };
+
+      fetchOptions();
+    }
+  }, [player]);
 
   useEffect(() => {
     if(channels)
