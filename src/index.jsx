@@ -10,7 +10,6 @@ import KeycloakRoute from "./routes/KeyCloakRoute";
 import { ROLES } from "./roles/roles";
 import AdminPage from "./pages/AdminPage";
 import LandingPage from "./pages/LandingPage";
-import ProfilePage from "./pages/ProfilePage";
 import Header from "./components/Header";
 import GamePage from "./pages/GamePage";
 import SquadPage from "./pages/SquadPage";
@@ -35,14 +34,6 @@ initialize()
                 element={
                   <KeycloakRoute role={ROLES.Admin}>
                     <AdminPage />
-                  </KeycloakRoute>
-                }
-              />
-              <Route
-                path="/profile"
-                element={
-                  <KeycloakRoute role={(ROLES.Admin, ROLES.User)}>
-                    <ProfilePage />
                   </KeycloakRoute>
                 }
               />

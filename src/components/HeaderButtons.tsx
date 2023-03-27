@@ -6,9 +6,6 @@ import { ROLES } from "../roles/roles";
 
 const HeaderButtons = () => {
   const navigate = useNavigate();
-  const toProfile = () => {
-    navigate("/profile");
-  };
   const toAdmin = () => {
     navigate("/admin");
   };
@@ -21,9 +18,7 @@ const HeaderButtons = () => {
         </Button>
       )}
       {keycloak.hasRealmRole(ROLES.User) && (
-        <Button color="inherit" onClick={() => toProfile()}>
-          {keycloak.tokenParsed?.name}
-        </Button>
+        <Button color="inherit">{keycloak.tokenParsed?.name}</Button>
       )}
       <Button color="inherit" onClick={() => keycloak.logout()}>
         Logout
