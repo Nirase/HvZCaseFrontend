@@ -13,3 +13,25 @@ The admin page will only be available if the user has a admin role in keycloak. 
 A list of all the available games is displayed and the user can select them in order to add, update and delete players and missions related to the game.
 
 -do images later with bigger monitor
+
+## Written Using
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+[Node.js](https://nodejs.org/en/)
+
+[react-bootstrap](https://react-bootstrap.github.io)
+
+[Visual Studio Code](https://code.visualstudio.com)
+
+[Javascript](https://getbootstrap.com/)
+
+[Github](https://github.com/)
+
+[keycloak](https://www.keycloak.org/)
+
+## Made by
+Danielle Hamrin
+
+Keman Nguyen
+
+Mattias Smedman
