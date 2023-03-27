@@ -58,7 +58,9 @@ const Map = ({ game, player, squads }: Props) => {
       setMapCenter({ lat, lng });
     };
     getPosition();
+  }, []);
 
+  useEffect(() => {
     if (squads) {
       let fetchedSquads: any = [];
       const playerSquad = squads.find((squad) => squad.id === player?.squadId);
@@ -72,14 +74,18 @@ const Map = ({ game, player, squads }: Props) => {
         fetchCheckIn(check);
       });
     }
+  }, [player]);
 
-    const fetchMissions = async () => {
-      const res = await getAllMissionsInGame(game.id);
+  useEffect(() => {
+    if (player) {
+      const fetchMissions = async () => {
+        const res = await getAllMissionsInGame(game.id);
 
-      setMissions(res);
-    };
-    fetchMissions();
-  }, []);
+        setMissions(res);
+      };
+      fetchMissions();
+    }
+  }, [player]);
 
   const circleOptions = {
     strokeOpacity: 0.5,
