@@ -121,6 +121,10 @@ const AdminGCMission = ({ game, setSnackbarRes, setSnackbarFrom }: Props) => {
         </AccordionSummary>
         <div className="createMissionContainer">
           <section style={{ margin: 20 }}>
+            <p>
+              Choose a location by clicking on the map, you can move the red
+              marker by dragging it if you want another location
+            </p>
             <TextField
               id="create-mission-name-input"
               label="Name"
