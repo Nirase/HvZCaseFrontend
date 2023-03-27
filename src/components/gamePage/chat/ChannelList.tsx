@@ -12,7 +12,6 @@ const ChannelList = ({channels, setChosenChannel} : Props) => {
     const [selectedIndex, setSelectedIndex] = useState(1);
 
     const handleListItemClick = (
-      event: React.MouseEvent<HTMLDivElement, MouseEvent>,
       index: number,
     ) => {
       setSelectedIndex(index);
