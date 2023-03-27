@@ -83,13 +83,13 @@ const UpdatePlayer = ({
       if (updatePlayerRes.status !== 404) {
         setSnackbarFrom(" updated player: " + player.id);
         setSnackbarRes(updatePlayerRes);
+        refreshPlayer(updatedPlayer);
       } else {
         setSnackbarFrom(
           " squad " + updatedPlayer.squadId + " in the game. Update failed"
         );
         setSnackbarRes(updatePlayerRes);
       }
-      refreshPlayer(updatedPlayer);
     }
   };
   return (
@@ -124,7 +124,7 @@ const UpdatePlayer = ({
       </FormControl>
       <TextField
         id="update-player-squadid-input"
-        label="Squad Id"
+        label="Squad Id (no input = null)"
         variant="standard"
         type={"number"}
         style={{ marginRight: 10 }}
