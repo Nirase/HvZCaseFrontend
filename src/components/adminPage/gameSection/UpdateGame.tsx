@@ -95,7 +95,6 @@ const UpdateGame = ({
     }
 
     const updateGameRes = await updateGame(id, updatedGame);
-    console.log(game);
     setSnackbarFrom(" updated Game: " + id);
     setSnackbarRes(updateGameRes);
     await refreshList();

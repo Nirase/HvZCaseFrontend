@@ -1,6 +1,4 @@
 import { InfoWindow } from "@react-google-maps/api";
-import { useEffect, useState } from "react";
-import { getGeocode, getLatLng } from "use-places-autocomplete";
 
 type LatLngLiteral = google.maps.LatLngLiteral;
 

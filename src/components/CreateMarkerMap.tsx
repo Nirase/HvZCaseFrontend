@@ -10,7 +10,6 @@ import MissionMarker from "./gamePage/map/MissonMarker";
 
 import CheckInMarker from "./gamePage/map/CheckInMarker";
 import InfoWindowMap from "./InfoWindowMap";
-import CheckInInfo from "./gamePage/map/CheckInInfo";
 
 type LatLngLiteral = google.maps.LatLngLiteral;
 type MapOptions = google.maps.MapOptions;

@@ -38,7 +38,7 @@ const CheckInCreate = ({
       const data = await addSquadCheckIn(+gameId, +squadId, check);
       setSnackbarRes(data);
       setSnackbarFrom("created a check in");
-      console.log(data);
+
       if (allCheckIns) {
         const all = [...allCheckIns, data];
         setAllCheckIns(all);
@@ -49,8 +49,7 @@ const CheckInCreate = ({
       setSnackbarRes("enter all fields");
     }
   };
-  console.log(startDate);
-  console.log(endDate);
+
   return (
     <div className="locationCreate">
       <p>

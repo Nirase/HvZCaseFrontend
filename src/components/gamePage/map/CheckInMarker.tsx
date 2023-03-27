@@ -1,9 +1,8 @@
 import { faUsersRays } from "@fortawesome/free-solid-svg-icons";
-import { InfoWindow, Marker } from "@react-google-maps/api";
+import { Marker } from "@react-google-maps/api";
 import { useEffect, useState } from "react";
 import { getGeocode, getLatLng } from "use-places-autocomplete";
 import { ICheckIn } from "../../../interfaces/marker";
-import InfoWindowMap from "../../InfoWindowMap";
 
 type LatLngLiteral = google.maps.LatLngLiteral;
 

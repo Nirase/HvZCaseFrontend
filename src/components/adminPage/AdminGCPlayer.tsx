@@ -81,7 +81,6 @@ const AdminGCPlayer = ({ game, setSnackbarRes, setSnackbarFrom }: Props) => {
     if (playerID != null) {
       const data = await getOnePlayerFromGame(+game.id, +playerID);
       if (data.status !== 404) {
-        console.log("hej");
         setPlayer(data);
       } else {
         setSnackbarRes(data);
