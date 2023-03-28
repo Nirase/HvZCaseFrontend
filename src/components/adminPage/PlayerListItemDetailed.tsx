@@ -19,6 +19,7 @@ const PlayerListItemDetailed = ({ player, setPlayer }: Props) => {
   const firstName = player.firstName;
   const lastName = player.lastName;
 
+  //calls function in the parent
   const handleClick = () => {
     if (setPlayer) {
       setPlayer(player);

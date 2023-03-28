@@ -92,9 +92,9 @@ const GamePage = () => {
     }
   }, [playerString]);
 
-  let part;
+  let squadRegister;
   if (player && !player.squadId) {
-    part = (
+    squadRegister = (
       <SquadRegistration
         player={player}
         squads={squads}
@@ -109,7 +109,7 @@ const GamePage = () => {
       />
     );
   } else {
-    part = <p></p>;
+    squadRegister = <p></p>;
   }
 
   if (game && user) {
@@ -195,7 +195,7 @@ const GamePage = () => {
                 setSnackbarFrom={(from: string) => setSnackbarFrom(from)}
               />
             )}
-            {!admin && <>{part}</>}
+            {!admin && <>{squadRegister}</>}
           </div>
 
           {allPlayers && <PlayerList players={allPlayers} />}

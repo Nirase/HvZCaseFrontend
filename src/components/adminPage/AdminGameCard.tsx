@@ -65,5 +65,4 @@ const AdminGameCard = ({
     </div>
   );
 };
-//<AdminGCPlayer gameId={gameId} />;
 export default AdminGameCard;
