@@ -16,6 +16,7 @@ const DeleteGame = ({
   setSnackbarRes,
   setSnackbarFrom,
 }: Props) => {
+  //deletes the game
   const handleDelete = async () => {
     const deleteGameRes = await deleteGame(+id);
     setSnackbarFrom(" game: " + id);

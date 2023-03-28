@@ -6,6 +6,7 @@ import keycloak from "../keycloak";
 
 const Home = () => {
   const [games, setGames] = useState<Array<IGame>>();
+  //fetches all games
   useEffect(() => {
     const fetchGames = async () => {
       const data = await getListOfGames();
@@ -13,6 +14,7 @@ const Home = () => {
     };
     fetchGames();
   }, []);
+
   if (games) {
     return (
       <>

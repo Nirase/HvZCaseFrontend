@@ -18,7 +18,6 @@ type Props = {
   id: number;
   game: IGame;
   updateGameFunc: Function;
-  //refreshList: Function;
   setSnackbarRes: (res: any) => void;
   setSnackbarFrom: (from: string) => void;
 };
@@ -34,7 +33,6 @@ const UpdateGame = ({
   id,
   game,
   updateGameFunc,
-  //refreshList,
   setSnackbarRes,
   setSnackbarFrom,
 }: Props) => {
@@ -65,10 +63,12 @@ const UpdateGame = ({
     libraries: libraries,
   });
 
+  //set gamestate to new target
   const handleChange = (event: SelectChangeEvent) => {
     setGameState(event.target.value as string);
   };
 
+  //updates game
   const handleUpdate = async () => {
     if (name) {
       updatedGame.name = name;
@@ -100,7 +100,6 @@ const UpdateGame = ({
     setSnackbarFrom(" updated Game: " + id);
     setSnackbarRes(updateGameRes);
     updateGameFunc(updatedGame);
-    //await refreshList();
   };
   return (
     <div>

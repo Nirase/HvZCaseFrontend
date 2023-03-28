@@ -36,6 +36,7 @@ const AddPlayer = ({
   const [userId, setUserId] = useState(0);
   const gameID = gameId;
 
+  //used to add player to db
   const newPlayer: IAddPlayer = {
     isHuman: true,
     isPatientZero: false,
@@ -44,6 +45,7 @@ const AddPlayer = ({
     biteCode,
   };
 
+  //used to add player to frontend
   const newPlayerWithDetails: IPlayer = {
     id: 0,
     userId: 0,
@@ -55,6 +57,7 @@ const AddPlayer = ({
     squadId: null,
   };
 
+  //keep tracks of isHuman select
   const handleChangeHuman = (event: SelectChangeEvent) => {
     setIsHuman(event.target.value as string);
     if (event.target.value === "true") {
@@ -65,6 +68,8 @@ const AddPlayer = ({
       newPlayer.isHuman = false;
     }
   };
+
+  //keep tracks of isPatientZero select
   const handleChangeIsPatient = (event: SelectChangeEvent) => {
     setIsPatientZero(event.target.value as string);
     if (event.target.value === "true") {
@@ -76,6 +81,7 @@ const AddPlayer = ({
     }
   };
 
+  //adds player
   const AddPlayer = async () => {
     newPlayer.userId = userId;
     newPlayer.gameId = +gameID;

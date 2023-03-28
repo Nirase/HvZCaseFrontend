@@ -49,6 +49,7 @@ const CreateGame = ({
   });
   const [warningText, setWarningText] = useState("");
 
+  //creates a new game
   const handleCreate = async () => {
     setWarningText("");
     newGame.name = name;
@@ -69,6 +70,7 @@ const CreateGame = ({
       setSnackbarRes("enter all fields");
     }
   };
+
   return (
     <div>
       <h3>
