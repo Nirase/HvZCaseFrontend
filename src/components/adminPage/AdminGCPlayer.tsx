@@ -93,6 +93,7 @@ const AdminGCPlayer = ({ game, setSnackbarRes, setSnackbarFrom }: Props) => {
     }
   };
 
+  //making selected playercard only visible when a player is selected
   let findPlayerCard;
   if (player != undefined) {
     findPlayerCard = (
@@ -105,6 +106,7 @@ const AdminGCPlayer = ({ game, setSnackbarRes, setSnackbarFrom }: Props) => {
     findPlayerCard = <p></p>;
   }
 
+  //making delete player only visible when a player is selected
   let deleteInput;
   if (player != null) {
     deleteInput = (
@@ -122,6 +124,7 @@ const AdminGCPlayer = ({ game, setSnackbarRes, setSnackbarFrom }: Props) => {
     deleteInput = <p></p>;
   }
 
+  //making update player only visible when a player is selected
   let updatePlayer;
   if (player != null) {
     updatePlayer = (

@@ -41,6 +41,7 @@ const UpdatePlayer = ({
     squadId: squadId,
   };
 
+  //keep tracks of isHuman select
   const handleChangeHuman = (event: SelectChangeEvent) => {
     setIsHuman(event.target.value as string);
     if (event.target.value === "true") {
@@ -51,6 +52,8 @@ const UpdatePlayer = ({
       updatedPlayer.isHuman = false;
     }
   };
+
+  //keep tracks of isPatientZero select
   const handleChangeIsPatient = (event: SelectChangeEvent) => {
     setIsPatientZero(event.target.value as string);
     if (event.target.value === "true") {
@@ -62,6 +65,7 @@ const UpdatePlayer = ({
     }
   };
 
+  //update player
   const updatePlayer = async () => {
     if (player != null) {
       if (isHumanStr === "true") {

@@ -70,6 +70,7 @@ const AdminGCMission = ({ game, setSnackbarRes, setSnackbarFrom }: Props) => {
   const [humanChecked, setHumanChecked] = useState(false);
   const [zombieChecked, setZombieChecked] = useState(false);
 
+  //fetches all missions available in the game
   useEffect(() => {
     const fetchMissions = async () => {
       const res = await getAllMissionsInGame(game.id);
@@ -78,6 +79,7 @@ const AdminGCMission = ({ game, setSnackbarRes, setSnackbarFrom }: Props) => {
     fetchMissions();
   }, []);
 
+  //creates a mission
   const handleCreate = async () => {
     newMission.name = name;
     newMission.description = desc;
@@ -101,6 +103,7 @@ const AdminGCMission = ({ game, setSnackbarRes, setSnackbarFrom }: Props) => {
     }
   };
 
+  //deletes mission
   const handleDelete = async () => {
     const deleteMissionRes = await deleteMission(game.id, id);
     setSnackbarFrom(" mission: " + id);
@@ -108,6 +111,7 @@ const AdminGCMission = ({ game, setSnackbarRes, setSnackbarFrom }: Props) => {
     handleRemoveMission();
   };
 
+  //removes mission fron mission array on frontend
   const handleRemoveMission = () => {
     setMissions((current) => current?.filter((m) => m.id !== id));
   };
