@@ -36,11 +36,12 @@ const SquadRegistration = ({
 
     if (addedSquad) {
       if (squads) {
+        // send up data to update list of squads dynamically
         const allSquads = [...squads, addedSquad];
         setSquad(allSquads);
       }
     }
-
+    // send up data for the response bar
     setSnackbarFrom("created a squad");
     setSnackbarRes(addedSquad);
   };

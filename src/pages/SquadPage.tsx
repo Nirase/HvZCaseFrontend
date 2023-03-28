@@ -26,6 +26,7 @@ const SquadPage = () => {
   });
   const navigate = useNavigate();
   const { gameId, squadId }: any = useParams();
+  // response bar state
   const [snackbar, setSnackbar] = useState(false);
   const [snackbarRes, setSnackbarRes] = useState<any>();
   const [snackbarFrom, setSnackbarFrom] = useState<string>();
@@ -40,6 +41,7 @@ const SquadPage = () => {
     if (squadId) {
       const id: string | undefined = keycloak.tokenParsed?.sub;
       if (id) {
+        // check is user have a player fot this game
         const fetchUser = async () => {
           const data = await getUserByKeyCloakId(id);
 
@@ -73,6 +75,7 @@ const SquadPage = () => {
   useEffect(() => {
     if (userPlayer) {
       if (squad) {
+        // check if player is member of this squad else reroute to gam page
         const isMember = squad.players.find((x: any) => x.id === userPlayer.id);
         if (isMember) {
           setAllowed(true);
@@ -84,6 +87,7 @@ const SquadPage = () => {
     }
   }, [userPlayer, squad]);
 
+  // back button
   const returnToGamePage = () => {
     navigate("/game/" + gameId);
   };

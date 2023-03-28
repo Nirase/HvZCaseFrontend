@@ -6,9 +6,6 @@ import Button from "@mui/material/Button";
 import keycloak from "../keycloak";
 import HeaderButtons from "./HeaderButtons";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
-import { IAddUser } from "../interfaces/user";
-import { addUser } from "../api/apiCalls";
 
 const Header = () => {
   const navigate = useNavigate();

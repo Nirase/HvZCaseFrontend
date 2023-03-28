@@ -85,6 +85,7 @@ const Map = ({ game, player, squads }: Props) => {
 
   useEffect(() => {
     if (player) {
+      // get all missions the player have access to
       const fetchMissions = async () => {
         const res = await getAllMissionsInGame(game.id);
 

@@ -10,6 +10,7 @@ type Props = {
 
 const InfoWindowMap = ({ position, markerInfo, onClose }: Props) => {
   const handelClose = () => {
+    //send up data
     onClose(undefined);
   };
 

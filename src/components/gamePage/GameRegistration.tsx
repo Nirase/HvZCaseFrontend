@@ -38,12 +38,14 @@ const GameRegistration = ({
     };
 
     const addedPlayer = await AddPlayerToGame(gameId, newPlayer);
-
+    // send up data, to response bar
     setSnackbarRes(addedPlayer);
     setSnackbarFrom("register for game");
     if (addedPlayer) {
+      // if it works update the player
       setPlayer(addedPlayer);
       if (players) {
+        // update the list of players by sending upp a new object
         const allPlayers = [...players, addedPlayer];
         addToAllPlayers(allPlayers);
       }

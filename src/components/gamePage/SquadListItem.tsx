@@ -61,8 +61,10 @@ const SquadListItem = ({
       playerCopy.squadId = squad.id;
 
       const res = await AddPlayerToSquad(+gameId, squad.id, player.id);
+      // send up data for response bar
       setSnackbarRes(res);
       setSnackbarFrom("joined a squad");
+      // send up data to update data dynamically
       updatePlayer(playerCopy);
       setAmountOfMembers(amountOfMembers + 1);
     }
@@ -74,8 +76,10 @@ const SquadListItem = ({
       playerCopy.squadId = null;
 
       const res = await removePlayerFromSquad(+gameId, squad.id, player.id);
+      // send up data for response bar
       setSnackbarRes(res);
       setSnackbarFrom("left a squad");
+      // send up data to update it dynamically
       updatePlayer(playerCopy);
       setAmountOfMembers(amountOfMembers - 1);
     }

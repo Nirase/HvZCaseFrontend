@@ -22,6 +22,7 @@ const MissonInfo = ({ info, clearInfo }: Props) => {
   }, [info]);
 
   const handelClear = () => {
+    // send up data when close
     clearInfo(undefined);
   };
 

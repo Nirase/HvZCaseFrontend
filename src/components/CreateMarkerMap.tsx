@@ -82,6 +82,7 @@ const CreateMarkerMap = ({
 
   const createMarker = async (latLng: google.maps.LatLng | null) => {
     if (latLng) {
+      // send up the address created from lat lag values
       const res = await getGeocode({ location: latLng });
       setMarker(latLng);
       markerAddress(res[0].formatted_address);
@@ -90,6 +91,7 @@ const CreateMarkerMap = ({
 
   const draggedMarker = async (latLng: google.maps.LatLng | null) => {
     if (latLng) {
+      // send up the created address from lat lan values, after the marker has ben dragged
       const res = await getGeocode({ location: latLng });
       setMarker(latLng);
       markerAddress(res[0].formatted_address);

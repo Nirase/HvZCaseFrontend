@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { getListOfGames } from "../api/apiCalls";
 import AdminGameCard from "../components/adminPage/AdminGameCard";
 import CreateGame from "../components/adminPage/gameSection/CreateGame";
-import GameRegistration from "../components/gamePage/GameRegistration";
 import ResponseSnackBar from "../components/ResponseSnackBar";
 import { IGame } from "../interfaces/game";
 

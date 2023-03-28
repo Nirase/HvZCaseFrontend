@@ -78,6 +78,7 @@ const MissionMarker = ({ missionmarker, setInfo, setId }: Props) => {
       setId(missionmarker.id);
     }
     if (position) {
+      // send up data to display
       setInfo(info, position);
     }
   };

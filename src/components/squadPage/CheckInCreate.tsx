@@ -36,12 +36,15 @@ const CheckInCreate = ({
     };
     if (startDate && endDate) {
       const data = await addSquadCheckIn(+gameId, +squadId, check);
+      // send up data to show response bar
       setSnackbarRes(data);
       setSnackbarFrom("created a check in");
 
       if (allCheckIns) {
+        // send up data to update the list of check ins
         const all = [...allCheckIns, data];
         setAllCheckIns(all);
+        // reset value to now show old values
         setEndDate("");
         setStartDate("");
       }
