@@ -33,7 +33,7 @@ const SquadRegistration = ({
     };
 
     const addedSquad = await addSquad(+gameId, squad);
-
+    player.squadId = addedSquad.id;
     if (addedSquad) {
       if (squads) {
         // send up data to update list of squads dynamically
