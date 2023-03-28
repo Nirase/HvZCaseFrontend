@@ -19,7 +19,6 @@ const DeletePlayer = ({
 }: Props) => {
   //delete player
   const deletePlayerFromGame = async () => {
-    console.log(gameId + " " + playerId);
     if (gameId != null && playerId != null) {
       const deletePlayerRes = await deletePlayer(gameId, +playerId);
       setSnackbarFrom(" player: " + playerId);

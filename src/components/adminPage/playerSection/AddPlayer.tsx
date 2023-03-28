@@ -86,8 +86,6 @@ const AddPlayer = ({
     newPlayer.userId = userId;
     newPlayer.gameId = +gameID;
     newPlayer.biteCode = biteCode + gameID + userId;
-    console.log(newPlayer.biteCode);
-    console.log(newPlayer);
     const addedPlayer = await AddPlayerToGame(+gameID, newPlayer);
 
     newPlayerWithDetails.id = addedPlayer.id;
@@ -98,9 +96,6 @@ const AddPlayer = ({
     newPlayerWithDetails.isPatientZero = newPlayer.isPatientZero;
     newPlayerWithDetails.biteCode = newPlayer.biteCode;
 
-    console.log("test ");
-    console.log(addedPlayer);
-    console.log(newPlayerWithDetails);
     if (addedPlayer) {
       if (addedPlayer.status != 400) {
         if (addedPlayer.status != 404) {

@@ -11,6 +11,7 @@ type Props = {
 
 const CheckInInfo = ({ checkIn, clearCheckInInfo }: Props) => {
   const handelClear = () => {
+    // send up data on close
     clearCheckInInfo(undefined);
   };
 

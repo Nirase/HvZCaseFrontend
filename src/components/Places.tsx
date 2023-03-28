@@ -24,6 +24,7 @@ const Places = ({ setPosition }: Props) => {
   };
 
   useEffect(() => {
+    // set value to empty string on first load
     setValue("");
   }, []);
 

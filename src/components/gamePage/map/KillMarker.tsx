@@ -35,6 +35,7 @@ const KillMarker = ({ kill, setKillInfo }: Props) => {
       location: kill.location,
       description,
     };
+    // send up data to display
     setKillInfo(killInfo);
   };
 

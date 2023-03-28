@@ -15,6 +15,7 @@ const KillInfo = ({ kill, players, clearKillInfo }: Props) => {
   const [name, setName] = useState("");
 
   const handelClear = () => {
+    // send up data on close
     clearKillInfo(undefined);
   };
 

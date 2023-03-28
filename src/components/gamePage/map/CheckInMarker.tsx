@@ -33,6 +33,7 @@ const CheckInMarker = ({ checkIn, setCheckInInfo }: Props) => {
 
   const handelSelect = () => {
     if (position) {
+      // send up data to display
       setCheckInInfo(checkIn, position);
     }
   };

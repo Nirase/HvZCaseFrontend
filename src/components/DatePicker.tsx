@@ -11,6 +11,7 @@ const DatePickerComponent = ({ sendSelectedDate }: Props) => {
 
   useEffect(() => {
     if (date) {
+      // send up date when value is changed
       const stringDate = date.toDate().toLocaleString().split(",", 1)[0];
       sendSelectedDate(stringDate);
     }

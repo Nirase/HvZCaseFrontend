@@ -30,6 +30,7 @@ import { Grid } from "@mui/material";
 const libraries: "places"[] = ["places"];
 
 const GamePage = () => {
+  // check if google maps api is loading
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_MAP_API_KEY as string,
     libraries: libraries,
@@ -43,6 +44,7 @@ const GamePage = () => {
   const [user, setUser] = useState<IUser>();
   const [squads, setSquads] = useState<Array<ISquad>>();
 
+  // response bar
   const [snackbar, setSnackbar] = useState(false);
   const [snackbarRes, setSnackbarRes] = useState<any>();
   const [snackbarFrom, setSnackbarFrom] = useState<string>();
@@ -90,9 +92,9 @@ const GamePage = () => {
     }
   }, [playerString]);
 
-  let tests;
+  let part;
   if (player && !player.squadId) {
-    tests = (
+    part = (
       <SquadRegistration
         player={player}
         squads={squads}
@@ -107,7 +109,7 @@ const GamePage = () => {
       />
     );
   } else {
-    tests = <p></p>;
+    part = <p></p>;
   }
 
   if (game && user) {
@@ -193,7 +195,7 @@ const GamePage = () => {
                 setSnackbarFrom={(from: string) => setSnackbarFrom(from)}
               />
             )}
-            {!admin && <>{tests}</>}
+            {!admin && <>{part}</>}
           </div>
 
           {allPlayers && <PlayerList players={allPlayers} />}
