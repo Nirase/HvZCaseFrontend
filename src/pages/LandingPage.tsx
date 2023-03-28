@@ -5,7 +5,7 @@ import { IGame } from "../interfaces/game";
 import keycloak from "../keycloak";
 
 const Home = () => {
-  const [games, setGames] = useState([]);
+  const [games, setGames] = useState<Array<IGame>>();
   useEffect(() => {
     const fetchGames = async () => {
       const data = await getListOfGames();
