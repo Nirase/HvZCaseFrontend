@@ -1,48 +1,50 @@
 # HvZCaseFrontend
 
-# Getting Started with Create React App
+## Landing page
+
+The landing page displays all games available for the user. After the user has logged in they can open the available games and access additional information and functionality related to the selected game by pressing the open game button.
+
+<img align="left" width=450 src="https://i.imgur.com/t3SpkHo.png">
+<img width=450 src="https://i.imgur.com/W8brwqc.png">
+
+## Game page
+
+The game page is for showing the information about the game that the user has chosen on the landing page.
+Here the user finds basic info, such as Game name, amount of players, zombies in game, start date and end date for the game.
+If a user is not registered for the game, they can se a register button, the game plan which is a aria on the map, a list of player in the game, list of squads and markers on the map for where people died and the rules for the game.
+
+When the user have registered, new things turn up. now they can se a chat with different channel's. They can also see there biteCode that they will give to the zombie when they are tagged. The squad list give you options to join, leave or info, the user can also create a squad. If i the user is killed, they will be able to enter another persons bite code when they tag someone and have the option to add location and a description of the kill.
+
+The map will show mission markers, that are for the different teams; all, humans or zombies. it wil also show the squad check in markers.
+
+## Admin page
+
+The admin page will only be available if the user has a admin role in keycloak. There, the user can create new games, update and delete games.
+
+A list of all the available games is displayed and the user can select them in order to add, update and delete players and missions related to the game.
+
+-do images later with bigger monitor
+
+## Written Using
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+[Node.js](https://nodejs.org/en/)
 
-In the project directory, you can run:
+[react-bootstrap](https://react-bootstrap.github.io)
 
-### `npm start`
+[Visual Studio Code](https://code.visualstudio.com)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+[Javascript](https://getbootstrap.com/)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+[Github](https://github.com/)
 
-### `npm test`
+[keycloak](https://www.keycloak.org/)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Made by
 
-### `npm run build`
+Danielle Hamrin
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Keman Nguyen
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Mattias Smedman
