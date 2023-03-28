@@ -31,7 +31,7 @@ const MessageBox = ({ game, options: channels }: Props) => {
     });
 
     channels.forEach((x: IChannel) => {
-      let channel = pusher.subscribe(x.name);
+      let channel = pusher.subscribe(x.id.toString());
       channel.bind("MessageRecieved", function (data: any) {
         setMessages((messages) => [
           ...messages,
@@ -49,7 +49,7 @@ const MessageBox = ({ game, options: channels }: Props) => {
 
   useEffect(() => {
     const fetchOldMessages = async () => {
-      let result = await getAnything("api/v1/game/1/channel/withdetails");
+      let result = await getAnything(`api/v1/game/${game.id}/channel/withdetails`);
       let allMessages: any = [];
       result.forEach(async (value: any) => {
         value.messages.forEach(async (msg: any) => {
