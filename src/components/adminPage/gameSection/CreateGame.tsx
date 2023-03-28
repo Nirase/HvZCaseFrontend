@@ -131,6 +131,7 @@ const CreateGame = ({
 
         <DatePickerComponent
           sendSelectedDate={(Date: string) => setEndDate(Date)}
+          gameCreateEndDate={true}
         />
       </div>
       <br></br>

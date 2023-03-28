@@ -6,13 +6,19 @@ import { getOneGame } from "../api/apiCalls";
 
 type Props = {
   sendSelectedDate: (Date: string) => void;
+  gameEndDate?: string;
+  gameCreateEndDate?: boolean;
 };
 
-const DatePickerComponent = ({ sendSelectedDate }: Props) => {
+const DatePickerComponent = ({
+  sendSelectedDate,
+  gameEndDate,
+  gameCreateEndDate,
+}: Props) => {
   const { gameId }: any = useParams();
   const [date, setDate] = useState<Dayjs | null>(null);
 
-  const [endDate, setEndDate] = useState<Dayjs>();
+  const [endDate, setEndDate] = useState<Dayjs | null>();
 
   useEffect(() => {
     if (date) {
@@ -20,7 +26,9 @@ const DatePickerComponent = ({ sendSelectedDate }: Props) => {
       const stringDate = date.toDate().toLocaleString().split(",", 1)[0];
       sendSelectedDate(stringDate);
     }
+  }, [date]);
 
+  useEffect(() => {
     const getTheGame = async () => {
       const data = await getOneGame(+gameId);
       if (data) {
@@ -28,9 +36,15 @@ const DatePickerComponent = ({ sendSelectedDate }: Props) => {
         setEndDate(date);
       }
     };
-
-    getTheGame();
-  }, [date]);
+    if (gameEndDate) {
+      const date = dayjs(gameEndDate);
+      setEndDate(date);
+    } else if (gameCreateEndDate) {
+      setEndDate(null);
+    } else if (gameId) {
+      getTheGame();
+    }
+  }, []);
 
   return (
     <DatePicker

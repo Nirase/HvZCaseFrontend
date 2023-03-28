@@ -166,6 +166,7 @@ const AdminGCMission = ({ game, setSnackbarRes, setSnackbarFrom }: Props) => {
 
               <DatePickerComponent
                 sendSelectedDate={(Date: string) => setStartDate(Date)}
+                gameEndDate={game.endDate}
               />
               <label style={{ fontWeight: "bold", marginTop: "8px" }}>
                 End Date*
@@ -173,6 +174,7 @@ const AdminGCMission = ({ game, setSnackbarRes, setSnackbarFrom }: Props) => {
 
               <DatePickerComponent
                 sendSelectedDate={(Date: string) => setEndDate(Date)}
+                gameEndDate={game.endDate}
               />
             </div>
             <FormGroup>
