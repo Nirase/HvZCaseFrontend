@@ -27,7 +27,7 @@ const MessageBox = ({ game, options: channels }: Props) => {
     });
 
     channels.forEach((x: IChannel) => {
-      pusher.unsubscribe(x.name);
+      pusher.unsubscribe(x.id.toString());
     });
 
     channels.forEach((x: IChannel) => {
@@ -42,14 +42,16 @@ const MessageBox = ({ game, options: channels }: Props) => {
 
     return () => {
       channels.forEach((x: IChannel) => {
-        pusher.unsubscribe(x.name);
+        pusher.unsubscribe(x.id.toString());
       });
     };
   }, [channels]);
 
   useEffect(() => {
     const fetchOldMessages = async () => {
-      let result = await getAnything(`api/v1/game/${game.id}/channel/withdetails`);
+      let result = await getAnything(
+        `api/v1/game/${game.id}/channel/withdetails`
+      );
       let allMessages: any = [];
       result.forEach(async (value: any) => {
         value.messages.forEach(async (msg: any) => {
