@@ -16,7 +16,7 @@ If a user is not registered for the game, they can see a register button, the ga
 When the user have registered, new things turn up. now they can se a chat with different channel's. They can also see there bite-code that they will give to the zombie when they are tagged. The squad list give you options to join, leave or info, the user can also create a squad. If the user is killed, they will be able to enter another persons bite-code when they tag someone and have the option to add location and a description of the kill.
 
 The map will show mission markers, that are for the different teams; all, humans or zombies. it wil also show the squad check in markers.
-
+the diffrent markers: 
 - all missions <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/triangle-exclamation.svg" width="30" height="30">
 - humans missions <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/snowflake.svg" width="30" height="30">
 - zombies missions<img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/biohazard.svg" width="30" height="30">
