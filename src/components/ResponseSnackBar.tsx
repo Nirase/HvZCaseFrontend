@@ -37,6 +37,9 @@ const ResponseSnackBar = ({ open, res, from, setClose }: Props) => {
     } else if (res === "enter all fields") {
       setVersion("error");
       setMessage("You have to enter all fields");
+    } else if (res === "not vis") {
+      setVersion("error");
+      setMessage("marker not visible for anyone");
     } else if (res === 204) {
       setVersion("success");
       setMessage("You have successfully deleted " + from);

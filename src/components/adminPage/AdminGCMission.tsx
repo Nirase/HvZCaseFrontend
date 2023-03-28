@@ -88,10 +88,14 @@ const AdminGCMission = ({ game, setSnackbarRes, setSnackbarFrom }: Props) => {
     newMission.visibleToZombies = zombieChecked;
 
     if (name && desc && startDate && endDate && address) {
-      const createdMission = await createMission(game.id, newMission);
-      setSnackbarFrom("created a mission");
-      setSnackbarRes(createdMission);
-      setMissions([...missions, createdMission]);
+      if (!humanChecked && !zombieChecked) {
+        setSnackbarRes("not vis");
+      } else {
+        const createdMission = await createMission(game.id, newMission);
+        setSnackbarFrom("created a mission");
+        setSnackbarRes(createdMission);
+        setMissions([...missions, createdMission]);
+      }
     } else {
       setSnackbarRes("enter all fields");
     }
