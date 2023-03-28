@@ -34,7 +34,7 @@ const Home = () => {
       </>
     );
   } else {
-    <h3>Loading games...</h3>;
+    return <h3>Loading games...</h3>;
   }
 };
 
