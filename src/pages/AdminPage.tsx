@@ -12,6 +12,7 @@ const AdminPage = () => {
   const [snackbarRes, setSnackbarRes] = useState<any>();
   const [snackbarFrom, setSnackbarFrom] = useState<string>();
 
+  //get gamelist from database
   useEffect(() => {
     const fetchGames = async () => {
       const data = await getListOfGames();
@@ -20,14 +21,18 @@ const AdminPage = () => {
     fetchGames();
   }, []);
 
+  //removes a element from gamelist
   const handleDeleteGame = (gameID: number) => {
     setGames((current) => current.filter((tempGame) => tempGame.id !== gameID));
   };
+
+  //changes game
   const handleUpdateGame = (uGame: IGame) => {
     setGame(undefined);
     setGame(uGame);
   };
 
+  //updates gamelist when game is changed
   useEffect(() => {
     const newGameList = [...games];
     for (let i = 0; i < games.length; i++) {
