@@ -75,6 +75,7 @@ const AdminGCPlayer = ({ game, setSnackbarRes, setSnackbarFrom }: Props) => {
     setPlayer(undefined);
   };
 
+  //get a player from the database
   const fetchOnePlayerFromGame = async () => {
     setPlayer(undefined);
     if (playerID != null) {
@@ -86,6 +87,8 @@ const AdminGCPlayer = ({ game, setSnackbarRes, setSnackbarFrom }: Props) => {
       }
     }
   };
+
+  //updates player in front end
   const updatePlayerCard = (uPlayer: IPlayer) => {
     setPlayer(undefined);
     if (playerID != null) {
