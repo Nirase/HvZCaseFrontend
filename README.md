@@ -15,13 +15,14 @@ If a user is not registered for the game, they can se a register button, the gam
 
 When the user have registered, new things turn up. now they can se a chat with different channel's. They can also see there bite-code that they will give to the zombie when they are tagged. The squad list give you options to join, leave or info, the user can also create a squad. If i the user is killed, they will be able to enter another persons bite-code when they tag someone and have the option to add location and a description of the kill.
 
-The map will show different markers,
+The map will show mission markers, that are for the different teams; all, humans or zombies. it wil also show the squad check in markers.
 for missions:
 all <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/triangle-exclamation.svg" width="50" height="50">,
 humans <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/snowflake.svg" width="50" height="50"> or
 zombies <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/biohazard.svg" width="50" height="50">.
 squad checkIn markers: <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/users-rays.svg" width="50" height="50">
 and death markers: <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/skull-crossbones.svg" width="50" height="50">
+<img width=450 src="https://i.imgur.com/bEPkRCa.png">
 
 ## Squad page
 
@@ -29,11 +30,13 @@ Here the user will se info about the squad. A list of all the members in the squ
 
 ## Admin page
 
-The admin page will only be available if the user has a admin role in keycloak. There the user can create new games, update and delete games.
+The admin page will only be available if the user has a admin role in keycloak. There, the user can create new games, update and delete games.
 
 A list of all the available games is displayed and the user can select them in order to add, update and delete players and missions related to the game.
 
--do images later with bigger monitor
+<img align="left" width=450 src="https://i.imgur.com/YsLN4Rx.png">
+<img width=450 src="https://i.imgur.com/vyAbeEm.png">
+<img width=450 src="https://i.imgur.com/dtKeVBP.png">
 
 ## Written Using
 
