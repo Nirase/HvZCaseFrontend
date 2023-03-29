@@ -35,7 +35,7 @@ const AdminGameCard = ({
           id="panel1a-header"
         >
           <h3>
-            {gameId} | {name}
+            {gameId} | {name} status: {game.gameState}
           </h3>
         </AccordionSummary>
         <AdminGCGame
