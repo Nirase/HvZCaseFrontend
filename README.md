@@ -16,7 +16,8 @@ If a user is not registered for the game, they can see a register button, the ga
 When the user have registered, new things turn up. now they can se a chat with different channel's. They can also see there bite-code that they will give to the zombie when they are tagged. The squad list give you options to join, leave or info, the user can also create a squad. If the user is killed, they will be able to enter another persons bite-code when they tag someone and have the option to add location and a description of the kill.
 
 The map will show mission markers, that are for the different teams; all, humans or zombies. it wil also show the squad check in markers.
-the diffrent markers: 
+the different markers:
+
 - all missions <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/triangle-exclamation.svg" width="30" height="30">
 - humans missions <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/snowflake.svg" width="30" height="30">
 - zombies missions<img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/biohazard.svg" width="30" height="30">
@@ -39,17 +40,33 @@ A list of all the available games is displayed and the user can select them in o
 <img width=450 src="https://i.imgur.com/vyAbeEm.png">
 <img width=450 src="https://i.imgur.com/dtKeVBP.png">
 
+## Map setup
+
+To set up the map for this application you need to get an MapId from google cloud platform(GCP).
+When you are in GCP navigate to "Goggle Maps Platform".
+To start with you navigate to Map styles and press Create Style  
+<img width=450 src="https://i.imgur.com/DpLICwS.png">
+
+Here you can decide on color and some stylings, if you want to go further with styling you can press "Open in style editor" where you will have more options. After you have saved the map you have to navigate to Map Management.
+<img width=450 src="https://i.imgur.com/eFsC5ze.png">
+
+Here you press create map id, and fill in the name of tha map, and choose the styled map option that you want. Then copy the generated map id and add it to the environment variables
+
+<img width=450 src="https://i.imgur.com/Ne2dIrk.png">
+
 ## Written Using
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 [Node.js](https://nodejs.org/en/)
 
-[react-bootstrap](https://react-bootstrap.github.io)
+[Material UI](https://mui.com/material-ui/getting-started/overview/)
 
 [Visual Studio Code](https://code.visualstudio.com)
 
-[Javascript](https://getbootstrap.com/)
+[Javascript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+
+[TypeScript](https://www.typescriptlang.org/)
 
 [Github](https://github.com/)
 
