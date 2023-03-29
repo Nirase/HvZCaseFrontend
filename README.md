@@ -1,5 +1,7 @@
 # HvZCaseFrontend
 
+Live version: https://hv-z-case-frontend.vercel.app/
+
 ## Landing page
 
 The landing page displays all games available for the user. After the user has logged in they can open the available games and access additional information and functionality related to the selected game by pressing the open game button.
